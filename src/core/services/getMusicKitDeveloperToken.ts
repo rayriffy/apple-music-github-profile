@@ -6,7 +6,7 @@ const {
   APPLE_TEAM_ID,
 } = process.env
 
-export const getMusicKitDeveloperToken = async (keyDuration = '1h') => {
+export const getMusicKitDeveloperToken = (keyDuration = '1h') => {
   const token = jwt.sign({}, APPLE_PRIVATE_KEY, {
     issuer: APPLE_TEAM_ID,
     expiresIn: keyDuration,

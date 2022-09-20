@@ -121,7 +121,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ res }) => 
     '../core/services/getMusicKitDeveloperToken'
   )
 
-  const token = await getMusicKitDeveloperToken()
+  const token = getMusicKitDeveloperToken()
   
   res.setHeader('Cache-Control', `s-maxage=${60 * 59}`) // 3 month
   return {

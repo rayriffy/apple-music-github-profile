@@ -50,6 +50,7 @@
     "@types/react-dom": "^18.0.6",
     "@types/sharp": "^0.31.0",
     "autoprefixer": "^10.4.11",
+    "concurrently": "^7.4.0",
     "musickit-typescript": "^1.2.4",
     "postcss": "^8.4.16",
     "prettier": "^2.7.1",

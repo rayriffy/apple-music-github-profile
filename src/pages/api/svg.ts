@@ -58,14 +58,26 @@ const api: NextApiHandler = async (req, res) => {
     coverImageData = `data:image/jpeg;base64,${encodedCoverImage.toString('base64')}`
   }
 
+  const part = 3
+  const getDuration = (millisec: number) => {
+    let minute = Math.floor(millisec / (60 * 1000))
+    let seconds = Math.ceil((millisec - minute * 60 * 1000) / 1000)
+
+    return `${minute}:${seconds.toString().padStart(2, '0')}`
+  }
+
   const renderedFile = ejs.render(templateFile, {
     title: track.attributes.name,
     artist: track.attributes.artistName ?? '',
     coverImageData,
+    timestamp: {
+      elapsed: getDuration(track.attributes.durationInMillis / part),
+      remaining: getDuration((track.attributes.durationInMillis * (part - 1)) / part),
+    }
   })
 
   res.setHeader('Content-Type', 'image/svg+xml')
-  res.setHeader('Cache-Control', 's-maxage=180')
+  // res.setHeader('Cache-Control', 's-maxage=180')
   res.send(renderedFile)
 }
 

@@ -12,6 +12,7 @@ export const getRecentlyPlayedTrack = async (
       headers: {
         Authorization: `Bearer ${developerToken}`,
         'Music-User-Token': userToken,
+        Referer: 'https://apple-music.rayriffy.com'
       },
     }
   )

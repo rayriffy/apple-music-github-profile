@@ -14,12 +14,12 @@ const Page: NextPage<Props> = props => {
     'init' | 'fail' | 'done'
   >('init')
 
-  const onAuthorize = async () => {
-    const music = MusicKit.getInstance()
-    const userToken = await music.authorize()
+  // const onAuthorize = async () => {
+  //   const music = MusicKit.getInstance()
+  //   const userToken = await music.authorize()
 
-    console.log({ developerToken, userToken })
-  }
+  //   console.log({ developerToken, userToken })
+  // }
 
   return (
     <div className="my-8 space-y-6 max-w-xl mx-auto">
@@ -71,7 +71,7 @@ const Page: NextPage<Props> = props => {
             <button
               type="button"
               className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              onClick={onAuthorize}
+              onClick={() => {}}
             >
               Authorize
             </button>

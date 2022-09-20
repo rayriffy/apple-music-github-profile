@@ -9,14 +9,20 @@ import axios from 'axios'
 import { getMusicKitDeveloperToken } from '../../core/services/getMusicKitDeveloperToken'
 import { getRecentlyPlayedTrack } from '../../modules/music/services/getRecentlyPlayedTrack'
 
-interface Props {
+interface UserQuery {
   username?: string
 }
 
 const api: NextApiHandler = async (req, res) => {
+  const { username } = req.query as UserQuery
+
+  if (username !== "rayriffy") {
+    throw Error("overruled")
+  }
+
   // get all nessesary token
   const userToken = process.env.SAMPLE_USER_TOKEN
-  const developerToken = getMusicKitDeveloperToken('1m')
+  const developerToken = getMusicKitDeveloperToken(60)
 
   // find recently played track
   const track = await getRecentlyPlayedTrack(
@@ -77,7 +83,11 @@ const api: NextApiHandler = async (req, res) => {
   })
 
   res.setHeader('Content-Type', 'image/svg+xml')
-  // res.setHeader('Cache-Control', 's-maxage=180')
+
+  if (process.env.NODE_ENV === 'production') {
+    res.setHeader('Cache-Control', 's-maxage=180')
+  }
+
   res.send(renderedFile)
 }
 

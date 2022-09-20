@@ -3,8 +3,12 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: '/theme/default.svg',
-        destination: '/api/svg',
+        source: '/theme/sample.svg',
+        destination: '/api/svg?username=rayriffy',
+      },
+      {
+        source: '/theme/default.svg:path*',
+        destination: '/api/svg:path*',
       },
     ]
   },

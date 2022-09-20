@@ -76,7 +76,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
     '../modules/music/services/getRecentlyPlayedTrack'
   )
 
-  const developerToken = getMusicKitDeveloperToken('1m')
+  const developerToken = getMusicKitDeveloperToken(60)
   const recentlyPlayedTrack = await getRecentlyPlayedTrack(
     developerToken,
     process.env.SAMPLE_USER_TOKEN

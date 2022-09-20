@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             BigInt          @id @default(autoincrement())
+  uid            String          @unique
+  username       String          @unique
+  registered     Boolean         @default(false)
+  createdAt      DateTime        @default(now())
+  authenticators Authenticator[]
+  challenge      Challenge?
+  audits          Audit[]
+}
+
+model Authenticator {
+  id           BigInt   @id @default(autoincrement())
+  uid          String
+  createdAt    DateTime @default(now())
+  fmt          String
+  publicKey    String
+  counter      Int
+  credentialId String
+  user         User     @relation(fields: [uid], references: [uid])
+}
+
+model Challenge {
+  id        BigInt   @id @default(autoincrement())
+  uid       String   @unique
+  challenge String   @unique
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [uid], references: [uid])
+}
+
+model Audit {
+  id  BigInt @id @default(autoincrement())
+  uid String
+  
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [uid], references: [uid])
+}
+
+model AppleMusicToken {
+  id        BigInt @id @default(autoincrement())
+  uid       String @unique
+  userToken String
+}

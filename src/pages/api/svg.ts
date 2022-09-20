@@ -16,7 +16,7 @@ interface Props {
 const api: NextApiHandler = async (req, res) => {
   // get all nessesary token
   const userToken = process.env.SAMPLE_USER_TOKEN
-  const developerToken = getMusicKitDeveloperToken('15s')
+  const developerToken = getMusicKitDeveloperToken('1m')
 
   // find recently played track
   const track = await getRecentlyPlayedTrack(

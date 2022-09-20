@@ -64,8 +64,8 @@ const api: NextApiHandler = async (req, res) => {
     coverImageData,
   })
 
-  //
   res.setHeader('Content-Type', 'image/svg+xml')
+  res.setHeader('Cache-Control', 's-maxage=180')
   res.send(renderedFile)
 }
 

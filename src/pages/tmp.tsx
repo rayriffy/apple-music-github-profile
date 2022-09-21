@@ -2,6 +2,7 @@ import { Fragment, useState } from 'react'
 
 import type { GetServerSideProps, NextPage } from 'next'
 import Script from 'next/script'
+import { FaApple } from 'react-icons/fa'
 
 interface Props {
   developerToken: string
@@ -49,7 +50,14 @@ const Page: NextPage<Props> = props => {
 
       {musicKitLoadingState === 'done' ? (
         <div className="space-y-2">
-          <div className="max-w-sm">
+          <button
+            type="button"
+            className="inline-flex items-center rounded-md border border-transparent bg-black px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
+          >
+            <FaApple className="w-4 h-4 mr-1" /> Sign in with Apple
+          </button>
+
+          {/* <div className="max-w-sm">
             <label
               htmlFor="username"
               className="block text-sm font-medium text-gray-700"
@@ -65,9 +73,9 @@ const Page: NextPage<Props> = props => {
                 placeholder="rayriffy"
               />
             </div>
-          </div>
+          </div> */}
 
-          <section className="space-x-4">
+          {/* <section className="space-x-4">
             <button
               type="button"
               className="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -81,7 +89,7 @@ const Page: NextPage<Props> = props => {
             >
               Refresh token
             </button>
-          </section>
+          </section> */}
         </div>
       ) : musicKitLoadingState === 'fail' ? (
         <p>Unable to load MusicKit instance</p>

@@ -1,5 +1,4 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="345" height="534" aria-labelledby="cardTitle" role="img">
-  <title id="cardTitle">Recently played</title>
   <foreignObject width="343" height="534">
     <style>
       .container {
@@ -85,7 +84,6 @@
         margin-bottom: 8px;
       }
       .slider-pill-inner {
-        width: 33.33%;
         height: 100%;
         background-color: #4b5563;
       }
@@ -129,7 +127,7 @@
 
       <div class="slider">
         <div class="slider-pill">
-          <div class="slider-pill-inner" />
+          <div class="slider-pill-inner" style="width: <%= timestamp.percentage %>%" />
         </div>
         <div class="slider-container">
           <p class="slider-content text-gray-600"><%= timestamp.elapsed %></p>

@@ -5,6 +5,7 @@ import type { NextApiHandler } from 'next'
 import ejs from 'ejs'
 import sharp from 'sharp'
 import axios from 'axios'
+import { optimize, OptimizedSvg } from 'svgo'
 
 import { getMusicKitDeveloperToken } from '../../core/services/getMusicKitDeveloperToken'
 import { getRecentlyPlayedTrack } from '../../modules/music/services/getRecentlyPlayedTrack'
@@ -88,7 +89,7 @@ const api: NextApiHandler = async (req, res) => {
     res.setHeader('Cache-Control', 's-maxage=180')
   }
 
-  res.send(renderedFile)
+  res.send((optimize(renderedFile) as OptimizedSvg).data)
 }
 
 export default api

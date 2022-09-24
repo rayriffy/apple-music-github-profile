@@ -67,7 +67,6 @@ const Page: NextPage<Props> = props => {
 }
 
 export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
-  const { default: axios } = await import('axios')
   const { default: sharp } = await import('sharp')
   const { getMusicKitDeveloperToken } = await import(
     '../core/services/getMusicKitDeveloperToken'
@@ -83,7 +82,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
   )
 
   // download album cover
-  const rawAlbumCover = await axios.get(
+  const rawAlbumCover = await fetch(
     recentlyPlayedTrack.attributes.artwork.url
       .replace('{w}', '600')
       .replace(
@@ -92,13 +91,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async ctx => {
           (Number(recentlyPlayedTrack.attributes.artwork.height ?? 1) * 600) /
           Number(recentlyPlayedTrack.attributes.artwork.width ?? 1)
         ).toString()
-      ),
-    {
-      responseType: 'arraybuffer',
-    }
-  )
+      )
+  ).then(o => o.arrayBuffer())
   // encode album cover
-  const encodedCoverImage = await sharp(Buffer.from(rawAlbumCover.data))
+
+  const encodedCoverImage = await sharp(Buffer.from(rawAlbumCover))
     .resize(400)
     .jpeg({
       quality: 90,

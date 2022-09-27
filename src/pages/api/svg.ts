@@ -2,8 +2,7 @@ import fs from 'fs'
 import path from 'path'
 
 import type { NextApiHandler } from 'next'
-import ejs from 'ejs'
-import { optimize, OptimizedSvg } from 'svgo'
+import type { OptimizedSvg } from 'svgo'
 
 import { getMusicKitDeveloperToken } from '../../core/services/getMusicKitDeveloperToken'
 import { getRecentlyPlayedTrack } from '../../modules/music/services/getRecentlyPlayedTrack'
@@ -43,6 +42,7 @@ const api: NextApiHandler = async (req, res) => {
     getAlbumCover(track.attributes.artwork)
   ])
 
+  const { default: ejs } = await import('ejs')
   const renderedFile = ejs.render(templateFile, {
     title: track.attributes.name,
     artist: track.attributes.artistName ?? '',
@@ -62,6 +62,7 @@ const api: NextApiHandler = async (req, res) => {
     res.setHeader('Cache-Control', `public, max-age=30, s-maxage=128, stale-while-revalidate=${60 * 60 * 24 * 31}`)
   }
 
+  const { optimize } = await import('svgo')
   res.send((optimize(renderedFile) as OptimizedSvg).data)
 }
 

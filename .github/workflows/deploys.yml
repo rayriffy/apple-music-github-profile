@@ -1,0 +1,47 @@
+name: deploys
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      APP_NAME: apple-music-github-profile-runtime
+      IMAGE_NAME: ghcr.io/rayriffy/apple-music-github-profile-runtime
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: rayriffy
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Docker image
+        run: docker build -t $APP_NAME .
+
+      - name: Tag Docker image
+        run: docker tag $APP_NAME $IMAGE_NAME
+
+      - name: Push Docker image
+        run: docker push $IMAGE_NAME
+    
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build]
+    steps:
+      - uses: deploys-app/deploys-action@v1
+        with:
+          project: apple-music-github-profile
+          location: gke.cluster-rcf2
+          name: apple-music-github-profile-runtime
+          image: ghcr.io/rayriffy/apple-music-github-profile-runtime
+          minReplicas: 1
+          maxReplicas: 2
+        env:
+          DEPLOYS_AUTH_USER: ${{ secrets.DEPLOYS_AUTH_USER }}
+          DEPLOYS_AUTH_PASS: ${{ secrets.DEPLOYS_AUTH_PASS }}

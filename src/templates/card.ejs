@@ -1,4 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="345" height="534" aria-labelledby="cardTitle" role="img">
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  width="345"
+  height="534"
+  role="img"
+>
   <foreignObject width="343" height="534">
     <style>
       .container {
@@ -6,7 +11,8 @@
         background-color: #f8f8fa;
         padding: 24px;
         height: 486px;
-        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
       }
 
       .text-gray-500 {
@@ -19,11 +25,19 @@
         color: #111827;
       }
 
-      .cover-image {
+      .cover-image-container {
+        display: flex;
+        align-items: center;
+        width: 288x;
         height: 288px;
-        border-radius: 12px;
         margin: 0 auto;
-        box-shadow:  0 0 #0000, 0 0 #0000, 0 10px 15px -3px #9ca3af, 0 4px 6px -4px #9ca3af;
+      }
+      .cover-image {
+        max-width: 288px;
+        max-height: 288px;
+        border-radius: 12px;
+        box-shadow: 0 0 #0000, 0 0 #0000, 0 10px 15px -3px #9ca3af,
+          0 4px 6px -4px #9ca3af;
       }
       img.cover-image {
         width: auto;
@@ -96,13 +110,26 @@
         line-height: 16px;
         margin: 0;
       }
+
+      .player-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 52px;
+      }
+      .player-spacer {
+        margin: 0 28px;
+      }
+      .player-item {
+        width: 38px;
+        height: 38px;
+      }
     </style>
     <div xmlns="http://www.w3.org/1999/xhtml" class="container">
       <div class="header">
-          <svg
+        <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 88 22"
-          focusable="false"
           fill="currentColor"
           class="apple-music-logo"
         >
@@ -113,12 +140,14 @@
         </svg>
         <span class="text-gray-600"> · Recently played</span>
       </div>
-      
-      <% if (coverImageData !== null) { %>
+
+      <div class="cover-image-container">
+        <% if (coverImageData !== null) { %>
         <img class="cover-image" src="<%= coverImageData %>" />
-      <% } else { %>
+        <% } else { %>
         <div class="cover-image" />
-      <% } %>
+        <% } %>
+      </div>
 
       <div class="content">
         <h1 class="song-title text-gray-900 truncate"><%= title %></h1>
@@ -127,12 +156,52 @@
 
       <div class="slider">
         <div class="slider-pill">
-          <div class="slider-pill-inner" style="width: <%= timestamp.percentage %>%" />
+          <div
+            class="slider-pill-inner"
+            style="width: <%= timestamp.percentage %>%"
+          />
         </div>
         <div class="slider-container">
           <p class="slider-content text-gray-600"><%= timestamp.elapsed %></p>
-          <p class="slider-content text-gray-600">-<%= timestamp.remaining %></p>
+          <p class="slider-content text-gray-600">
+            -<%= timestamp.remaining %>
+          </p>
         </div>
+      </div>
+
+      <div class="player-container text-gray-900">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="player-item"
+        >
+          <path
+            d="M9.195 18.44c1.25.713 2.805-.19 2.805-1.629v-2.34l6.945 3.968c1.25.714 2.805-.188 2.805-1.628V8.688c0-1.44-1.555-2.342-2.805-1.628L12 11.03v-2.34c0-1.44-1.555-2.343-2.805-1.629l-7.108 4.062c-1.26.72-1.26 2.536 0 3.256l7.108 4.061z"
+          />
+        </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="player-item player-spacer"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M6.75 5.25a.75.75 0 01.75-.75H9a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H7.5a.75.75 0 01-.75-.75V5.25zm7.5 0A.75.75 0 0115 4.5h1.5a.75.75 0 01.75.75v13.5a.75.75 0 01-.75.75H15a.75.75 0 01-.75-.75V5.25z"
+            clip-rule="evenodd"
+          />
+        </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="currentColor"
+          class="player-item"
+        >
+          <path
+            d="M5.055 7.06c-1.25-.714-2.805.189-2.805 1.628v8.123c0 1.44 1.555 2.342 2.805 1.628L12 14.471v2.34c0 1.44 1.555 2.342 2.805 1.628l7.108-4.061c1.26-.72 1.26-2.536 0-3.256L14.805 7.06C13.555 6.346 12 7.25 12 8.688v2.34L5.055 7.06z"
+          />
+        </svg>
       </div>
     </div>
   </foreignObject>

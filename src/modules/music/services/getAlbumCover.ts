@@ -1,8 +1,6 @@
-import sharp from 'sharp'
-
 import type { MixedTypeSong } from '../@types/RecentPlayedTracksResponse'
 
-const remoteImageSize = 400
+const targetImageSize = 400
 
 export const getAlbumCover = async (
   artwork: MixedTypeSong['attributes']['artwork']
@@ -13,11 +11,11 @@ export const getAlbumCover = async (
     if (typeof artwork?.url === 'string') {
       // build cover url
       let albumCoverUrl = artwork.url
-        .replace('{w}', remoteImageSize.toString())
+        .replace('{w}', targetImageSize.toString())
         .replace(
           '{h}',
           Math.floor(
-            (Number(artwork.height ?? 1) * remoteImageSize) /
+            (Number(artwork.height ?? 1) * targetImageSize) /
               Number(artwork.width ?? 1)
           ).toString()
         )
@@ -31,18 +29,28 @@ export const getAlbumCover = async (
         return await o.arrayBuffer()
       })
 
-      // reencode image into smaller size
-      const encodedCoverImage = await sharp(Buffer.from(rawAlbumCover))
-        .resize(350)
-        .jpeg({
-          quality: 83,
-          mozjpeg: true,
-        })
-        .toBuffer()
-        .catch(() => {
-          return Buffer.from(rawAlbumCover)
-        })
+      let encodedCoverImage: Buffer
 
+      // if image is compressible from Apple Music API, then serve that version
+      if (artwork.url.includes('{w}') && artwork.url.includes('{h}')) {
+        encodedCoverImage = Buffer.from(rawAlbumCover)
+      }
+      // exclusive case for iCloud Music Library, self-uploaded album is not compressible from API
+      else {
+        const { default: sharp } = await import('sharp')
+        encodedCoverImage = await sharp(Buffer.from(rawAlbumCover))
+          .resize(targetImageSize)
+          .jpeg({
+            quality: 83,
+            mozjpeg: true,
+          })
+          .toBuffer()
+          .catch(() => {
+            return Buffer.from(rawAlbumCover)
+          })
+      }
+
+      // build final encoded image
       coverImageData = `data:image/jpeg;base64,${encodedCoverImage.toString(
         'base64'
       )}`

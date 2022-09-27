@@ -38,7 +38,7 @@ jobs:
         with:
           project: apple-music-github-profile
           location: gke.cluster-rcf2
-          name: apple-music-github-profile-runtime
+          name: runtime
           image: ghcr.io/rayriffy/apple-music-github-profile-runtime
           minReplicas: 1
           maxReplicas: 2

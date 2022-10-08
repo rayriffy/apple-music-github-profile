@@ -23,6 +23,7 @@ specifiers:
   musickit-typescript: ^1.2.4
   nanoid: ^4.0.0
   next: ^12.3.0
+  next-axiom: ^0.14.0
   next-plugin-preact: ^3.0.7
   postcss: ^8.4.16
   preact: ^10.11.0
@@ -48,6 +49,7 @@ dependencies:
   lodash: 4.17.21
   nanoid: 4.0.0
   next: 12.3.0_dmmjpkrptnkrz2kzqikv5vt4mi
+  next-axiom: 0.14.0_next@12.3.0
   next-plugin-preact: 3.0.7_tmlbra522yq6sccdrgzumgual4
   preact: 10.11.0
   preact-render-to-string: 5.2.4_preact@10.11.0
@@ -1123,6 +1125,16 @@ packages:
     resolution: {integrity: sha512-ONmRUqK7zj7DWX0D9ADe03wbwOBZxNAfF20PlGfCWQcD3+/MakShIHrMqx9YwPTfxDdF1zLeL+RGZiR9kGMLdg==}
     dev: false
 
+  /next-axiom/0.14.0_next@12.3.0:
+    resolution: {integrity: sha512-LLbiDcL79274HqaKTSipZo6B4SCLh++11BpVfg+cNTZoLb8VH1g7g14xgFBhKeDN+DaiDSg8Of7ZPqaYEcIUXQ==}
+    engines: {node: '>=15'}
+    peerDependencies:
+      next: ^12.1.4
+    dependencies:
+      next: 12.3.0_dmmjpkrptnkrz2kzqikv5vt4mi
+      whatwg-fetch: 3.6.2
+    dev: false
+
   /next-plugin-preact/3.0.7_tmlbra522yq6sccdrgzumgual4:
     resolution: {integrity: sha512-8Xl+SJT3FCZHS7R/6Gana6e95o09UpiyCsK0cw8P/KW2M+lQcYIwIt4ZLZd+K9TW3JZx6KJDLqVbq0Kd6KZsIg==}
     requiresBuild: true
@@ -1806,6 +1818,10 @@ packages:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
+    dev: false
+
+  /whatwg-fetch/3.6.2:
+    resolution: {integrity: sha512-bJlen0FcuU/0EMLrdbJ7zOnW6ITZLrZMIarMUVmdKtsGvZna8vxKYaexICWPfZ8qwf9fzNq+UEIZrnSaApt6RA==}
     dev: false
 
   /whatwg-url/5.0.0:

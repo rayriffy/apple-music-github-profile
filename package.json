@@ -33,6 +33,7 @@
     "lodash": "^4.17.21",
     "nanoid": "^4.0.0",
     "next": "^12.3.0",
+    "next-axiom": "^0.14.0",
     "next-plugin-preact": "^3.0.7",
     "preact": "^10.11.0",
     "preact-render-to-string": "^5.2.4",

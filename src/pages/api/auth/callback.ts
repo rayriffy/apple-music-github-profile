@@ -29,7 +29,7 @@ const api: NextApiHandler = async (req, res) => {
   const clientSecret = appleSignin.getClientSecret({
     clientID: 'com.rayriffy.apple-music.auth',
     teamID: process.env.APPLE_TEAM_ID,
-    privateKey: process.env.APPLE_PRIVATE_KEY,
+    privateKey: process.env.APPLE_PRIVATE_KEY.replaceAll(/\\n/g, "\n"),
     keyIdentifier: process.env.APPLE_KEY_ID,
   })
   
@@ -38,6 +38,13 @@ const api: NextApiHandler = async (req, res) => {
       clientID: 'com.rayriffy.apple-music.auth',
       redirectUri: 'https://apple-music.rayriffy.com/api/auth/callback',
       clientSecret: clientSecret
+    })
+
+
+    return res.send({
+      body: req.body ?? {},
+      query: req.query ?? {},
+      appleUser,
     })
   } catch (e) {}
   return res.send({

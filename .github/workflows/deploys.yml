@@ -41,7 +41,7 @@ jobs:
           name: runtime
           image: ghcr.io/rayriffy/apple-music-github-profile-runtime
           minReplicas: 1
-          maxReplicas: 2
+          maxReplicas: 5
         env:
           DEPLOYS_AUTH_USER: ${{ secrets.DEPLOYS_AUTH_USER }}
           DEPLOYS_AUTH_PASS: ${{ secrets.DEPLOYS_AUTH_PASS }}

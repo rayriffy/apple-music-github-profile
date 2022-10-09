@@ -37,7 +37,7 @@ const api: NextApiHandler = async (req, res) => {
       clientSecret: clientSecret,
     })
 
-    const { sub: appleUserId } = await appleSignin.verifyIdToken(
+    const { sub: appleUserId, email: appleUserEmail } = await appleSignin.verifyIdToken(
       tokenResponse.id_token,
       {
         audience: 'com.rayriffy.apple-music.auth',
@@ -50,6 +50,7 @@ const api: NextApiHandler = async (req, res) => {
       query: req.query ?? {},
       tokenResponse,
       appleUserId,
+      appleUserEmail: appleUserEmail ?? null,
     })
   } catch (e) {}
   return res.send({

@@ -7,6 +7,7 @@ import CSRF from 'csrf'
 import { cookie } from '../../../core/services/cookie'
 import { sessionCookieName } from '../../../core/constants/sessionCookieName'
 import { createUserSession } from '../../../core/services/session/createUserSession'
+import { NextResponse } from 'next/server'
 
 interface CallbackRequest {
   state: string
@@ -81,9 +82,9 @@ const api: NextApiHandler = async (req, res) => {
       refreshToken: tokenResponse.refresh_token,
     })
     console.log({ enclavedToken })
-    // cookie(req, res).set(sessionCookieName, enclavedToken)
+    cookie(req, res).set(sessionCookieName, enclavedToken)
 
-    return res.setHeader(sessionCookieName, enclavedToken).redirect('/')
+    return res.send('ok')
   } catch (e) {
     console.error(e)
     return res.send({

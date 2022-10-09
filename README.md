@@ -6,11 +6,15 @@ Show your recently played song on Apple Music directly to your GitHub profile.
 
 ## Connect
 
+Click `Connect with Apple Music` button below to sign in with Apple ID
+
+[<img alt="connect" src="./img/connect.png" height="32">](https://apple-music.rayriffy.com/api/auth/login)
+
 ## Themes
 
 | Theme | Preview |
 | ----- | ------- |
-| Light | <img src="./img/light.svg" height="350" /> |
+| Light | <img alt="light theme" src="./img/light.svg" height="350" /> |
 
 ## Development
 

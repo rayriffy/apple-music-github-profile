@@ -1,8 +1,16 @@
 import jwt from 'jsonwebtoken'
 
-const { APPLE_PRIVATE_KEY, APPLE_KEY_ID, APPLE_TEAM_ID } = process.env
+const { RIFFY_DEBUG, APPLE_PRIVATE_KEY, APPLE_KEY_ID, APPLE_TEAM_ID } = process.env
 
 export const getMusicKitDeveloperToken = (keyDuration = 60 * 60) => {
+  if (RIFFY_DEBUG === 'true') {
+    console.log({
+      APPLE_PRIVATE_KEY,
+      APPLE_KEY_ID,
+      APPLE_TEAM_ID,
+    })
+  }
+
   const token = jwt.sign({},
     APPLE_PRIVATE_KEY,
     {

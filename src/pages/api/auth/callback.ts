@@ -80,16 +80,10 @@ const api: NextApiHandler = async (req, res) => {
       accessToken: tokenResponse.access_token,
       refreshToken: tokenResponse.refresh_token,
     })
-    cookie(req, res).set(sessionCookieName, enclavedToken)
+    console.log({ enclavedToken })
+    // cookie(req, res).set(sessionCookieName, enclavedToken)
 
-    return res.redirect('/')
-    // return res.send({
-    //   body: req.body ?? {},
-    //   query: req.query ?? {},
-    //   tokenResponse,
-    //   appleUserId,
-    //   appleUserEmail: appleUserEmail ?? null,
-    // })
+    return res.setHeader(sessionCookieName, enclavedToken).redirect('/')
   } catch (e) {
     console.error(e)
     return res.send({

@@ -3,11 +3,13 @@
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["referentialIntegrity"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "mysql"
+  url = env("DATABASE_URL")
+  referentialIntegrity = "prisma"
 }
 
 model User {
@@ -18,4 +20,6 @@ model User {
   appleMusicToken   String?
   createdAt         DateTime @default(now())
   updatedAt         DateTime @default(now())
+
+  @@index([uid])
 }

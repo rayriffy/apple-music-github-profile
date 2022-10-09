@@ -2,9 +2,14 @@ import { memo, useState } from 'react'
 
 import Script from 'next/script'
 
-import { AppleMusicIcon } from '../../modules/music/components/appleMusicIcon'
+import { AppleMusicAuthorizeButton } from './AppleMusicAuthorizeButton'
 
-export const ConnectAppleMusic = memo(() => {
+interface Props {
+  disabled: boolean
+  onSuccess?(): void
+}
+
+export const ConnectAppleMusic = memo<Props>(props => {
   const [musicKitLoadingState, setMusicKitLoadingState] = useState<
     'init' | 'fail' | 'done'
   >('init')
@@ -27,9 +32,7 @@ export const ConnectAppleMusic = memo(() => {
             Failed to load MusicKit
           </button>
         ) : (
-          <button className="inline-flex items-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-black shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2">
-            Connect <AppleMusicIcon className="h-3.5 ml-1.5 text-[#fc3c44]" />
-          </button>
+          <AppleMusicAuthorizeButton {...props} />
         )}
       </div>
       <Script

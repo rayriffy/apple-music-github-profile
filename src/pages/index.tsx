@@ -1,10 +1,9 @@
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 
 import type { GetServerSideProps, NextPage } from 'next'
 
-import { FaApple } from 'react-icons/fa'
-
 import { ConnectAppleMusic } from '../core/components/ConnectAppleMusic'
+import { SignInWithApple } from '../core/components/SignInWithApple'
 
 interface Props {
   authenticated: boolean
@@ -13,6 +12,10 @@ interface Props {
 }
 
 const Page: NextPage<Props> = props => {
+  const { authenticated, connected, uid } = props
+
+  const [step, setStep] = useState<number>(!authenticated ? 1 : !connected ? 2 : 3)
+
   return (
     <Fragment>
       <section className="space-y-4">
@@ -41,19 +44,15 @@ const Page: NextPage<Props> = props => {
         <section className="px-5 py-4 bg-gray-50 rounded-lg border shadow-lg">
           <h1 className="font-bold text-lg">Step 1</h1>
           <p className="text-gray-800 text-sm">Sign in with Apple ID</p>
-          <div className="flex justify-center mt-2">
-            <a
-              href="/api/auth/login"
-              className="inline-flex items-center rounded-md border border-transparent bg-black px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
-            >
-              <FaApple className="w-4 h-4 mr-1" /> Sign in with Apple
-            </a>
-          </div>
+          <SignInWithApple authenticated={authenticated} />
         </section>
         <section className="px-5 py-4 bg-gray-50 rounded-lg border shadow-lg">
           <h1 className="font-bold text-lg">Step 2</h1>
           <p className="text-gray-800 text-sm">Connect with Apple Music</p>
-          <ConnectAppleMusic />
+          <ConnectAppleMusic
+            disabled={!authenticated}
+            onSuccess={() => setStep(3)}
+          />
         </section>
         <section className="px-5 py-4 bg-gray-50 rounded-lg border shadow-lg col-span-2">
           <h1 className="font-bold text-lg">Step 3</h1>
@@ -61,7 +60,16 @@ const Page: NextPage<Props> = props => {
             Paste following Markdown content into your GitHub profile
           </p>
           <div className="flex mt-4 mb-2">
-            <div className="flex-shrink-0 aspect-[345/534] bg-white rounded-xl w-1/3 shadow-lg"></div>
+            {step !== 3 ? (
+              <div className="flex-shrink-0 aspect-[345/534] bg-white rounded-xl w-1/3 shadow-lg"></div>
+            ) : (
+              <Fragment>
+                <div className="flex-shrink-0 aspect-[345/534] bg-white rounded-xl w-1/3 shadow-lg"></div>
+                <div className="rounded-xl w-full break-all pl-4">https://apple-music.rayriffy.com/theme/light.svg?{new URLSearchParams({
+                  uid: uid,
+                }).toString()}</div>
+              </Fragment>
+            )}
           </div>
         </section>
       </div>
@@ -78,8 +86,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ req, res }
 
   let userSession = await getUserSession(req)
     .catch(() => null)
-
-  console.log({ userSession, headers: req.headers })
 
   if (userSession === null) {
     cookie(req, res).remove(sessionCookieName)
@@ -107,7 +113,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ req, res }
         props: {
           authenticated: true,
           connected: isMusicTokenExist,
-          uid: isMusicTokenExist ? userSession.id : undefined,
+          uid: userSession.id,
         }
       }
     } catch (e) {
@@ -117,6 +123,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ req, res }
         props: {
           authenticated: true,
           connected: false,
+          uid: userSession.id,
         }
       }
     }

@@ -7,7 +7,6 @@ import CSRF from 'csrf'
 import { cookie } from '../../../core/services/cookie'
 import { sessionCookieName } from '../../../core/constants/sessionCookieName'
 import { createUserSession } from '../../../core/services/session/createUserSession'
-import { NextResponse } from 'next/server'
 
 interface CallbackRequest {
   state: string
@@ -81,7 +80,6 @@ const api: NextApiHandler = async (req, res) => {
       accessToken: tokenResponse.access_token,
       refreshToken: tokenResponse.refresh_token,
     })
-    console.log({ enclavedToken })
     cookie(req, res).set(sessionCookieName, enclavedToken)
 
     return res.send(`
@@ -93,6 +91,11 @@ const api: NextApiHandler = async (req, res) => {
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <meta http-equiv="Refresh" content="1; url=https://apple-music.rayriffy.com/" />
         <title>Authenticated</title>
+        <style>
+          p {
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+          }
+        </style>
       </head>
       <body>
         <p>Authenticated! Redirecting...</p>

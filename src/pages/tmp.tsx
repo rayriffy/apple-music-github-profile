@@ -101,9 +101,6 @@ const Page: NextPage<Props> = props => {
         src="https://js-cdn.music.apple.com/musickit/v3/musickit.js"
         async
         onLoad={async () => {
-          console.log('loaded music kit')
-          console.log({ MusicKit, developerToken })
-
           try {
             await MusicKit.configure({
               developerToken: developerToken,

@@ -14,7 +14,5 @@ export const set = (res: PossibleResponses, cookieName: string, cookieValue: str
     sameSite: 'lax',
   })
 
-  console.log({ cookie })
-
   return res.setHeader('Set-Cookie', cookie)
 }

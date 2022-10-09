@@ -11,12 +11,8 @@ module.exports = withAxiom(
       async rewrites() {
         return [
           {
-            source: '/theme/sample.svg',
-            destination: '/api/svg?username=rayriffy',
-          },
-          {
-            source: '/theme/default.svg:path*',
-            destination: '/api/svg:path*',
+            source: '/theme/:theme.svg',
+            destination: '/api/svg',
           },
         ]
       },

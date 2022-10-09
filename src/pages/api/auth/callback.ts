@@ -84,7 +84,21 @@ const api: NextApiHandler = async (req, res) => {
     console.log({ enclavedToken })
     cookie(req, res).set(sessionCookieName, enclavedToken)
 
-    return res.send('ok')
+    return res.send(`
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta http-equiv="Refresh" content="1; url=https://apple-music.rayriffy.com/" />
+        <title>Authenticated</title>
+      </head>
+      <body>
+        <p>Authenticated! Redirecting...</p>
+      </body>
+    </html>
+    `)
   } catch (e) {
     console.error(e)
     return res.send({

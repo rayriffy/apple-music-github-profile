@@ -86,6 +86,8 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ req, res }
 
   let userSession = await getUserSession(req)
 
+  console.log({ userSession, headers: req.headers })
+
   if (userSession === null) {
     cookie(req, res).remove(sessionCookieName)
     return {

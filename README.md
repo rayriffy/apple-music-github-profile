@@ -10,7 +10,7 @@ Show your recently played song on Apple Music directly to your GitHub profile.
 
 | Theme | Preview |
 | ----- | ------- |
-| Light | <img src="https://apple-music.rayriffy.com/theme/sample.svg" height="350" /> |
+| Light | <img src="./img/light.svg" height="350" /> |
 
 ## Development
 

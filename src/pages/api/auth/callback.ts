@@ -1,4 +1,4 @@
-import type { NextApiHandler } from "next"
+import type { NextApiHandler } from 'next'
 
 import appleSignin from 'apple-signin-auth'
 import CSRF from 'csrf'
@@ -10,10 +10,7 @@ interface CallbackRequest {
 
 const api: NextApiHandler = async (req, res) => {
   // recieve values
-  const {
-    state = "",
-    code = "",
-  } = req.body as CallbackRequest
+  const { state = '', code = '' } = req.body as CallbackRequest
 
   // verify csrf token
   const csrfInstance = new CSRF()
@@ -21,7 +18,7 @@ const api: NextApiHandler = async (req, res) => {
 
   if (!isCSRFVerified) {
     return res.status(400).send({
-      message: 'request has been tampered'
+      message: 'request has been tampered',
     })
   }
 
@@ -29,22 +26,30 @@ const api: NextApiHandler = async (req, res) => {
   const clientSecret = appleSignin.getClientSecret({
     clientID: 'com.rayriffy.apple-music.auth',
     teamID: process.env.APPLE_TEAM_ID,
-    privateKey: process.env.APPLE_PRIVATE_KEY.replaceAll(/\\n/g, "\n"),
+    privateKey: process.env.APPLE_PRIVATE_KEY.replaceAll(/\\n/g, '\n'),
     keyIdentifier: process.env.APPLE_KEY_ID,
   })
-  
+
   try {
-    const appleUser = await appleSignin.getAuthorizationToken(code, {
+    const tokenResponse = await appleSignin.getAuthorizationToken(code, {
       clientID: 'com.rayriffy.apple-music.auth',
       redirectUri: 'https://apple-music.rayriffy.com/api/auth/callback',
-      clientSecret: clientSecret
+      clientSecret: clientSecret,
     })
 
+    const { sub: appleUserId } = await appleSignin.verifyIdToken(
+      tokenResponse.id_token,
+      {
+        audience: 'com.rayriffy.apple-music.auth',
+        ignoreExpiration: true,
+      }
+    )
 
     return res.send({
       body: req.body ?? {},
       query: req.query ?? {},
-      appleUser,
+      tokenResponse,
+      appleUserId,
     })
   } catch (e) {}
   return res.send({

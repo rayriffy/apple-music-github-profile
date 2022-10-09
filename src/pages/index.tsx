@@ -39,7 +39,7 @@ const Page: NextPage<Props> = props => {
             This web application does not finished yet...literally you won't
             going to be able to use this app until this red dialog is gone
           </div>
-          <div className="bg-red-500 col-span-1 font-bold text-sm text-white p-4 rounded-lg">
+          <div className="bg-red-500 col-span-1 font-bold text-sm text-white p-4 rounded-lg break-all">
             {JSON.stringify(props)}
           </div>
         </div>

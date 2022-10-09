@@ -22,7 +22,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build Docker image
-        run: docker build -t $APP_NAME .
+        run: DOCKER_BUILDKIT=1 docker build -t $APP_NAME .
 
       - name: Tag Docker image
         run: docker tag $APP_NAME $IMAGE_NAME

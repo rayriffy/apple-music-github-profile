@@ -2,11 +2,49 @@
 
 ![cover](./img/cover.jpg)
 
-Show your recently plated song on Apple Music directly to your GitHub profile.
+Show your recently played song on Apple Music directly to your GitHub profile.
 
 ## Connect
 
 ## Themes
+
+| Theme | Preview |
+| ----- | ------- |
+| Light | <img src="https://apple-music.rayriffy.com/theme/sample.svg" height="300" /> |
+
+## Development
+
+You're going to have Apple Developer membership in order to gain access to Apple Music API. You're going to create following...
+
+1. **App ID**: with *"Sign In with Apple"* capability enabled
+2. **Service ID**: with *"Sign In with Apple"* enabled and configured
+3. **Media ID**: with *"MusicKit"* enabled
+4. **Key**: with *"Sign in with Apple"* and *"Media Services"* enabled and configured
+
+After key downloaded, copy `.env.exmaple` into `.env` and change variable values appropriately.
+
+- `APPLE_KEY_ID`: ID of the downloaded key
+- `APPLE_PRIVATE_KEY`: Private key content of the downloaded key
+- `APPLE_TEAM_ID`: Team ID of your Apple Developer membership
+- `IRON_SECRET`: Random salt nessesary for encrypting authentication token
+- `DATABASE_URL`: (Optional) Connection URLs of Postgres database. Optional if you're developing locally with provided `docker-compose.yml`
+
+Then, get yourself [Docker] and spining up database server with following command.
+
+```
+# Create and start database
+docker-compose up -d postgres
+
+# Stop and remove database when finished
+docker-compose down
+```
+
+And now you're able to start development server.
+> **Be aware!!!** Apple Services might not played well with HTTP protocol but it's very unlikely.
+
+```
+pnpm dev
+```
 
 ## FAQ
 

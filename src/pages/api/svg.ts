@@ -96,7 +96,7 @@ const api: NextApiHandler = async (req, res) => {
   if (process.env.NODE_ENV === 'production') {
     res.setHeader(
       'Cache-Control',
-      `public, max-age=30, s-maxage=128, stale-while-revalidate=${
+      `public, max-age=120, s-maxage=128, stale-while-revalidate=${
         60 * 60 * 24 * 31
       }`
     )

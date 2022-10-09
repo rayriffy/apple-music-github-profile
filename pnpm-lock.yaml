@@ -8,9 +8,7 @@ specifiers:
   '@types/cookie': ^0.5.1
   '@types/ejs': ^3.1.1
   '@types/jsonwebtoken': ^8.5.9
-  '@types/lodash': ^4.14.185
   '@types/node': ^18.7.18
-  '@types/qrcode': ^1.5.0
   '@types/react': ^18.0.20
   '@types/react-dom': ^18.0.6
   '@types/sharp': ^0.31.0
@@ -22,11 +20,8 @@ specifiers:
   csrf: ^3.1.0
   ejs: ^3.1.8
   jsonwebtoken: ^8.5.1
-  lodash: ^4.17.21
   musickit-typescript: ^1.2.4
-  nanoid: ^4.0.0
   next: ^12.3.0
-  next-axiom: ^0.14.0
   next-plugin-preact: ^3.0.7
   postcss: ^8.4.16
   preact: ^10.11.0
@@ -51,10 +46,7 @@ dependencies:
   csrf: 3.1.0
   ejs: 3.1.8
   jsonwebtoken: 8.5.1
-  lodash: 4.17.21
-  nanoid: 4.0.0
   next: 12.3.0_dmmjpkrptnkrz2kzqikv5vt4mi
-  next-axiom: 0.14.0_next@12.3.0
   next-plugin-preact: 3.0.7_tmlbra522yq6sccdrgzumgual4
   preact: 10.11.0
   preact-render-to-string: 5.2.4_preact@10.11.0
@@ -70,9 +62,7 @@ devDependencies:
   '@types/cookie': 0.5.1
   '@types/ejs': 3.1.1
   '@types/jsonwebtoken': 8.5.9
-  '@types/lodash': 4.14.185
   '@types/node': 18.7.18
-  '@types/qrcode': 1.5.0
   '@types/react': 18.0.20
   '@types/react-dom': 18.0.6
   '@types/sharp': 0.31.0
@@ -400,22 +390,12 @@ packages:
       '@types/node': 18.7.18
     dev: true
 
-  /@types/lodash/4.14.185:
-    resolution: {integrity: sha512-evMDG1bC4rgQg4ku9tKpuMh5iBNEwNa3tf9zRHdP1qlv+1WUg44xat4IxCE14gIpZRGUUWAx2VhItCZc25NfMA==}
-    dev: true
-
   /@types/node/18.7.18:
     resolution: {integrity: sha512-m+6nTEOadJZuTPkKR/SYK3A2d7FZrgElol9UP1Kae90VVU4a6mxnPuLiIW1m4Cq4gZ/nWb9GrdVXJCoCazDAbg==}
     dev: true
 
   /@types/prop-types/15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
-    dev: true
-
-  /@types/qrcode/1.5.0:
-    resolution: {integrity: sha512-x5ilHXRxUPIMfjtM+1vf/GPTRWZ81nqscursm5gMznJeK9M0YnZ1c3bEvRLQ0zSSgedLx1J6MGL231ObQGGhaA==}
-    dependencies:
-      '@types/node': 18.7.18
     dev: true
 
   /@types/react-dom/18.0.6:
@@ -1167,24 +1147,8 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
 
-  /nanoid/4.0.0:
-    resolution: {integrity: sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==}
-    engines: {node: ^14 || ^16 || >=18}
-    hasBin: true
-    dev: false
-
   /napi-build-utils/1.0.2:
     resolution: {integrity: sha512-ONmRUqK7zj7DWX0D9ADe03wbwOBZxNAfF20PlGfCWQcD3+/MakShIHrMqx9YwPTfxDdF1zLeL+RGZiR9kGMLdg==}
-    dev: false
-
-  /next-axiom/0.14.0_next@12.3.0:
-    resolution: {integrity: sha512-LLbiDcL79274HqaKTSipZo6B4SCLh++11BpVfg+cNTZoLb8VH1g7g14xgFBhKeDN+DaiDSg8Of7ZPqaYEcIUXQ==}
-    engines: {node: '>=15'}
-    peerDependencies:
-      next: ^12.1.4
-    dependencies:
-      next: 12.3.0_dmmjpkrptnkrz2kzqikv5vt4mi
-      whatwg-fetch: 3.6.2
     dev: false
 
   /next-plugin-preact/3.0.7_tmlbra522yq6sccdrgzumgual4:
@@ -1870,10 +1834,6 @@ packages:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
-    dev: false
-
-  /whatwg-fetch/3.6.2:
-    resolution: {integrity: sha512-bJlen0FcuU/0EMLrdbJ7zOnW6ITZLrZMIarMUVmdKtsGvZna8vxKYaexICWPfZ8qwf9fzNq+UEIZrnSaApt6RA==}
     dev: false
 
   /whatwg-url/5.0.0:

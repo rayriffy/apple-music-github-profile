@@ -4,7 +4,7 @@ import { getMusicKitDeveloperToken } from "../../core/services/getMusicKitDevelo
 const api: NextApiHandler = (req, res) => {
   const token = getMusicKitDeveloperToken()
 
-  res.setHeader('Cache-Control', `public, maxage=${60 * 59}`) // 1 hour
+  res.setHeader('Cache-Control', `public, max-age=${60 * 59}, s-maxage=${60 * 59}`) // 1 hour
   return res.send({
     message: 'ok',
     data: token

@@ -1,8 +1,7 @@
 {
   "name": "apple-music-github-profile",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Show your recently played song on Apple Music directly to your GitHub profile.", 
   "scripts": {
     "dev": "next",
     "build": "prisma generate && next build",
@@ -17,8 +16,8 @@
     "url": "git+https://github.com/rayriffy/apple-music-github-profile.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Phumrapee Limpianchop <contact@rayriffy.com>",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/rayriffy/apple-music-github-profile/issues"
   },
@@ -32,10 +31,7 @@
     "csrf": "^3.1.0",
     "ejs": "^3.1.8",
     "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.21",
-    "nanoid": "^4.0.0",
     "next": "^12.3.0",
-    "next-axiom": "^0.14.0",
     "next-plugin-preact": "^3.0.7",
     "preact": "^10.11.0",
     "preact-render-to-string": "^5.2.4",
@@ -51,9 +47,7 @@
     "@types/cookie": "^0.5.1",
     "@types/ejs": "^3.1.1",
     "@types/jsonwebtoken": "^8.5.9",
-    "@types/lodash": "^4.14.185",
     "@types/node": "^18.7.18",
-    "@types/qrcode": "^1.5.0",
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
     "@types/sharp": "^0.31.0",

@@ -48,8 +48,8 @@ export const ConnectAppleMusic = memo<Props>(props => {
             await MusicKit.configure({
               developerToken: data,
               app: {
-                name: 'GitHub Now Playing',
-                build: '0.0.1',
+                name: 'Apple Music GitHub Profile',
+                build: '1.0.0',
               },
             })
 

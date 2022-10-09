@@ -4,7 +4,7 @@ CREATE TABLE `User` (
     `uid` VARCHAR(191) NOT NULL,
     `email` VARCHAR(191) NULL,
     `appleRefreshToken` VARCHAR(191) NOT NULL,
-    `appleMusicToken` VARCHAR(191) NULL,
+    `appleMusicToken` VARCHAR(300) NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 

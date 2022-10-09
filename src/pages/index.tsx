@@ -2,7 +2,6 @@ import type { GetServerSideProps, NextPage } from 'next'
 
 import { FaApple } from 'react-icons/fa'
 import { ConnectAppleMusic } from '../core/components/ConnectAppleMusic'
-import { AppleMusicIcon } from '../modules/music/components/appleMusicIcon'
 
 interface Props {
   developerToken: string
@@ -10,7 +9,7 @@ interface Props {
 
 const Page: NextPage<Props> = props => {
   return (
-    <main className="my-8 space-y-6 max-w-xl mx-auto">
+    <main className="my-8 space-y-6 max-w-xl mx-auto px-4">
       <section>
         <h1 className="font-semibold text-2xl text-gray-900">
           Apple Music GitHub profile

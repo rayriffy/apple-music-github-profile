@@ -1,10 +1,13 @@
 import type { GetServerSideProps, NextPage } from 'next'
 
 import { FaApple } from 'react-icons/fa'
+
 import { ConnectAppleMusic } from '../core/components/ConnectAppleMusic'
 
 interface Props {
-  developerToken: string
+  authenticated: boolean
+  connected: boolean
+  uid?: string
 }
 
 const Page: NextPage<Props> = props => {
@@ -33,7 +36,11 @@ const Page: NextPage<Props> = props => {
             passkeys registered, try to refresh token with an button below.
           </div>
           <div className="bg-red-500 col-span-2 font-bold text-lg text-white p-4 rounded-lg">
-            This web application does not finished yet...literally you won't going to be able to use this app until this red dialog is gone
+            This web application does not finished yet...literally you won't
+            going to be able to use this app until this red dialog is gone
+          </div>
+          <div className="bg-red-500 col-span-1 font-bold text-sm text-white p-4 rounded-lg">
+            {JSON.stringify(props)}
           </div>
         </div>
       </section>
@@ -54,11 +61,13 @@ const Page: NextPage<Props> = props => {
         <section className="px-5 py-4 bg-gray-50 rounded-lg border shadow-lg">
           <h1 className="font-bold text-lg">Step 2</h1>
           <p className="text-gray-800 text-sm">Connect with Apple Music</p>
-          <ConnectAppleMusic developerToken={props.developerToken} />
+          <ConnectAppleMusic />
         </section>
         <section className="px-5 py-4 bg-gray-50 rounded-lg border shadow-lg col-span-2">
           <h1 className="font-bold text-lg">Step 3</h1>
-          <p className="text-gray-800 text-sm">Paste following Markdown content into your GitHub profile</p>
+          <p className="text-gray-800 text-sm">
+            Paste following Markdown content into your GitHub profile
+          </p>
           <div className="flex mt-4 mb-2">
             <div className="flex-shrink-0 aspect-[345/534] bg-white rounded-xl w-1/3 shadow-lg"></div>
           </div>
@@ -68,20 +77,54 @@ const Page: NextPage<Props> = props => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async ({
-  res,
-}) => {
-  const { getMusicKitDeveloperToken } = await import(
-    '../core/services/getMusicKitDeveloperToken'
-  )
+export const getServerSideProps: GetServerSideProps<Props> = async ({ req, res }) => {
+  const { PrismaClient } = await import('@prisma/client')
 
-  const token = getMusicKitDeveloperToken()
+  const { cookie } = await import('../core/services/cookie')
+  const { getUserSession } = await import('../core/services/session/getUserSession')
+  const { sessionCookieName } = await import('../core/constants/sessionCookieName')
 
-  res.setHeader('Cache-Control', `public, maxage=${60 * 59}`) // 1 hour
-  return {
-    props: {
-      developerToken: token,
-    },
+  let userSession = await getUserSession(req)
+
+  if (userSession === null) {
+    cookie(req, res).remove(sessionCookieName)
+    return {
+      props: {
+        authenticated: false,
+        connected: false,
+      }
+    }
+  } else {
+    const prisma = new PrismaClient()
+
+    try {
+      const targetUser = await prisma.user.findUnique({
+        where: {
+          uid: userSession.id
+        },
+        select: {
+          appleMusicToken: true
+        }
+      })
+      const isMusicTokenExist = typeof targetUser?.appleMusicToken === 'string'
+
+      return {
+        props: {
+          authenticated: true,
+          connected: isMusicTokenExist,
+          uid: isMusicTokenExist ? userSession.id : undefined,
+        }
+      }
+    } catch (e) {
+      console.error(e)
+      await prisma.$disconnect()
+      return {
+        props: {
+          authenticated: true,
+          connected: false,
+        }
+      }
+    }
   }
 }
 

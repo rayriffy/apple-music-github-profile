@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@hapi/iron': ^7.0.0
   '@next/bundle-analyzer': ^12.3.1
   '@prisma/client': ^4.3.1
   '@tailwindcss/forms': ^0.5.3
@@ -16,6 +17,7 @@ specifiers:
   apple-signin-auth: ^1.7.4
   autoprefixer: ^10.4.11
   concurrently: ^7.4.0
+  cookie: ^0.5.0
   csrf: ^3.1.0
   ejs: ^3.1.8
   jsonwebtoken: ^8.5.1
@@ -40,9 +42,11 @@ specifiers:
   typescript: ^4.8.3
 
 dependencies:
+  '@hapi/iron': 7.0.0
   '@next/bundle-analyzer': 12.3.1
   '@prisma/client': 4.3.1_prisma@4.3.1
   apple-signin-auth: 1.7.4
+  cookie: 0.5.0
   csrf: 3.1.0
   ejs: 3.1.8
   jsonwebtoken: 8.5.1
@@ -81,6 +85,43 @@ devDependencies:
   typescript: 4.8.3
 
 packages:
+
+  /@hapi/b64/6.0.0:
+    resolution: {integrity: sha512-Es6o4BtzvMmNF28KJGuwUzUtMjF6ToZ1hQt3UOjaXc6TNkRefel+NyQSjc9b5q3Re7xwv23r0xK3Vo3yreaJHQ==}
+    dependencies:
+      '@hapi/hoek': 10.0.1
+    dev: false
+
+  /@hapi/boom/10.0.0:
+    resolution: {integrity: sha512-1YVs9tLHhypBqqinKQRqh7FUERIolarQApO37OWkzD+z6y6USi871Sv746zBPKcIOBuI6g6y4FrwX87mmJ90Gg==}
+    dependencies:
+      '@hapi/hoek': 10.0.1
+    dev: false
+
+  /@hapi/bourne/3.0.0:
+    resolution: {integrity: sha512-Waj1cwPXJDucOib4a3bAISsKJVb15MKi9IvmTI/7ssVEm6sywXGjVJDhl6/umt1pK1ZS7PacXU3A1PmFKHEZ2w==}
+    dev: false
+
+  /@hapi/cryptiles/6.0.0:
+    resolution: {integrity: sha512-CUypQJI2F3HaKZjwlky3KyLu7p0O4WJXNJj+2AZ0czqwkwQIz8j+btOkzA3OMar8WTntnCrDx0f92PzxEK+JlA==}
+    engines: {node: '>=14.0.0'}
+    dependencies:
+      '@hapi/boom': 10.0.0
+    dev: false
+
+  /@hapi/hoek/10.0.1:
+    resolution: {integrity: sha512-CvlW7jmOhWzuqOqiJQ3rQVLMcREh0eel4IBnxDx2FAcK8g7qoJRQK4L1CPBASoCY6y8e6zuCy3f2g+HWdkzcMw==}
+    dev: false
+
+  /@hapi/iron/7.0.0:
+    resolution: {integrity: sha512-NNXJP5fpeiTCPj/4OJG2PWBjWC0/V5D8YggS9RZeuBbfUUuTYE6TbdGqLUsCzIpPI54I8W5dhwEGbRv1CnWQtw==}
+    dependencies:
+      '@hapi/b64': 6.0.0
+      '@hapi/boom': 10.0.0
+      '@hapi/bourne': 3.0.0
+      '@hapi/cryptiles': 6.0.0
+      '@hapi/hoek': 10.0.1
+    dev: false
 
   /@next/bundle-analyzer/12.3.1:
     resolution: {integrity: sha512-2f/eei0YqZZBMTs4g1+HbgHyAFH5MbI/w9wLXmE8ly9SFze2D40sRH46JcC//EFVM/TIynVBh5sxn9CVO/vtxg==}
@@ -652,6 +693,11 @@ packages:
       tree-kill: 1.2.2
       yargs: 17.5.1
     dev: true
+
+  /cookie/0.5.0:
+    resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
+    engines: {node: '>= 0.6'}
+    dev: false
 
   /csrf/3.1.0:
     resolution: {integrity: sha512-uTqEnCvWRk042asU6JtapDTcJeeailFy4ydOQS28bj1hcLnYRiqi8SsD2jS412AY1I/4qdOwWZun774iqywf9w==}

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "next",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "vercel-build": "concurrently \"prisma migrate deploy\" \"prisma generate && next build\"",
     "start": "next start",
     "prisma:generate": "prisma generate",
@@ -24,9 +24,11 @@
   },
   "homepage": "https://github.com/rayriffy/apple-music-github-profile#readme",
   "dependencies": {
+    "@hapi/iron": "^7.0.0",
     "@next/bundle-analyzer": "^12.3.1",
     "@prisma/client": "^4.3.1",
     "apple-signin-auth": "^1.7.4",
+    "cookie": "^0.5.0",
     "csrf": "^3.1.0",
     "ejs": "^3.1.8",
     "jsonwebtoken": "^8.5.1",

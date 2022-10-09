@@ -4,13 +4,7 @@ import Script from 'next/script'
 
 import { AppleMusicIcon } from '../../modules/music/components/appleMusicIcon'
 
-interface Props {
-  developerToken: string
-}
-
-export const ConnectAppleMusic = memo<Props>(props => {
-  const { developerToken } = props
-
+export const ConnectAppleMusic = memo(() => {
   const [musicKitLoadingState, setMusicKitLoadingState] = useState<
     'init' | 'fail' | 'done'
   >('init')
@@ -42,12 +36,14 @@ export const ConnectAppleMusic = memo<Props>(props => {
         src="https://js-cdn.music.apple.com/musickit/v3/musickit.js"
         async
         onLoad={async () => {
-          console.log('loaded music kit')
-          console.log({ MusicKit, developerToken })
-
           try {
+            const { data } = await fetch('/api/getMusicKitDeveloperToken', {
+              headers: {
+                Accepts: 'application/json'
+              }
+            }).then(o => o.json())
             await MusicKit.configure({
-              developerToken: developerToken,
+              developerToken: data,
               app: {
                 name: 'GitHub Now Playing',
                 build: '0.0.1',
@@ -56,7 +52,6 @@ export const ConnectAppleMusic = memo<Props>(props => {
 
             setMusicKitLoadingState('done')
           } catch (err) {
-            console.error('unable to configure musickit')
             setMusicKitLoadingState('fail')
           }
         }}

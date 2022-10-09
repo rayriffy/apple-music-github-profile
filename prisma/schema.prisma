@@ -13,6 +13,7 @@ datasource db {
 model User {
   id                BigInt   @id @default(autoincrement())
   uid               String   @unique
+  email             String?
   appleRefreshToken String
   appleMusicToken   String?
   createdAt         DateTime @default(now())

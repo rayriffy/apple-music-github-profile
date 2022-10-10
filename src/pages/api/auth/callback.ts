@@ -41,7 +41,7 @@ const api: NextApiHandler = async (req, res) => {
      */
     const tokenResponse = await appleSignin.getAuthorizationToken(code, {
       clientID: 'com.rayriffy.apple-music.auth',
-      redirectUri: 'https://apple-music.rayriffy.com/api/auth/callback',
+      redirectUri: 'https://apple-music-github-profile.rayriffy.com/api/auth/callback',
       clientSecret: clientSecret,
     })
     const { sub: appleUserId, email: appleUserEmail } = await appleSignin.verifyIdToken(
@@ -89,7 +89,7 @@ const api: NextApiHandler = async (req, res) => {
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <meta http-equiv="Refresh" content="1; url=https://apple-music.rayriffy.com/" />
+        <meta http-equiv="Refresh" content="1; url=https://apple-music-github-profile.rayriffy.com/" />
         <title>Authenticated</title>
         <style>
           p {

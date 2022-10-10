@@ -3,5 +3,5 @@ export const relyingParty = {
   id:
     process.env.NODE_ENV === 'development'
       ? 'localhost'
-      : 'apple-music.rayriffy.com',
+      : 'apple-music-github-profile.rayriffy.com',
 }

@@ -9,7 +9,7 @@ export const getRecentlyPlayedTrack = async (
       Accepts: 'application/json',
       Authorization: `Bearer ${developerToken}`,
       'Music-User-Token': userToken,
-      Referer: 'https://apple-music.rayriffy.com',
+      Referer: 'https://apple-music-github-profile.rayriffy.com',
     }
   }).then(async o => {
     if (o.status >= 400 && o.status < 600) {

@@ -9,7 +9,7 @@ export const CardPreview = memo<Props>(props => {
 
   const builtUrl = useMemo(
     () =>
-      `https://apple-music.rayriffy.com/theme/light.svg?${new URLSearchParams({
+      `https://apple-music-github-profile.rayriffy.com/theme/light.svg?${new URLSearchParams({
         uid: uid,
       }).toString()}`,
     [uid]

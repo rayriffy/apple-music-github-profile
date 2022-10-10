@@ -2,6 +2,11 @@ import type { MixedTypeSong } from '../@types/RecentPlayedTracksResponse'
 
 const targetImageSize = 400
 
+/**
+ * Download image and optimize if necessary
+ * @param artwork Artwork property of Apple Music API
+ * @returns base64 encoded image
+ */
 export const getAlbumCover = async (
   artwork: MixedTypeSong['attributes']['artwork']
 ): Promise<string | null> => {

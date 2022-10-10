@@ -2,8 +2,8 @@ import { Fragment, useState } from 'react'
 
 import type { GetServerSideProps, NextPage } from 'next'
 
-import { ConnectAppleMusic } from '../core/components/ConnectAppleMusic'
-import { SignInWithApple } from '../core/components/SignInWithApple'
+import { ConnectAppleMusic } from '../core/components/connectAppleMusic'
+import { SignInWithApple } from '../core/components/signInWithApple'
 import { CardPreview } from '../modules/music/components/cardPreview'
 
 interface Props {
@@ -72,7 +72,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ req, res }
   const { getUserSession } = await import('../core/services/session/getUserSession')
   const { sessionCookieName } = await import('../core/constants/sessionCookieName')
 
-  let userSession = await getUserSession(req)
+  const userSession = await getUserSession(req)
     .catch(() => null)
 
   if (userSession === null) {

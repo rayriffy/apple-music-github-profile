@@ -1,4 +1,6 @@
-import { Fragment, memo, useMemo } from 'react'
+import { Fragment, memo, useMemo, useState } from 'react'
+
+import { themes } from '../../../core/constants/themes'
 
 interface Props {
   uid: string
@@ -7,20 +9,21 @@ interface Props {
 export const CardPreview = memo<Props>(props => {
   const { uid } = props
 
+  const [selectedTheme, setSelectedTheme] = useState(themes[0].id)
   const builtUrl = useMemo(
     () =>
-      `https://apple-music-github-profile.rayriffy.com/theme/light.svg?${new URLSearchParams({
+      `https://apple-music-github-profile.rayriffy.com/theme/${selectedTheme}.svg?${new URLSearchParams({
         uid: uid,
       }).toString()}`,
-    [uid]
+    [uid, selectedTheme]
   )
 
   return (
     <Fragment>
       <div className="w-2/3 mx-auto mb-6 sm:mx-0 sm:mb-0 sm:w-2/5 flex-shrink-0">
         <img
-          className="rounded-xl shadow-lg overflow-hidden"
           loading="lazy"
+          className='border rounded-xl shadow-lg overflow-hidden'
           src={builtUrl}
           width={345}
           height={534}
@@ -36,11 +39,20 @@ export const CardPreview = memo<Props>(props => {
           </label>
           <select
             id="themeSelector"
+            defaultValue={selectedTheme}
+            onChange={e => {
+              setSelectedTheme(e.target.value)
+            }}
             className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
           >
-            <option value="light" selected>
-              Light
-            </option>
+            {themes.map(theme => (
+              <option
+                key={`themeSelector-option-${theme.id}`}
+                value={theme.id}
+              >
+                {theme.name}
+              </option>
+            ))}
           </select>
         </div>
 

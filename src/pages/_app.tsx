@@ -1,7 +1,8 @@
+import { Fragment } from 'react'
+
+import Head from 'next/head'
 import type { NextPage } from 'next'
 import type { AppProps } from 'next/app'
-import Head from 'next/head'
-import { Fragment } from 'react'
 
 import '../styles/tailwind.css'
 

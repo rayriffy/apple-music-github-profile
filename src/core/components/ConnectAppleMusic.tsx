@@ -2,7 +2,7 @@ import { memo, useState } from 'react'
 
 import Script from 'next/script'
 
-import { AppleMusicAuthorizeButton } from './AppleMusicAuthorizeButton'
+import { AppleMusicAuthorizeButton } from './appleMusicAuthorizeButton'
 
 interface Props {
   disabled: boolean

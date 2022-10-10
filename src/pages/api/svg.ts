@@ -1,13 +1,13 @@
 import fs from 'fs'
 import path from 'path'
 
+import { PrismaClient } from '@prisma/client'
 import type { NextApiHandler } from 'next'
 import type { OptimizedSvg } from 'svgo'
 
 import { getMusicKitDeveloperToken } from '../../core/services/getMusicKitDeveloperToken'
 import { getRecentlyPlayedTrack } from '../../modules/music/services/getRecentlyPlayedTrack'
 import { getAlbumCover } from '../../modules/music/services/getAlbumCover'
-import { PrismaClient } from '@prisma/client'
 
 interface UserQuery {
   theme?: string
@@ -78,7 +78,7 @@ const api: NextApiHandler = async (req, res) => {
   ])
 
   const { default: ejs } = await import('ejs')
-  const renderedFile = ejs.render(templateFile, {
+  const builtRenderedData = {
     title: track.attributes.name,
     artist: track.attributes.artistName ?? '',
     coverImageData,
@@ -89,7 +89,7 @@ const api: NextApiHandler = async (req, res) => {
         (track.attributes.durationInMillis * (part - 1)) / part
       ),
     },
-  })
+  }
 
   res.setHeader('Content-Type', 'image/svg+xml')
 
@@ -103,7 +103,7 @@ const api: NextApiHandler = async (req, res) => {
   }
 
   const { optimize } = await import('svgo')
-  res.send((optimize(renderedFile) as OptimizedSvg).data)
+  res.send((optimize(ejs.render(templateFile, builtRenderedData)) as OptimizedSvg).data)
 }
 
 export default api

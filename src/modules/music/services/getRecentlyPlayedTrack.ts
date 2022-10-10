@@ -1,9 +1,14 @@
-import type { RecentPlayedTracksResponse } from '../@types/RecentPlayedTracksResponse'
+import type { MixedTypeSong, RecentPlayedTracksResponse } from '../@types/RecentPlayedTracksResponse'
 
+/**
+ * Obtain user's recently played track
+ * @param developerToken Apple Music developer token (https://developer.apple.com/documentation/applemusicapi/generating_developer_tokens)
+ * @param userToken Authorized user token (https://developer.apple.com/documentation/applemusicapi/user_authentication_for_musickit)
+ */
 export const getRecentlyPlayedTrack = async (
   developerToken: string,
   userToken: string
-) => {
+): Promise<MixedTypeSong> => {
   const rawResponse: RecentPlayedTracksResponse = await fetch('https://api.music.apple.com/v1/me/recent/played/tracks', {
     headers: {
       Accepts: 'application/json',

@@ -1,6 +1,7 @@
-import { Fragment, memo, useMemo, useState } from 'react'
+import { Fragment, memo, useMemo } from 'react'
 
 import { themes } from '../../../core/constants/themes'
+import { useDebounceState } from '../../../core/services/debounce/useDebounceState'
 
 interface Props {
   uid: string
@@ -9,7 +10,7 @@ interface Props {
 export const CardPreview = memo<Props>(props => {
   const { uid } = props
 
-  const [selectedTheme, setSelectedTheme] = useState(themes[0].id)
+  const [selectedTheme, setSelectedTheme] = useDebounceState(themes[0].id, 500)
   const builtUrl = useMemo(
     () =>
       `https://apple-music-github-profile.rayriffy.com/theme/${selectedTheme}.svg?${new URLSearchParams({

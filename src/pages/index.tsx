@@ -2,8 +2,8 @@ import { Fragment, useState } from 'react'
 
 import type { GetServerSideProps, NextPage } from 'next'
 
-import { ConnectAppleMusic } from '../core/components/connectAppleMusic'
-import { SignInWithApple } from '../core/components/signInWithApple'
+import { ConnectAppleMusic } from '../core/components/connectAppleMusica'
+import { SignInWithApple } from '../core/components/signInWithApplea'
 import { CardPreview } from '../modules/music/components/cardPreview'
 
 interface Props {

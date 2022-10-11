@@ -10,7 +10,7 @@ interface Props {
 export const CardPreview = memo<Props>(props => {
   const { uid } = props
 
-  const [selectedTheme, setSelectedTheme] = useDebounceState(themes[0].id, 500)
+  const [, setSelectedTheme, selectedTheme] = useDebounceState(themes[0].id, 500)
   const builtUrl = useMemo(
     () =>
       `https://apple-music-github-profile.rayriffy.com/theme/${selectedTheme}.svg?${new URLSearchParams({

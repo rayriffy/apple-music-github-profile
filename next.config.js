@@ -14,6 +14,10 @@ module.exports = withBundleAnalyzer(
         },
       ]
     },
+    eslint: {
+      ignoreDuringBuilds: true,
+    },
+    swcMinify: true,
     output: 'standalone',
   })
 )

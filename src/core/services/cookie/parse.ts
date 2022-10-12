@@ -2,9 +2,7 @@ import { parse as parseCookie } from 'cookie'
 
 import type { PossibleRequests } from '.'
 
-export const parse = (
-  req: PossibleRequests
-) => {
+export const parse = (req: PossibleRequests) => {
   // For API Routes we don't need to parse the cookies.
   if (req.cookies) {
     return req.cookies

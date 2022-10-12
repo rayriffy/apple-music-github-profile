@@ -43,8 +43,8 @@ export const ConnectAppleMusic = memo<Props>(props => {
           try {
             const { data } = await fetch('/api/getMusicKitDeveloperToken', {
               headers: {
-                Accepts: 'application/json'
-              }
+                Accepts: 'application/json',
+              },
             }).then(o => o.json())
             await MusicKit.configure({
               developerToken: data,

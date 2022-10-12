@@ -1,5 +1,3 @@
-
-
 import Iron from '@hapi/iron'
 
 import { cookie, PossibleRequests } from '../cookie'

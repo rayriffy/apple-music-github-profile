@@ -10,12 +10,17 @@ interface Props {
 export const CardPreview = memo<Props>(props => {
   const { uid } = props
 
-  const [, setSelectedTheme, selectedTheme] = useDebounceState(themes[0].id, 500)
+  const [, setSelectedTheme, selectedTheme] = useDebounceState(
+    themes[0].id,
+    500
+  )
   const builtUrl = useMemo(
     () =>
-      `https://apple-music-github-profile.rayriffy.com/theme/${selectedTheme}.svg?${new URLSearchParams({
-        uid: uid,
-      }).toString()}`,
+      `https://apple-music-github-profile.rayriffy.com/theme/${selectedTheme}.svg?${new URLSearchParams(
+        {
+          uid: uid,
+        }
+      ).toString()}`,
     [uid, selectedTheme]
   )
 
@@ -24,7 +29,7 @@ export const CardPreview = memo<Props>(props => {
       <div className="w-2/3 mx-auto mb-6 sm:mx-0 sm:mb-0 sm:w-2/5 flex-shrink-0">
         <img
           loading="lazy"
-          className='border rounded-xl shadow-lg overflow-hidden'
+          className="border rounded-xl shadow-lg overflow-hidden"
           src={builtUrl}
           width={345}
           height={534}
@@ -47,10 +52,7 @@ export const CardPreview = memo<Props>(props => {
             className="mt-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
           >
             {themes.map(theme => (
-              <option
-                key={`themeSelector-option-${theme.id}`}
-                value={theme.id}
-              >
+              <option key={`themeSelector-option-${theme.id}`} value={theme.id}>
                 {theme.name}
               </option>
             ))}
@@ -58,7 +60,10 @@ export const CardPreview = memo<Props>(props => {
         </div>
 
         <div>
-          <label htmlFor="markdownContent" className="block text-sm font-medium text-gray-700">
+          <label
+            htmlFor="markdownContent"
+            className="block text-sm font-medium text-gray-700"
+          >
             Markdown content
           </label>
           <div className="mt-1">
@@ -68,7 +73,8 @@ export const CardPreview = memo<Props>(props => {
               id="comment"
               className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-xs font-mono"
             >
-              [![Apple Music GitHub profile]({builtUrl})](https://github.com/rayriffy/apple-music-github-profile)
+              [![Apple Music GitHub profile]({builtUrl}
+              )](https://github.com/rayriffy/apple-music-github-profile)
             </textarea>
           </div>
         </div>

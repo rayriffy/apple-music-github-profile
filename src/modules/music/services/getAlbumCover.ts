@@ -24,7 +24,7 @@ export const getAlbumCover = async (
               Number(artwork.width ?? 1)
           ).toString()
         )
-      
+
       // download image from apple cdn
       const rawAlbumCover = await fetch(albumCoverUrl).then(async o => {
         if (o.status >= 400 && o.status < 600) {

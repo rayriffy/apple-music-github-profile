@@ -42,16 +42,15 @@ const api: NextApiHandler = async (req, res) => {
      */
     const tokenResponse = await appleSignin.getAuthorizationToken(code, {
       clientID: 'com.rayriffy.apple-music.auth',
-      redirectUri: 'https://apple-music-github-profile.rayriffy.com/api/auth/callback',
+      redirectUri:
+        'https://apple-music-github-profile.rayriffy.com/api/auth/callback',
       clientSecret: clientSecret,
     })
-    const { sub: appleUserId, email: appleUserEmail } = await appleSignin.verifyIdToken(
-      tokenResponse.id_token,
-      {
+    const { sub: appleUserId, email: appleUserEmail } =
+      await appleSignin.verifyIdToken(tokenResponse.id_token, {
         audience: 'com.rayriffy.apple-music.auth',
         ignoreExpiration: true,
-      }
-    )
+      })
 
     /**
      * Insert user OAuth result to database
@@ -59,7 +58,7 @@ const api: NextApiHandler = async (req, res) => {
     const prisma = new PrismaClient()
     await prisma.user.upsert({
       where: {
-        uid: appleUserId
+        uid: appleUserId,
       },
       update: {
         appleRefreshToken: tokenResponse.refresh_token,
@@ -107,7 +106,7 @@ const api: NextApiHandler = async (req, res) => {
   } catch (e) {
     console.error(e)
     return res.send({
-      message: 'unable to verify authentication response from Apple'
+      message: 'unable to verify authentication response from Apple',
     })
   }
 }

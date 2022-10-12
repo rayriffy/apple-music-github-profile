@@ -37,7 +37,7 @@ const Page: NextPage<Props> = props => {
         </div>
       </section>
 
-      <div className="grid sm:grid-cols-2 gap-4">
+      <div className="grid sm:grid-cols-2 gap-4 items-center">
         <section className="px-5 py-4 bg-gray-50 rounded-lg border shadow-lg">
           <h1 className="font-bold text-lg">Step 1</h1>
           <p className="text-gray-800 text-sm">Sign in with Apple ID</p>
@@ -57,6 +57,9 @@ const Page: NextPage<Props> = props => {
             onSuccess={() => setStep(3)}
             onError={e => setError(e)}
           />
+          {step === 3 && (
+            <p className="text-xs text-gray-500 leading-none mt-4">* Already connected before click connect button again if your card encounter an error.</p>
+          )}
         </section>
         <section className="px-5 py-4 bg-gray-50 rounded-lg border shadow-lg sm:col-span-2">
           <h1 className="font-bold text-lg">Step 3</h1>

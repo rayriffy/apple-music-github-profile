@@ -7,6 +7,7 @@ import CSRF from 'csrf'
 import { cookie } from '../../../core/services/cookie'
 import { sessionCookieName } from '../../../core/constants/sessionCookieName'
 import { createUserSession } from '../../../core/services/session/createUserSession'
+import { getClientAddress } from '../../../core/services/getClientAddress'
 
 interface CallbackRequest {
   state: string
@@ -52,8 +53,6 @@ const api: NextApiHandler = async (req, res) => {
       }
     )
 
-    console.log({ req: req.headers })
-
     /**
      * Insert user OAuth result to database
      */
@@ -65,6 +64,7 @@ const api: NextApiHandler = async (req, res) => {
       update: {
         appleRefreshToken: tokenResponse.refresh_token,
         updatedAt: new Date(),
+        clientAddress: getClientAddress(req.headers),
       },
       create: {
         uid: appleUserId,

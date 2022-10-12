@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import type { NextApiHandler } from 'next'
 
+import { getClientAddress } from '../../core/services/getClientAddress'
 import { getUserSession } from '../../core/services/session/getUserSession'
 
 const api: NextApiHandler = async (req, res) => {
@@ -46,6 +47,7 @@ const api: NextApiHandler = async (req, res) => {
       },
       data: {
         appleMusicToken: req.body.userToken,
+        clientAddress: getClientAddress(req.headers),
         updatedAt: new Date(),
       },
     })

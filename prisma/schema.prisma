@@ -17,9 +17,10 @@ model User {
   uid               String   @unique
   email             String?
   appleRefreshToken String
-  appleMusicToken   String?   @db.VarChar(300)
+  appleMusicToken   String?  @db.VarChar(300)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @default(now())
+  clientAddress     String?
 
   @@index([uid])
 }

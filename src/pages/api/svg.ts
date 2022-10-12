@@ -17,7 +17,11 @@ interface UserQuery {
 const api: NextApiHandler = async (req, res) => {
   const { theme, uid } = req.query as UserQuery
 
-  if (typeof theme !== 'string' || typeof uid !== 'string') {
+  const requiredParams = ['theme', 'uid']
+
+  if (Object.keys(req.query).some(key => !requiredParams.includes(key))) {
+    return res.status(400).send('params exceed')
+  } else if (typeof theme !== 'string' || typeof uid !== 'string') {
     return res.status(400).send('illegal query')
   }
 

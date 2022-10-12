@@ -7,6 +7,7 @@ import { AppleMusicAuthorizeButton } from './appleMusicAuthorizeButton'
 interface Props {
   disabled: boolean
   onSuccess?(): void
+  onError?(message: string): void
 }
 
 export const ConnectAppleMusic = memo<Props>(props => {

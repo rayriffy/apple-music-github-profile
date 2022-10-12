@@ -15,7 +15,10 @@ interface Props {
 const Page: NextPage<Props> = props => {
   const { authenticated, connected, uid } = props
 
-  const [step, setStep] = useState<number>(!authenticated ? 1 : !connected ? 2 : 3)
+  const [step, setStep] = useState<number>(
+    !authenticated ? 1 : !connected ? 2 : 3
+  )
+  const [error, setError] = useState<string | null>(null)
 
   return (
     <Fragment>
@@ -23,7 +26,8 @@ const Page: NextPage<Props> = props => {
         <h2 className="text-gray-900 font-semibold">How to use?</h2>
         <div className="grid sm:grid-cols-2 gap-6 text-sm">
           <div className="p-4 bg-gray-50 rounded-lg border shadow-lg">
-            You will authorize access to your Apple Music, then you will get a Markdown snippet to paste into your GitHub profile.
+            You will authorize access to your Apple Music, then you will get a
+            Markdown snippet to paste into your GitHub profile.
           </div>
           <div className="p-4 bg-gray-50 rounded-lg border shadow-lg">
             Image will be refreshed <b>every 5 minutes</b>. If you get an error
@@ -42,9 +46,16 @@ const Page: NextPage<Props> = props => {
         <section className="px-5 py-4 bg-gray-50 rounded-lg border shadow-lg">
           <h1 className="font-bold text-lg">Step 2</h1>
           <p className="text-gray-800 text-sm">Connect with Apple Music</p>
+          {error !== null && (
+            <div className="bg-red-100 text-red-800 text-sm p-1 rounded-lg my-2">
+              <h1 className="font-bold">Failed to authorize</h1>
+              <p>{error}</p>
+            </div>
+          )}
           <ConnectAppleMusic
             disabled={!authenticated}
             onSuccess={() => setStep(3)}
+            onError={e => setError(e)}
           />
         </section>
         <section className="px-5 py-4 bg-gray-50 rounded-lg border shadow-lg sm:col-span-2">
@@ -65,15 +76,21 @@ const Page: NextPage<Props> = props => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async ({ req, res }) => {
+export const getServerSideProps: GetServerSideProps<Props> = async ({
+  req,
+  res,
+}) => {
   const { PrismaClient } = await import('@prisma/client')
 
   const { cookie } = await import('../core/services/cookie')
-  const { getUserSession } = await import('../core/services/session/getUserSession')
-  const { sessionCookieName } = await import('../core/constants/sessionCookieName')
+  const { getUserSession } = await import(
+    '../core/services/session/getUserSession'
+  )
+  const { sessionCookieName } = await import(
+    '../core/constants/sessionCookieName'
+  )
 
-  const userSession = await getUserSession(req)
-    .catch(() => null)
+  const userSession = await getUserSession(req).catch(() => null)
 
   if (userSession === null) {
     cookie(req, res).remove(sessionCookieName)
@@ -81,7 +98,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ req, res }
       props: {
         authenticated: false,
         connected: false,
-      }
+      },
     }
   } else {
     const prisma = new PrismaClient()
@@ -89,20 +106,22 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ req, res }
     try {
       const targetUser = await prisma.user.findUnique({
         where: {
-          uid: userSession.id
+          uid: userSession.id,
         },
         select: {
-          appleMusicToken: true
-        }
+          appleMusicToken: true,
+        },
       })
-      const isMusicTokenExist = typeof targetUser?.appleMusicToken === 'string' && targetUser?.appleMusicToken !== ""
+      const isMusicTokenExist =
+        typeof targetUser?.appleMusicToken === 'string' &&
+        targetUser?.appleMusicToken !== ''
 
       return {
         props: {
           authenticated: true,
           connected: isMusicTokenExist,
           uid: userSession.id,
-        }
+        },
       }
     } catch (e) {
       console.error(e)
@@ -112,7 +131,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({ req, res }
           authenticated: true,
           connected: false,
           uid: userSession.id,
-        }
+        },
       }
     }
   }

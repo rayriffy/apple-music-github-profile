@@ -19,7 +19,7 @@ const api: NextApiHandler = async (req, res) => {
 
   // verify csrf token
   const csrfInstance = new CSRF()
-  const isCSRFVerified = csrfInstance.verify(process.env.IRON_SECRET, state)
+  const isCSRFVerified = csrfInstance.verify(process.env.CSRF_SECRET, state)
 
   if (!isCSRFVerified) {
     return res.status(400).send({

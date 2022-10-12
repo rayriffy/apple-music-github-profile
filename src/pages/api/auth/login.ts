@@ -6,7 +6,7 @@ import CSRF from 'csrf'
 const api: NextApiHandler = async (req, res) => {
   // create csrf token
   const csrfInstance = new CSRF()
-  const csrfToken = csrfInstance.create(process.env.IRON_SECRET)
+  const csrfToken = csrfInstance.create(process.env.CSRF_SECRET)
 
   // create apple url
   const authorizationUrl = appleSignin.getAuthorizationUrl({

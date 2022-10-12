@@ -52,6 +52,8 @@ const api: NextApiHandler = async (req, res) => {
       }
     )
 
+    console.log({ req: req.headers })
+
     /**
      * Insert user OAuth result to database
      */

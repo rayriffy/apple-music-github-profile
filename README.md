@@ -50,6 +50,10 @@ And now you're able to start development server.
 pnpm dev
 ```
 
+## Known Limitations
+
+1. Unable to show recently played song that brought directly from iTunes Store (API Limit)
+
 ## FAQ
 
 #### Why do I have to sign in with Apple ID first?

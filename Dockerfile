@@ -4,9 +4,11 @@ FROM node:16-alpine AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
+# Install pnpm
+RUN npm i -g pnpm
+
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-RUN npm i -g pnpm
 RUN pnpm -r i --frozen-lockfile
 
 # Rebuild the source code only when needed

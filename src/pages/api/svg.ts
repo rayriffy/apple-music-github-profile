@@ -108,7 +108,9 @@ const api: NextApiHandler = async (req, res) => {
   }
 
   const { optimize } = await import('svgo')
-  res.send((optimize(ejs.render(templateFile, builtRenderedData)) as OptimizedSvg).data)
+  res.send(
+    (optimize(ejs.render(templateFile, builtRenderedData)) as OptimizedSvg).data
+  )
 }
 
 export default api

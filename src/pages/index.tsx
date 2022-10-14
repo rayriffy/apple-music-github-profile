@@ -83,7 +83,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
   req,
   res,
 }) => {
-  const { PrismaClient } = await import('@prisma/client')
+  const { prisma } = await import('../context/prisma')
 
   const { cookie } = await import('../core/services/cookie')
   const { getUserSession } = await import(
@@ -104,8 +104,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
       },
     }
   } else {
-    const prisma = new PrismaClient()
-
     try {
       const targetUser = await prisma.user.findUnique({
         where: {
@@ -128,7 +126,6 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
       }
     } catch (e) {
       console.error(e)
-      await prisma.$disconnect()
       return {
         props: {
           authenticated: true,

@@ -1,6 +1,6 @@
-import { PrismaClient } from '@prisma/client'
 import type { NextApiHandler } from 'next'
 
+import { prisma } from '../../context/prisma'
 import { getClientAddress } from '../../core/services/getClientAddress'
 import { getUserSession } from '../../core/services/session/getUserSession'
 
@@ -16,8 +16,6 @@ const api: NextApiHandler = async (req, res) => {
     })
   }
 
-  const prisma = new PrismaClient()
-
   /**
    * Looking for a valid user
    */
@@ -31,7 +29,6 @@ const api: NextApiHandler = async (req, res) => {
   })
 
   if (!targetUser) {
-    await prisma.$disconnect()
     return res.status(400).send({
       message: 'illegal user',
     })
@@ -53,7 +50,6 @@ const api: NextApiHandler = async (req, res) => {
     })
   }
 
-  await prisma.$disconnect()
   return res.send({
     message: 'ok',
   })

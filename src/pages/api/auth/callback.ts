@@ -1,9 +1,9 @@
 import type { NextApiHandler } from 'next'
 
-import { PrismaClient } from '@prisma/client'
 import appleSignin from 'apple-signin-auth'
 import CSRF from 'csrf'
 
+import { prisma } from '../../../context/prisma'
 import { cookie } from '../../../core/services/cookie'
 import { sessionCookieName } from '../../../core/constants/sessionCookieName'
 import { createUserSession } from '../../../core/services/session/createUserSession'
@@ -55,7 +55,6 @@ const api: NextApiHandler = async (req, res) => {
     /**
      * Insert user OAuth result to database
      */
-    const prisma = new PrismaClient()
     await prisma.user.upsert({
       where: {
         uid: appleUserId,

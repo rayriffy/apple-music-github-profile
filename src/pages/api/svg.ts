@@ -1,10 +1,10 @@
 import fs from 'fs'
 import path from 'path'
 
-import { PrismaClient } from '@prisma/client'
 import type { NextApiHandler } from 'next'
 import type { OptimizedSvg } from 'svgo'
 
+import { prisma } from '../../context/prisma'
 import { getMusicKitDeveloperToken } from '../../core/services/getMusicKitDeveloperToken'
 import { getRecentlyPlayedTrack } from '../../modules/music/services/getRecentlyPlayedTrack'
 import { getAlbumCover } from '../../modules/music/services/getAlbumCover'
@@ -40,13 +40,11 @@ const api: NextApiHandler = async (req, res) => {
   /**
    * Locate user apple music token
    */
-  const prisma = new PrismaClient()
   const targetUser = await prisma.user.findUnique({
     where: {
       uid: uid,
     },
   })
-  await prisma.$disconnect()
 
   if (!targetUser) {
     return res.status(400).send('user not found')

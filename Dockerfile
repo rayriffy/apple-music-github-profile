@@ -1,5 +1,5 @@
 # Install dependencies only when needed
-FROM node:18-slim AS deps
+FROM node:16-slim AS deps
 WORKDIR /app
 
 # Install pnpm
@@ -10,7 +10,7 @@ COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN pnpm -r i --frozen-lockfile
 
 # Rebuild the source code only when needed
-FROM node:18-slim AS builder
+FROM node:16-slim AS builder
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
@@ -23,7 +23,7 @@ RUN pnpm build
 # RUN npm run build
 
 # Production image, copy all the files and run next
-FROM gcr.io/distroless/nodejs18-debian11:nonroot AS runner
+FROM gcr.io/distroless/nodejs16-debian11 AS runner
 WORKDIR /app
 
 ENV NODE_ENV production

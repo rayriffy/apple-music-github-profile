@@ -1,10 +1,8 @@
-Contributing
-===
+# Contributing
 
 Any contribution is welcome to this repository, there're various ways to contribute into the project.
 
-Creating new card theme
----
+## Creating new card theme
 
 Cards are being rendered as `image/svg+xml` image. All templates are stored at [`src/templates`](./src/templates) directory, and being rendered as a final result by ESM. API will send this metadata object that necessary for you to create a reactive card.
 

@@ -58,7 +58,10 @@ const Page: NextPage<Props> = props => {
             onError={e => setError(e)}
           />
           {step === 3 && (
-            <p className="text-xs text-gray-500 leading-none mt-4">* Already connected before click connect button again if your card encounter an error.</p>
+            <p className="text-xs text-gray-500 leading-none mt-4">
+              * Already connected before click connect button again if your card
+              encounter an error.
+            </p>
           )}
         </section>
         <section className="px-5 py-4 bg-gray-50 rounded-lg border shadow-lg sm:col-span-2">

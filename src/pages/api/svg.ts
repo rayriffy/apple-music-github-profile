@@ -2,7 +2,6 @@ import fs from 'fs'
 import path from 'path'
 
 import type { NextApiHandler } from 'next'
-import type { OptimizedSvg } from 'svgo'
 
 import { prisma } from '../../context/prisma'
 import { getMusicKitDeveloperToken } from '../../core/services/getMusicKitDeveloperToken'
@@ -105,11 +104,11 @@ const api: NextApiHandler = async (req, res) => {
       import('ejs'),
     ])
 
-    const optimizedRender = optimize(
-      ejs.render(templateFile, builtRenderedData)
-    )
+    try {
+      const optimizedRender = optimize(
+        ejs.render(templateFile, builtRenderedData)
+      )
 
-    if (optimizedRender.error === undefined) {
       res.setHeader('Content-Type', 'image/svg+xml')
 
       if (process.env.NODE_ENV === 'production') {
@@ -126,8 +125,8 @@ const api: NextApiHandler = async (req, res) => {
         )
       }
 
-      res.send((optimizedRender as OptimizedSvg).data)
-    } else {
+      res.send(optimizedRender.data)
+    } catch (e) {
       throw new Error('Unable to optimize SVG string')
     }
   } catch (e) {

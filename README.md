@@ -12,18 +12,18 @@ Click `Connect with Apple Music` button below to sign in with Apple ID
 
 ## Themes
 
-| Theme | Preview |
-| ----- | ------- |
+| Theme | Preview                                                      |
+| ----- | ------------------------------------------------------------ |
 | Light | <img alt="light theme" src="./img/light.svg" height="350" /> |
 
 ## Development
 
 You're going to have Apple Developer membership in order to gain access to Apple Music API. You're going to create following...
 
-1. **App ID**: with *"Sign In with Apple"* capability enabled
-2. **Service ID**: with *"Sign In with Apple"* enabled and configured
-3. **Media ID**: with *"MusicKit"* enabled
-4. **Key**: with *"Sign in with Apple"* and *"Media Services"* enabled and configured
+1. **App ID**: with _"Sign In with Apple"_ capability enabled
+2. **Service ID**: with _"Sign In with Apple"_ enabled and configured
+3. **Media ID**: with _"MusicKit"_ enabled
+4. **Key**: with _"Sign in with Apple"_ and _"Media Services"_ enabled and configured
 
 After key downloaded, copy `.env.exmaple` into `.env` and change variable values appropriately.
 
@@ -44,6 +44,7 @@ docker-compose down
 ```
 
 And now you're able to start development server.
+
 > **Be aware!!!** Apple Services might not played well with HTTP protocol but it's very unlikely.
 
 ```
@@ -57,15 +58,19 @@ pnpm dev
 ## FAQ
 
 #### Why do I have to sign in with Apple ID first?
+
 Unlike Spotfy API where you can identify user by uid, Apple Music API does not provide any possible way to identify users which will make impossible for one deployment to be used by manu people.
 
 #### Can I use this card anywhere else?
+
 Yes
 
 #### I want more card styles
+
 You can make your own theme card, and send a pull request to this repository. Please refer to [contribution guidelines]()
 
 #### My card is broken
+
 It possible that connected Apple Music session is already expired. You can reconnect your card by complete liking process once again.
 
 ## Credit

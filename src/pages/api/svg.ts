@@ -100,22 +100,6 @@ const api: NextApiHandler = async (req, res) => {
       },
     }
 
-    res.setHeader('Content-Type', 'image/svg+xml')
-
-    if (process.env.NODE_ENV === 'production') {
-      /**
-       * Store in local browser for 60 seconds
-       * Stored cache on server is fresh for 128 seconds
-       * After that, cache on server still serveable for 31 days but it will trigger for a fresh update
-       */
-      res.setHeader(
-        'Cache-Control',
-        `public, max-age=60, s-maxage=128, stale-while-revalidate=${
-          60 * 60 * 24 * 31
-        }`
-      )
-    }
-
     const [{ optimize }, { default: ejs }] = await Promise.all([
       import('svgo'),
       import('ejs'),
@@ -126,6 +110,22 @@ const api: NextApiHandler = async (req, res) => {
     )
 
     if (optimizedRender.error === undefined) {
+      res.setHeader('Content-Type', 'image/svg+xml')
+
+      if (process.env.NODE_ENV === 'production') {
+        /**
+         * Store in local browser for 60 seconds
+         * Stored cache on server is fresh for 128 seconds
+         * After that, cache on server still serveable for 31 days but it will trigger for a fresh update
+         */
+        res.setHeader(
+          'Cache-Control',
+          `public, max-age=60, s-maxage=128, stale-while-revalidate=${
+            60 * 60 * 24 * 31
+          }`
+        )
+      }
+
       res.send((optimizedRender as OptimizedSvg).data)
     } else {
       throw new Error('Unable to optimize SVG string')

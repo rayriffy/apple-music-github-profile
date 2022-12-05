@@ -1,6 +1,9 @@
 import fs from 'fs'
 import path from 'path'
 
+import { optimize } from 'svgo'
+import { render } from 'art-template'
+
 import type { NextApiHandler } from 'next'
 
 import { prisma } from '../../context/prisma'
@@ -99,11 +102,6 @@ const api: NextApiHandler = async (req, res) => {
       },
     }
 
-    const [{ optimize }, { render }] = await Promise.all([
-      import('svgo'),
-      import('art-template'),
-    ])
-
     try {
       const optimizedRender = optimize(
         render(templateFile, builtRenderedData)
@@ -127,6 +125,7 @@ const api: NextApiHandler = async (req, res) => {
 
       res.send(optimizedRender.data)
     } catch (e) {
+      console.log(e)
       throw new Error('Unable to render SVG string')
     }
   } catch (e) {

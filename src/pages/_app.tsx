@@ -26,6 +26,21 @@ const App: NextPage<AppProps> = props => {
             profile (i.e. GitHub markdown)
           </p>
         </section>
+        <section className="space-y-4">
+          <h2 className="text-gray-900 font-semibold">How to use?</h2>
+          <div className="grid sm:grid-cols-2 gap-6 text-sm">
+            <div className="p-4 bg-gray-50 rounded-lg border shadow-lg">
+              You will authorize access to your Apple Music, then you will get a
+              Markdown snippet to paste into your GitHub profile.
+            </div>
+            <div className="p-4 bg-gray-50 rounded-lg border shadow-lg">
+              Image will be refreshed <b>every 5 minutes</b>. If you get an
+              error message on your image or fail to authenticate MusicKit after
+              passkeys registered, try to refresh token with an button below.
+            </div>
+          </div>
+        </section>
+
         <Component {...pageProps} />
       </main>
       <footer className="text-center text-gray-600 py-6 space-y-2">

@@ -24,6 +24,9 @@ export const getRecentlyPlayedTrack = async (
     }
   ).then(async o => {
     if (o.status >= 400 && o.status < 600) {
+      console.log('>>> statusCode: ', o.status)
+      console.log('>>> data: ', await o.text())
+      console.log('')
       throw new Error(await o.json())
     }
 

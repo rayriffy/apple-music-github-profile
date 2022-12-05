@@ -23,15 +23,25 @@ export const getRecentlyPlayedTrack = async (
       },
     }
   ).then(async o => {
-    if (o.status >= 400 && o.status < 600) {
+    try {
+      if (o.status >= 400 && o.status < 600) {
+        throw new Error(await o.json())
+      }
+
+      return await o.json()
+    } catch (e) {
       console.log('>>> statusCode: ', o.status)
       console.log('>>> data: ', await o.text())
       console.log('')
-      throw new Error(await o.json())
+      throw e
     }
-
-    return await o.json()
   })
 
-  return rawResponse.data[0]
+  try {
+    return rawResponse.data[0]
+  } catch (e) {
+    console.log('>>> data: ', JSON.stringify(rawResponse))
+    console.log('')
+    throw e
+  }
 }

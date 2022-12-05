@@ -1,7 +1,6 @@
 import fs from 'fs'
 import path from 'path'
 
-import { optimize } from 'svgo'
 import { render } from 'art-template'
 
 import type { NextApiHandler } from 'next'
@@ -11,6 +10,7 @@ import { getMusicKitDeveloperToken } from '../../core/services/getMusicKitDevelo
 import { getRecentlyPlayedTrack } from '../../modules/music/services/getRecentlyPlayedTrack'
 import { getAlbumCover } from '../../modules/music/services/getAlbumCover'
 import { renderErrorCard } from '../../core/services/renderErrorCard'
+import { optimizeSVG } from '../../core/services/optimizeSVG'
 
 interface UserQuery {
   theme?: string
@@ -103,7 +103,9 @@ const api: NextApiHandler = async (req, res) => {
     }
 
     try {
-      const optimizedRender = optimize(render(templateFile, builtRenderedData))
+      const optimizedRender = optimizeSVG(
+        render(templateFile, builtRenderedData)
+      )
 
       res.setHeader('Content-Type', 'image/svg+xml')
 
@@ -121,7 +123,7 @@ const api: NextApiHandler = async (req, res) => {
         )
       }
 
-      res.send(optimizedRender.data)
+      res.send(optimizedRender)
     } catch (e) {
       console.log(e)
       throw new Error('Unable to render SVG string')

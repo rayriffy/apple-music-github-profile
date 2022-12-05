@@ -103,9 +103,7 @@ const api: NextApiHandler = async (req, res) => {
     }
 
     try {
-      const optimizedRender = optimize(
-        render(templateFile, builtRenderedData)
-      )
+      const optimizedRender = optimize(render(templateFile, builtRenderedData))
 
       res.setHeader('Content-Type', 'image/svg+xml')
 

@@ -19,4 +19,4 @@ Cards are being rendered as `image/svg+xml` image. All templates are stored at [
 }
 ```
 
-Create new theme at `src/pages` called `<themeName>.ejs` by replacing `<themeName>` with your desired file name, and providing metadata into [`themes.ts`](./src/core/constants/themes.ts). Then, you implementing a valid SVG image and sending a pull request to this repository for a review. See [`light.ejs`](./src/templates/light.ejs) for an examples.
+Create new theme at `src/pages` called `<themeName>.art` by replacing `<themeName>` with your desired file name, and providing metadata into [`themes.ts`](./src/core/constants/themes.ts). Then, you implementing a valid SVG image and sending a pull request to this repository for a review. See [`light.art`](./src/templates/light.art) for an examples.

@@ -32,7 +32,7 @@ const api: NextApiHandler = async (req, res) => {
     const targetTemplateFile = path.join(
       process.cwd(),
       'src/templates',
-      `${theme}.ejs`
+      `${theme}.art`
     )
     if (!fs.existsSync(targetTemplateFile)) {
       throw new Error('Requested template does not exist')
@@ -99,14 +99,14 @@ const api: NextApiHandler = async (req, res) => {
       },
     }
 
-    const [{ optimize }, { default: ejs }] = await Promise.all([
+    const [{ optimize }, { render }] = await Promise.all([
       import('svgo'),
-      import('ejs'),
+      import('art-template'),
     ])
 
     try {
       const optimizedRender = optimize(
-        ejs.render(templateFile, builtRenderedData)
+        render(templateFile, builtRenderedData)
       )
 
       res.setHeader('Content-Type', 'image/svg+xml')
@@ -127,7 +127,7 @@ const api: NextApiHandler = async (req, res) => {
 
       res.send(optimizedRender.data)
     } catch (e) {
-      throw new Error('Unable to optimize SVG string')
+      throw new Error('Unable to render SVG string')
     }
   } catch (e) {
     const renderedCard = await renderErrorCard(e.message ?? 'Unexpected error')

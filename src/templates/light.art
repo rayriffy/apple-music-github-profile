@@ -143,29 +143,29 @@
       </div>
 
       <div class="cover-image-container">
-        <% if (coverImageData !== null) { %>
-        <img class="cover-image" src="<%= coverImageData %>" />
-        <% } else { %>
-        <div class="cover-image" />
-        <% } %>
+        {{ if coverImageData !== null }}
+          <img class="cover-image" src="{{ coverImageData }}" />
+        {{ else }}        
+          <div class="cover-image" />
+        {{ /if }}
       </div>
 
       <div class="content">
-        <h1 class="song-title text-gray-900 truncate"><%= title %></h1>
-        <h2 class="song-artist text-gray-500 truncate"><%= artist %></h2>
+        <h1 class="song-title text-gray-900 truncate">{{ title }}</h1>
+        <h2 class="song-artist text-gray-500 truncate">{{ artist }}</h2>
       </div>
 
       <div class="slider">
         <div class="slider-pill">
           <div
             class="slider-pill-inner"
-            style="width: <%= timestamp.percentage %>%"
+            style="width: {{ timestamp.percentage }}%"
           />
         </div>
         <div class="slider-container">
-          <p class="slider-content text-gray-600"><%= timestamp.elapsed %></p>
+          <p class="slider-content text-gray-600">{{ timestamp.elapsed }}</p>
           <p class="slider-content text-gray-600">
-            -<%= timestamp.remaining %>
+            -{{ timestamp.remaining }}
           </p>
         </div>
       </div>

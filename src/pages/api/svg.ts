@@ -130,6 +130,7 @@ const api: NextApiHandler = async (req, res) => {
     const renderedCard = await renderErrorCard(e.message ?? 'Unexpected error')
 
     res.setHeader('Content-Type', 'image/svg+xml')
+    res.setHeader('Cache-Control', `public, max-age=10`)
     res.send(renderedCard)
   }
 }

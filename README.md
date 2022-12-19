@@ -59,7 +59,7 @@ pnpm dev
 
 #### Why do I have to sign in with Apple ID first?
 
-Unlike Spotfy API where you can identify user by uid, Apple Music API does not provide any possible way to identify users which will make impossible for one deployment to be used by manu people.
+Unlike Spotfy API where you can identify user by uid, Apple Music API does not provide any possible way to identify users which will make impossible for one deployment to be used by many people.
 
 #### Can I use this card anywhere else?
 

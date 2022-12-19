@@ -71,7 +71,7 @@ You can make your own theme card, and send a pull request to this repository. Pl
 
 #### My card is broken
 
-It possible that connected Apple Music session is already expired. You can reconnect your card by complete liking process once again.
+It possible that connected Apple Music session is already expired. You can reconnect your card by complete linking process once again.
 
 ## Credit
 

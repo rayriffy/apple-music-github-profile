@@ -59,7 +59,7 @@ pnpm dev
 
 #### Why do I have to sign in with Apple ID first?
 
-Unlike Spotfy API where you can identify user by uid, Apple Music API does not provide any possible way to identify users which will make impossible for one deployment to be used by manu people.
+Unlike Spotfy API where you can identify user by uid, Apple Music API does not provide any possible way to identify users which will make impossible for one deployment to be used by many people.
 
 #### Can I use this card anywhere else?
 
@@ -71,7 +71,7 @@ You can make your own theme card, and send a pull request to this repository. Pl
 
 #### My card is broken
 
-It possible that connected Apple Music session is already expired. You can reconnect your card by complete liking process once again.
+It possible that connected Apple Music session is already expired. You can reconnect your card by complete linking process once again.
 
 ## Credit
 

@@ -6,9 +6,9 @@
 >
   <foreignObject width="343" height="534">
     <style>
-      .container {
+      .container { 
         border-radius: 12px;
-        background-color: #f8f8fa;
+        background-color: #1a1a1a;
         padding: 24px;
         height: 486px;
         font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
@@ -16,13 +16,13 @@
       }
 
       .text-gray-500 {
-        color: #6b7280;
+        color: #f2f2f2;
       }
       .text-gray-600 {
-        color: #4b5563;
+        color: #acacac;
       }
       .text-gray-900 {
-        color: #111827;
+        color: #818181;
       }
 
       .cover-image-container {
@@ -37,15 +37,15 @@
         max-width: 288px;
         max-height: 288px;
         border-radius: 12px;
-        box-shadow: 0 0 #0000, 0 0 #0000, 0 10px 15px -3px #9ca3af,
-          0 4px 6px -4px #9ca3af;
+        box-shadow: 0 0 #0000, 0 0 #0000, 0 10px 15px -3px #42454a,
+          0 4px 6px -4px #42454a;
       }
       img.cover-image {
         width: auto;
         overflow: hidden;
       }
       div.cover-image {
-        background-color: #d1d5db;
+        background-color: #383a3c;
         width: 288px;
       }
 
@@ -93,14 +93,14 @@
       .slider-pill {
         width: 100%;
         height: 8px;
-        background-color: #d1d5db;
+        background-color: #353638;
         border-radius: 9999px;
         overflow: hidden;
         margin-bottom: 8px;
       }
       .slider-pill-inner {
         height: 100%;
-        background-color: #4b5563;
+        background-color: #a8b1bc;
       }
       .slider-container {
         display: flex;

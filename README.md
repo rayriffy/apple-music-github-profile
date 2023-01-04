@@ -15,6 +15,7 @@ Click `Connect with Apple Music` button below to sign in with Apple ID
 | Theme | Preview                                                      |
 | ----- | ------------------------------------------------------------ |
 | Light | <img alt="light theme" src="./img/light.svg" height="350" /> |
+| Dark | <img alt="light theme" src="./img/light.svg" height="350" /> |
 
 ## Development
 

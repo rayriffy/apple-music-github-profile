@@ -9,7 +9,8 @@
     "start": "next start",
     "prisma:generate": "prisma generate",
     "prisma:commit": "prisma migrate dev",
-    "prisma:deploy": "prisma migrate deploy"
+    "prisma:deploy": "prisma migrate deploy",
+    "preview:generate": "node -r @swc-node/register tools/generatePreviews.ts"
   },
   "repository": {
     "type": "git",
@@ -39,6 +40,8 @@
     "svgo": "^3.0.2"
   },
   "devDependencies": {
+    "@swc-node/register": "^1.5.5",
+    "@swc/core": "^1.3.25",
     "@tailwindcss/forms": "^0.5.3",
     "@types/cookie": "^0.5.1",
     "@types/jsonwebtoken": "^8.5.9",

@@ -115,11 +115,11 @@ const api: NextApiHandler = async (req, res) => {
          * Stored cache on server is fresh for 128 seconds
          * After that, cache on server still serveable for 31 days but it will trigger for a fresh update
          */
-        const duration = 60 * 60 * 24 * 31
-        res.setHeader('CDN-Cache-Control', `max-age=${duration}`)
         res.setHeader(
           'Cache-Control',
-          `public, max-age=60, s-maxage=128, stale-while-revalidate=${duration}`
+          `public, max-age=60, s-maxage=128, stale-while-revalidate=${
+            60 * 60 * 24 * 31
+          }`
         )
       }
 
@@ -132,7 +132,6 @@ const api: NextApiHandler = async (req, res) => {
     const renderedCard = await renderErrorCard(e.message ?? 'Unexpected error')
 
     res.setHeader('Content-Type', 'image/svg+xml')
-    res.setHeader('CDN-Cache-Control', `public, max-age=5`)
     res.setHeader('Cache-Control', `public, max-age=10`)
     res.send(renderedCard)
   }

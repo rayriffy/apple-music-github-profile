@@ -11,7 +11,7 @@ export const SignInWithApple = () => {
   const authorizationUrl = appleSignin.getAuthorizationUrl({
     clientID: 'com.rayriffy.apple-music.auth',
     redirectUri:
-      'https://apple-music-github-profile.rayriffy.com/callback',
+      'https://apple-music-github-profile.rayriffy.com/auth/callback',
     state: csrfToken,
     responseMode: 'form_post',
     scope: 'email',

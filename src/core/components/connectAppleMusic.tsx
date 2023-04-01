@@ -6,7 +6,13 @@ import Script from 'next/script'
 
 import { AppleMusicAuthorizeButton } from './appleMusicAuthorizeButton'
 
-export const ConnectAppleMusic = memo(() => {
+interface Props {
+  developerToken: string
+}
+
+export const ConnectAppleMusic = memo<Props>(props => {
+  const { developerToken } = props
+
   const [musicKitLoadingState, setMusicKitLoadingState] = useState<
     'init' | 'fail' | 'done'
   >('init')
@@ -37,13 +43,8 @@ export const ConnectAppleMusic = memo(() => {
         async
         onLoad={async () => {
           try {
-            const { data } = await fetch('/api/getMusicKitDeveloperToken', {
-              headers: {
-                Accepts: 'application/json',
-              },
-            }).then(o => o.json())
             await MusicKit.configure({
-              developerToken: data,
+              developerToken,
               app: {
                 name: 'Apple Music GitHub Profile',
                 build: '1.0.0',
@@ -59,4 +60,3 @@ export const ConnectAppleMusic = memo(() => {
     </div>
   )
 })
-  

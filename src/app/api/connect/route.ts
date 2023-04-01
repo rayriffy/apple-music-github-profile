@@ -9,22 +9,28 @@ export const POST = async (req: Request) => {
   const { session } = await getUser()
 
   if (!userToken) {
-    return NextResponse.json({
-      message: 'missing args',
-    }, {
-      status: 400
-    })
+    return NextResponse.json(
+      {
+        message: 'missing args',
+      },
+      {
+        status: 400,
+      }
+    )
   }
 
   /**
    * Verify user authentication
    */
   if (session === null) {
-    return NextResponse.json({
-      message: 'not authenticated',
-    }, {
-      status: 403,
-    })
+    return NextResponse.json(
+      {
+        message: 'not authenticated',
+      },
+      {
+        status: 403,
+      }
+    )
   }
 
   /**
@@ -40,11 +46,14 @@ export const POST = async (req: Request) => {
   })
 
   if (!targetUser) {
-    return NextResponse.json({
-      message: 'illegal user',
-    }, {
-      status: 400
-    })
+    return NextResponse.json(
+      {
+        message: 'illegal user',
+      },
+      {
+        status: 400,
+      }
+    )
   }
 
   /**

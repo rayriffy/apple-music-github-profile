@@ -4,7 +4,8 @@ import '../styles/tailwind.css'
 
 export const metadata = {
   title: 'Apple Music GitHub Profile',
-  description: 'Display your recently played music on your Apple Music to GitHub profile (or anywhere else!)',
+  description:
+    'Display your recently played music on your Apple Music to GitHub profile (or anywhere else!)',
 }
 
 interface Props {
@@ -21,7 +22,9 @@ const Layout = async (props: Props) => {
           <main className="max-w-lg w-full bg-white px-6 py-6 rounded-xl shadow-xl">
             {children}
           </main>
-          <span className="text-sm pt-6">© {new Date().getFullYear()} Phumrapee Limpianchop</span>
+          <span className="text-sm pt-6">
+            © {new Date().getFullYear()} Phumrapee Limpianchop
+          </span>
         </div>
       </body>
     </html>

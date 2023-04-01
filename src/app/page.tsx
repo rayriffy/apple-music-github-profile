@@ -17,9 +17,16 @@ const Page = async () => {
   return (
     <Fragment>
       <Steps total={3} current={1} />
-      <h1 className="font-semibold text-2xl text-gray-900 pb-2">Apple Music GitHub profile</h1>
-      <p>This web application will be able to display your recently played music on your Apple Music to GitHub profile (or anywhere else!)</p>
-      <p className="pt-2 pb-3">First of all, you need to sign-in with your Apple ID</p>
+      <h1 className="font-semibold text-2xl text-gray-900 pb-2">
+        Apple Music GitHub profile
+      </h1>
+      <p>
+        This web application will be able to display your recently played music
+        on your Apple Music to GitHub profile (or anywhere else!)
+      </p>
+      <p className="pt-2 pb-3">
+        First of all, you need to sign-in with your Apple ID
+      </p>
       <SignInWithApple />
     </Fragment>
   )

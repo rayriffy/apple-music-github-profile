@@ -5,7 +5,6 @@ import { render } from 'art-template'
 import { optimizeSVG } from '../src/core/services/optimizeSVG'
 
 import { themes } from '../src/core/constants/themes'
-
 ;(async () => {
   const builtRenderedData = {
     title: 'キミの魔法',
@@ -42,15 +41,35 @@ import { themes } from '../src/core/constants/themes'
   )
 
   // read original readme
-  const readme = await fs.promises.readFile(path.join(process.cwd(), 'README.md'), 'utf-8')
-  
+  const readme = await fs.promises.readFile(
+    path.join(process.cwd(), 'README.md'),
+    'utf-8'
+  )
+
   // modify readme
-  const modifiedReadme = readme.split('## ').map(section => {
-    if (section.startsWith('Themes\n')) {
-      return `Themes\n\n| Themes | Preview |\n| - | - |\n${themes.map(theme => `| ${theme.name} | <img alt="${theme.name.toLowerCase()} theme" src="./img/${theme.id}.svg" height="350" /> |`).join('\n')}\n\n`
-    } else { return section }
-  }).join('## ')
+  const modifiedReadme = readme
+    .split('## ')
+    .map(section => {
+      if (section.startsWith('Themes\n')) {
+        return `Themes\n\n| Themes | Preview |\n| - | - |\n${themes
+          .map(
+            theme =>
+              `| ${
+                theme.name
+              } | <img alt="${theme.name.toLowerCase()} theme" src="./img/${
+                theme.id
+              }.svg" height="350" /> |`
+          )
+          .join('\n')}\n\n`
+      } else {
+        return section
+      }
+    })
+    .join('## ')
 
   // write readme
-  await fs.promises.writeFile(path.join(process.cwd(), 'README.md'), modifiedReadme)
+  await fs.promises.writeFile(
+    path.join(process.cwd(), 'README.md'),
+    modifiedReadme
+  )
 })()

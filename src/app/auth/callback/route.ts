@@ -13,9 +13,9 @@ import { redirectUri } from '$core/constants/redirectUri'
 
 const {
   CSRF_SECRET = '',
-  APPLE_TEAM_ID= '',
-  APPLE_PRIVATE_KEY= '',
-  APPLE_KEY_ID= '',
+  APPLE_TEAM_ID = '',
+  APPLE_PRIVATE_KEY = '',
+  APPLE_KEY_ID = '',
 } = process.env
 
 export const POST = async (request: Request) => {
@@ -30,11 +30,14 @@ export const POST = async (request: Request) => {
   const isCSRFVerified = csrfInstance.verify(CSRF_SECRET, state)
 
   if (!isCSRFVerified) {
-    return NextResponse.json({
-      message: 'request has been tampered',
-    }, {
-      status: 400
-    })
+    return NextResponse.json(
+      {
+        message: 'request has been tampered',
+      },
+      {
+        status: 400,
+      }
+    )
   }
 
   // parse sign-in with apple
@@ -96,10 +99,13 @@ export const POST = async (request: Request) => {
     redirect('/link')
   } catch (e) {
     console.error(e)
-    return NextResponse.json({
-      message: 'unable to verify authentication response from Apple',
-    }, {
-      status: 500
-    })
+    return NextResponse.json(
+      {
+        message: 'unable to verify authentication response from Apple',
+      },
+      {
+        status: 500,
+      }
+    )
   }
 }

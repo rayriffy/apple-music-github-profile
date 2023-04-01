@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { Fragment, memo, useMemo } from 'react'
 

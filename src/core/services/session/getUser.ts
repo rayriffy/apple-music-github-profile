@@ -5,7 +5,7 @@ import { prisma } from '$context/prisma'
 import { sessionCookieName } from '../../constants/sessionCookieName'
 
 interface User {
-  session: LoginSession | null,
+  session: LoginSession | null
   connected: boolean
 }
 

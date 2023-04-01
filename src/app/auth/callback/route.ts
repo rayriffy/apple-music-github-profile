@@ -23,6 +23,12 @@ const {
 } = process.env
 
 export const POST = async (request: Request) => {
+  console.log('Request')
+  console.log(request)
+  console.log('URL: ', request.url)
+  console.log('Text: ', await request.formData().then(o => o.entries()).catch(() => undefined))
+  console.log('JSON: ', await request.json().catch(() => undefined))
+
   // parse values
   const {
     state = '',

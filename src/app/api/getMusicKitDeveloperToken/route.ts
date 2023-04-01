@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server'
 
 import { getMusicKitDeveloperToken } from '$core/services/getMusicKitDeveloperToken'
 
-export const GET = () => {
+export const GET = async () => {
   const token = getMusicKitDeveloperToken()
 
   return NextResponse.json(

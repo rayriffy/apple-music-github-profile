@@ -7,3 +7,7 @@ body,
 #__next {
   height: 100%;
 }
+
+html {
+  @apply bg-gradient-to-r from-pink-100 via-purple-100 to-indigo-100;
+}

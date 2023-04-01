@@ -18,7 +18,7 @@ const Layout = async (props: Props) => {
   return (
     <html lang="en">
       <body>
-        <div className="h-screen w-full flex justify-center items-center flex-col px-4 bg-gradient-to-r from-pink-100 via-purple-100 to-indigo-100">
+        <div className="min-h-screen h-full w-full flex justify-center items-center flex-col px-4">
           <main className="max-w-lg w-full bg-white px-6 py-6 rounded-xl shadow-xl">
             {children}
           </main>

@@ -21,6 +21,9 @@ export const getRecentlyPlayedTrack = async (
         'Music-User-Token': userToken,
         Referer: 'https://apple-music-github-profile.rayriffy.com',
       },
+      next: {
+        revalidate: 0
+      }
     }
   ).then(async o => {
     try {
@@ -45,3 +48,5 @@ export const getRecentlyPlayedTrack = async (
     throw e
   }
 }
+
+export const revalidate = 0

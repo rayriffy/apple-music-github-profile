@@ -9,6 +9,7 @@ import { prisma } from '$context/prisma'
 import { getClientAddress } from '$core/services/getClientAddress'
 import { createUserSession } from '$core/services/session/createUserSession'
 import { sessionCookieName } from '$core/constants/sessionCookieName'
+import { redirectUri } from '$core/constants/redirectUri'
 
 const {
   CSRF_SECRET = '',
@@ -50,12 +51,9 @@ export const POST = async (request: Request) => {
      */
     const tokenResponse = await appleSignin.getAuthorizationToken(code, {
       clientID: 'com.rayriffy.apple-music.auth',
-      redirectUri:
-        'https://apple-music-github-profile.rayriffy.com/api/auth/callback',
-      clientSecret: clientSecret,
+      redirectUri,
+      clientSecret,
     })
-
-    console.log({ clientSecret, tokenResponse })
 
     const { sub: appleUserId, email: appleUserEmail } =
       await appleSignin.verifyIdToken(tokenResponse.id_token, {

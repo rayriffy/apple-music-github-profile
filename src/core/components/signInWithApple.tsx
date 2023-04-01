@@ -2,6 +2,8 @@ import CSRF from 'csrf'
 import appleSignin from 'apple-signin-auth'
 import { FaApple } from 'react-icons/fa'
 
+import { redirectUri } from '$core/constants/redirectUri'
+
 export const SignInWithApple = () => {
   // create csrf token
   const csrfInstance = new CSRF()
@@ -10,8 +12,7 @@ export const SignInWithApple = () => {
   // create apple urlz
   const authorizationUrl = appleSignin.getAuthorizationUrl({
     clientID: 'com.rayriffy.apple-music.auth',
-    redirectUri:
-      'https://apple-music-github-profile.rayriffy.com/auth/callback',
+    redirectUri,
     state: csrfToken,
     responseMode: 'form_post',
     scope: 'email',

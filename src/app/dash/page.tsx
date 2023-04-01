@@ -34,9 +34,9 @@ const Page = async () => {
           Try Reconnecting it
         </Link>{' '}
         (or{' '}
-        <Link href="/auth/logout" className="text-blue-500">
+        <a href="/auth/logout" className="text-blue-500">
           Logout
-        </Link>
+        </a>
         )
       </p>
       <div className="md:flex">

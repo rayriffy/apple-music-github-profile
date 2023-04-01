@@ -8,7 +8,7 @@ WORKDIR /app
 RUN npm i -g pnpm
 
 # Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* patches/ ./
 RUN pnpm -r i --frozen-lockfile && pnpm patch art-template
 
 # Rebuild the source code only when needed

@@ -1,9 +1,8 @@
-import { cookies } from 'next/headers'
-import { redirect } from 'next/navigation'
 import { NextResponse } from 'next/server'
 
 import appleSignin from 'apple-signin-auth'
 import CSRF from 'csrf'
+import { serialize } from 'cookie'
 
 import { prisma } from '$context/prisma'
 import { getClientAddress } from '$core/services/getClientAddress'
@@ -93,10 +92,41 @@ export const POST = async (request: Request) => {
       refreshToken: tokenResponse.refresh_token,
     })
 
-    const cookieStore = cookies()
-    cookieStore.set(sessionCookieName, enclavedToken)
-
-    redirect('/link')
+    return new NextResponse(
+      `
+      <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="X-UA-Compatible" content="ie=edge">
+          <meta http-equiv="Refresh" content="1; url=https://apple-music-github-profile.rayriffy.com/link" />
+          <title>Authenticated</title>
+          <style>
+            p {
+              font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            }
+          </style>
+        </head>
+        <body>
+          <p>Authenticated! Redirecting...</p>
+        </body>
+      </html>
+    `,
+      {
+        headers: {
+          'Content-Type': 'text/html',
+          'Set-Cookie': serialize(sessionCookieName, enclavedToken, {
+            maxAge: 60 * 60,
+            expires: new Date(Date.now() + 60 * 60 * 1000),
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+            path: '/',
+            sameSite: 'lax',
+          }),
+        },
+      }
+    )
   } catch (e) {
     console.error(e)
     return NextResponse.json(

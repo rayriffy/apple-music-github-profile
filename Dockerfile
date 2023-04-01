@@ -9,7 +9,7 @@ RUN npm i -g pnpm
 
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
-RUN pnpm -r i --frozen-lockfile
+RUN pnpm -r i --frozen-lockfile && pnpm patch art-template
 
 # Rebuild the source code only when needed
 FROM node:18-alpine AS builder

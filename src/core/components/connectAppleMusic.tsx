@@ -1,16 +1,12 @@
+'use client';
+
 import { memo, useState } from 'react'
 
 import Script from 'next/script'
 
 import { AppleMusicAuthorizeButton } from './appleMusicAuthorizeButton'
 
-interface Props {
-  disabled: boolean
-  onSuccess?(): void
-  onError?(message: string): void
-}
-
-export const ConnectAppleMusic = memo<Props>(props => {
+export const ConnectAppleMusic = memo(() => {
   const [musicKitLoadingState, setMusicKitLoadingState] = useState<
     'init' | 'fail' | 'done'
   >('init')
@@ -33,7 +29,7 @@ export const ConnectAppleMusic = memo<Props>(props => {
             Failed to load MusicKit
           </button>
         ) : (
-          <AppleMusicAuthorizeButton {...props} />
+          <AppleMusicAuthorizeButton />
         )}
       </div>
       <Script
@@ -63,3 +59,4 @@ export const ConnectAppleMusic = memo<Props>(props => {
     </div>
   )
 })
+  

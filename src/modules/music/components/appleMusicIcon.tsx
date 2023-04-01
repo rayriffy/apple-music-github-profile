@@ -1,4 +1,5 @@
-import { memo, SVGAttributes } from 'react'
+import { memo } from 'react'
+import type { SVGAttributes } from 'react'
 
 export const AppleMusicIcon = memo<SVGAttributes<SVGSVGElement>>(props => (
   <svg

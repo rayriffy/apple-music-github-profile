@@ -2,28 +2,23 @@ import fs from 'fs'
 import path from 'path'
 
 import { render } from 'art-template'
+import { NextResponse } from 'next/server'
 
-import type { NextApiHandler } from 'next'
+import { prisma } from '$context/prisma'
+import { renderErrorCard } from '$core/services/renderErrorCard'
+import { getMusicKitDeveloperToken } from '$core/services/getMusicKitDeveloperToken'
+import { getRecentlyPlayedTrack } from '$modules/music/services/getRecentlyPlayedTrack'
+import { getAlbumCover } from '$modules/music/services/getAlbumCover'
+import { optimizeSVG } from '$core/services/optimizeSVG'
 
-import { prisma } from '../../context/prisma'
-import { getMusicKitDeveloperToken } from '../../core/services/getMusicKitDeveloperToken'
-import { getRecentlyPlayedTrack } from '../../modules/music/services/getRecentlyPlayedTrack'
-import { getAlbumCover } from '../../modules/music/services/getAlbumCover'
-import { renderErrorCard } from '../../core/services/renderErrorCard'
-import { optimizeSVG } from '../../core/services/optimizeSVG'
+export const GET = async (req: Request, context) => {
+  const params = new URL(req.url).searchParams
 
-interface UserQuery {
-  theme?: string
-  uid?: string
-}
-
-const api: NextApiHandler = async (req, res) => {
-  const { theme, uid } = req.query as UserQuery
-
-  const requiredParams = ['theme', 'uid']
+  const theme = context.params.theme
+  const uid = params.get('uid')
 
   try {
-    if (Object.keys(req.query).some(key => !requiredParams.includes(key))) {
+    if (params.keys.length > 1) {
       throw new Error('Parameter exceed')
     } else if (typeof theme !== 'string' || typeof uid !== 'string') {
       throw new Error('Illegal query')
@@ -37,7 +32,12 @@ const api: NextApiHandler = async (req, res) => {
       'src/templates',
       `${theme}.art`
     )
-    if (!fs.existsSync(targetTemplateFile)) {
+    if (
+      !(await fs.promises
+        .access(targetTemplateFile, fs.constants.R_OK)
+        .then(() => true)
+        .catch(() => false))
+    ) {
       throw new Error('Requested template does not exist')
     }
 
@@ -107,23 +107,23 @@ const api: NextApiHandler = async (req, res) => {
         render(templateFile, builtRenderedData)
       )
 
-      res.setHeader('Content-Type', 'image/svg+xml')
-
-      if (process.env.NODE_ENV === 'production') {
-        /**
-         * Store in local browser for 60 seconds
-         * Stored cache on server is fresh for 128 seconds
-         * After that, cache on server still serveable for 31 days but it will trigger for a fresh update
-         */
-        res.setHeader(
-          'Cache-Control',
-          `public, max-age=60, s-maxage=128, stale-while-revalidate=${
-            60 * 60 * 24 * 31
-          }`
-        )
-      }
-
-      res.send(optimizedRender)
+      /**
+       * Store in local browser for 60 seconds
+       * Stored cache on server is fresh for 128 seconds
+       * After that, cache on server still serveable for 31 days but it will trigger for a fresh update
+       */
+      return new NextResponse(optimizedRender, {
+        headers: {
+          'Content-Type': 'image/svg+xml',
+          ...(process.env.NODE_ENV === 'production'
+            ? {
+                'Cache-Control': `public, max-age=60, s-maxage=128, stale-while-revalidate=${
+                  60 * 60 * 24 * 31
+                }`,
+              }
+            : {}),
+        },
+      })
     } catch (e) {
       console.log(e)
       throw new Error('Unable to render SVG string')
@@ -131,10 +131,11 @@ const api: NextApiHandler = async (req, res) => {
   } catch (e) {
     const renderedCard = await renderErrorCard(e.message ?? 'Unexpected error')
 
-    res.setHeader('Content-Type', 'image/svg+xml')
-    res.setHeader('Cache-Control', `public, max-age=10`)
-    res.send(renderedCard)
+    return new NextResponse(renderedCard, {
+      headers: {
+        'Content-Type': 'image/svg+xml',
+        'Cache-Control': 'public, max-age=10',
+      },
+    })
   }
 }
-
-export default api

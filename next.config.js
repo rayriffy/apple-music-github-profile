@@ -8,12 +8,16 @@ module.exports = withBundleAnalyzer({
     return [
       {
         source: '/theme/:theme.svg',
-        destination: '/api/svg',
+        destination: '/api/svg/:theme',
       },
     ]
   },
   eslint: {
     ignoreDuringBuilds: true,
+  },
+  experimental: {
+    appDir: true,
+    typedRoutes: true,
   },
   reactStrictMode: true,
   swcMinify: true,

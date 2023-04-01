@@ -1,3 +1,5 @@
+'use client';
+
 import { Fragment, memo, useMemo } from 'react'
 
 import { themes } from '../../../core/constants/themes'

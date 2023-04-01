@@ -1,6 +1,12 @@
-import type { IncomingHttpHeaders } from 'http'
+import { headers } from 'next/headers'
 
-export const getClientAddress = (headers: IncomingHttpHeaders): string =>
-  (headers['cf-connecting-ip'] as string) ??
-  (headers['x-real-ip'] as string) ??
-  (headers['x-forwarded-for'] as string)
+export const getClientAddress = (): string | null => {
+  const headersList = headers()
+
+  return (
+    headersList.get('cf-connecting-ip') ??
+    headersList.get('x-real-ip') ??
+    headersList.get('x-forwarded-for') ??
+    null
+  )
+}

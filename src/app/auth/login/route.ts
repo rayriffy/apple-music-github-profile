@@ -1,24 +1,22 @@
-import type { NextApiHandler } from 'next'
+import { redirect } from 'next/navigation'
 
 import appleSignin from 'apple-signin-auth'
 import CSRF from 'csrf'
 
-const api: NextApiHandler = async (req, res) => {
+export const GET = () => {
   // create csrf token
   const csrfInstance = new CSRF()
-  const csrfToken = csrfInstance.create(process.env.CSRF_SECRET)
+  const csrfToken = csrfInstance.create(process.env.CSRF_SECRET ?? '')
 
   // create apple url
   const authorizationUrl = appleSignin.getAuthorizationUrl({
     clientID: 'com.rayriffy.apple-music.auth',
     redirectUri:
-      'https://apple-music-github-profile.rayriffy.com/api/auth/callback',
+      'https://apple-music-github-profile.rayriffy.com/callback',
     state: csrfToken,
     responseMode: 'form_post',
     scope: 'email',
   })
 
-  res.redirect(authorizationUrl)
+  redirect(authorizationUrl)
 }
-
-export default api

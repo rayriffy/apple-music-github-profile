@@ -4,7 +4,7 @@ import { maxSessionAge } from '../../constants/maxSessionAge'
 
 import type { User } from '../../@types/User'
 
-const { IRON_SECRET } = process.env
+const { IRON_SECRET = '' } = process.env
 
 export const createUserSession = (user: User) =>
   Iron.seal(

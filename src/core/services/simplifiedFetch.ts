@@ -3,7 +3,7 @@ export const simplifiedFetch = <T = any>(
   init?: RequestInit
 ): Promise<T> =>
   fetch(input, init).then(async o => {
-    if (o.status >= 400 && o.status < 600) {
+    if (!o.ok) {
       throw new Error((await o.json()).message)
     }
 

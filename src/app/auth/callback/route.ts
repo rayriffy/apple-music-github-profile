@@ -10,11 +10,6 @@ import { getClientAddress } from '$core/services/getClientAddress'
 import { createUserSession } from '$core/services/session/createUserSession'
 import { sessionCookieName } from '$core/constants/sessionCookieName'
 
-interface CallbackRequest {
-  state: string
-  code: string
-}
-
 const {
   CSRF_SECRET = '',
   APPLE_TEAM_ID= '',
@@ -23,17 +18,13 @@ const {
 } = process.env
 
 export const POST = async (request: Request) => {
-  console.log('Request')
-  console.log(request)
-  console.log('URL: ', request.url)
-  console.log('Text: ', await request.formData().then(o => o.entries()).catch(() => undefined))
-  console.log('JSON: ', await request.json().catch(() => undefined))
+  const formData = await request.formData()
 
   // parse values
-  const {
-    state = '',
-    code = ''
-  } = await request.json() as CallbackRequest
+  const state = formData.get('state') as string
+  const code = formData.get('code') as string
+
+  console.log({ state, code })
 
   // verify csrf token
   const csrfInstance = new CSRF()

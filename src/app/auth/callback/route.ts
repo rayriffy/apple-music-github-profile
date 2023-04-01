@@ -24,8 +24,6 @@ export const POST = async (request: Request) => {
   const state = formData.get('state') as string
   const code = formData.get('code') as string
 
-  console.log({ state, code })
-
   // verify csrf token
   const csrfInstance = new CSRF()
   const isCSRFVerified = csrfInstance.verify(CSRF_SECRET, state)
@@ -56,6 +54,9 @@ export const POST = async (request: Request) => {
         'https://apple-music-github-profile.rayriffy.com/api/auth/callback',
       clientSecret: clientSecret,
     })
+
+    console.log({ clientSecret, tokenResponse })
+
     const { sub: appleUserId, email: appleUserEmail } =
       await appleSignin.verifyIdToken(tokenResponse.id_token, {
         audience: 'com.rayriffy.apple-music.auth',

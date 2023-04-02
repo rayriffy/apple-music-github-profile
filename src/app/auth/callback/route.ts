@@ -100,7 +100,7 @@ export const POST = async (request: Request) => {
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <meta http-equiv="X-UA-Compatible" content="ie=edge">
-          <meta http-equiv="Refresh" content="1; url=https://apple-music-github-profile.rayriffy.com/${
+          <meta http-equiv="Refresh" content="1; url=https://music-profile.rayriffy.com/${
             user.appleMusicToken === null ? 'link' : 'dash'
           }" />
           <title>Authenticated</title>

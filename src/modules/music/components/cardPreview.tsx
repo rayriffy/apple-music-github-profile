@@ -18,7 +18,7 @@ export const CardPreview = memo<Props>(props => {
   )
   const builtUrl = useMemo(
     () =>
-      `https://apple-music-github-profile.rayriffy.com/theme/${selectedTheme}.svg?${new URLSearchParams(
+      `https://music-profile.rayriffy.com/theme/${selectedTheme}.svg?${new URLSearchParams(
         {
           uid: uid,
         }

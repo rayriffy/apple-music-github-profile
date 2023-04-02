@@ -19,7 +19,7 @@ export const getRecentlyPlayedTrack = async (
         Accepts: 'application/json',
         Authorization: `Bearer ${developerToken}`,
         'Music-User-Token': userToken,
-        Referer: 'https://apple-music-github-profile.rayriffy.com',
+        Referer: 'https://music-profile.rayriffy.com',
       },
       next: {
         revalidate: 0,

@@ -18,7 +18,7 @@ module.exports = withBundleAnalyzer({
   experimental: {
     appDir: true,
     typedRoutes: true,
-    serverComponentsExternalPackages: ['svgo'],
+    serverComponentsExternalPackages: ['svgo', 'art-template', 'apple-signin-auth'],
   },
   reactStrictMode: true,
   swcMinify: true,

@@ -18,6 +18,7 @@ module.exports = withBundleAnalyzer({
   experimental: {
     appDir: true,
     typedRoutes: true,
+    serverComponentsExternalPackages: ['svgo'],
   },
   reactStrictMode: true,
   swcMinify: true,

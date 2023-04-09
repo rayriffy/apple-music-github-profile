@@ -18,8 +18,8 @@ const Layout = async (props: Props) => {
   return (
     <html lang="en">
       <body>
-        <div className="min-h-screen h-full w-full flex justify-center items-center flex-col px-4">
-          <main className="max-w-lg w-full bg-white px-6 py-6 rounded-xl shadow-xl">
+        <div className="min-h-screen h-full w-full flex justify-center items-center flex-col p-4">
+          <main className="max-w-lg w-full bg-white px-6 py-6 rounded-xl shadow-xl max-h-full overflow-y-auto">
             {children}
           </main>
           <span className="text-sm pt-6">

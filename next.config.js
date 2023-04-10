@@ -17,7 +17,7 @@ module.exports = withBundleAnalyzer({
       {
         source: '/:path*',
         has: [{ type: 'host', value: 'apple-music-github-profile.rayriffy.com' }],
-        destination: 'https://music-profile.rayriffy.com/:slug*',
+        destination: 'https://music-profile.rayriffy.com/:path*',
         permanent: true
       }
     ]

@@ -12,6 +12,16 @@ module.exports = withBundleAnalyzer({
       },
     ]
   },
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'apple-music-github-profile.rayriffy.com' }],
+        destination: 'https://music-profile.rayriffy.com/:slug*',
+        permanent: true
+      }
+    ]
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },

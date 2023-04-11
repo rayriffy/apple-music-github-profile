@@ -54,7 +54,7 @@ export const AppleMusicAuthorizeButton = memo(() => {
         progress ? 'disabled:cursor-wait' : 'disabled:cursor-not-allowed'
       }`}
     >
-      Connect <AppleMusicIcon className="h-3.5 ml-1.5 text-[#fc3c44]" />
+      Connect <AppleMusicIcon className="ml-1.5 h-3.5 text-[#fc3c44]" />
     </button>
   )
 })

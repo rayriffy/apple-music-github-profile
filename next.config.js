@@ -16,10 +16,12 @@ module.exports = withBundleAnalyzer({
     return [
       {
         source: '/:path*',
-        has: [{ type: 'host', value: 'apple-music-github-profile.rayriffy.com' }],
+        has: [
+          { type: 'host', value: 'apple-music-github-profile.rayriffy.com' },
+        ],
         destination: 'https://music-profile.rayriffy.com/:path*',
-        permanent: true
-      }
+        permanent: true,
+      },
     ]
   },
   eslint: {
@@ -28,7 +30,11 @@ module.exports = withBundleAnalyzer({
   experimental: {
     appDir: true,
     typedRoutes: true,
-    serverComponentsExternalPackages: ['svgo', 'art-template', 'apple-signin-auth'],
+    serverComponentsExternalPackages: [
+      'svgo',
+      'art-template',
+      'apple-signin-auth',
+    ],
   },
   reactStrictMode: true,
   swcMinify: true,

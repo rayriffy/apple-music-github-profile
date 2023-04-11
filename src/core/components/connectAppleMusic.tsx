@@ -23,13 +23,13 @@ export const ConnectAppleMusic = memo<Props>(props => {
         {musicKitLoadingState === 'init' ? (
           <button
             disabled
-            className="inline-flex items-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-black shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 cursor-wait focus:ring-offset-2"
+            className="inline-flex cursor-wait items-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-black shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2"
           >
             Loading MusicKit...
           </button>
         ) : musicKitLoadingState === 'fail' ? (
           <button
-            className="inline-flex items-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-600 cursor-not-allowed focus:outline-none focus:ring-2 focus:ring-red-900 focus:ring-offset-2"
+            className="inline-flex cursor-not-allowed items-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-900 focus:ring-offset-2"
             disabled
           >
             Failed to load MusicKit

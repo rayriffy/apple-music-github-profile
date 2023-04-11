@@ -17,18 +17,18 @@ const Page = async () => {
   return (
     <Fragment>
       <div className="flex justify-between">
-        <p className="text-sm truncate pr-2">
+        <p className="truncate pr-2 text-sm">
           Logged in as{' '}
           <span className="font-semibold">{session?.email ?? '#EMAIL#'}</span>
         </p>
         <Steps total={3} current={3} />
       </div>
-      <h1 className="font-semibold text-2xl text-gray-900 pb-2">Connected!</h1>
+      <h1 className="pb-2 text-2xl font-semibold text-gray-900">Connected!</h1>
       <p className="pb-2">
         Congrats 🎉 You're ready to use the card! Choose card theme of your
         choice and copy following Markdown snippet into your GitHub profile.
       </p>
-      <p className="text-sm pb-4">
+      <p className="pb-4 text-sm">
         Having issue with the card?{' '}
         <Link href="/link" className="text-blue-500">
           Try Reconnecting it

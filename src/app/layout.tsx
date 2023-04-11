@@ -18,11 +18,11 @@ const Layout = async (props: Props) => {
   return (
     <html lang="en">
       <body>
-        <div className="min-h-screen h-full w-full flex justify-center items-center flex-col p-4">
-          <main className="max-w-lg w-full bg-white px-6 py-6 rounded-xl shadow-xl max-h-full overflow-y-auto">
+        <div className="flex h-full min-h-screen w-full flex-col items-center justify-center p-4">
+          <main className="max-h-full w-full max-w-lg overflow-y-auto rounded-xl bg-white px-6 py-6 shadow-xl">
             {children}
           </main>
-          <span className="text-sm pt-6">
+          <span className="pt-6 text-sm">
             © {new Date().getFullYear()} Phumrapee Limpianchop
           </span>
         </div>

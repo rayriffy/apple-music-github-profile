@@ -10,7 +10,7 @@ export const Steps = memo<Props>(props => {
 
   return (
     <nav
-      className="flex items-center justify-end pb-4 shrink-0"
+      className="flex shrink-0 items-center justify-end pb-4"
       aria-label="Progress"
     >
       <p className="text-sm font-medium">

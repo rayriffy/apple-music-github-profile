@@ -20,13 +20,13 @@ const Page = async () => {
   return (
     <Fragment>
       <div className="flex justify-between">
-        <p className="text-sm truncate pr-2">
+        <p className="truncate pr-2 text-sm">
           Logged in as{' '}
           <span className="font-semibold">{session?.email ?? '#EMAIL#'}</span>
         </p>
         <Steps total={3} current={2} />
       </div>
-      <h1 className="font-semibold text-2xl text-gray-900 pb-2">
+      <h1 className="pb-2 text-2xl font-semibold text-gray-900">
         Connect with Apple Music
       </h1>
       <p className="pb-2">

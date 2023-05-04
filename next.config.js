@@ -28,7 +28,6 @@ module.exports = withBundleAnalyzer({
     ignoreDuringBuilds: true,
   },
   experimental: {
-    appDir: true,
     typedRoutes: true,
     serverComponentsExternalPackages: [
       'svgo',

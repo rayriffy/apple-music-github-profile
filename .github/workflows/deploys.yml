@@ -44,9 +44,9 @@ jobs:
 
       - uses: deploys-app/deploys-action@v1
         with:
-          project: apple-music-github-profile
+          project: rayriffy
           location: gke.cluster-rcf2
-          name: runtime
+          name: music-profile
           image: ghcr.io/rayriffy/apple-music-github-profile-runtime
           minReplicas: 1
           maxReplicas: 5

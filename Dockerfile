@@ -28,7 +28,7 @@ ENV PORT 3000
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 
-# COPY --from=builder /app/public ./public
+COPY --from=builder /opt /
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing

@@ -1,27 +1,34 @@
-FROM cgr.dev/chainguard/node:18 AS builder
+FROM node:18-slim AS builder
 
 WORKDIR /app
+RUN npm i -g pnpm
+
+RUN mkdir -p /opt && \
+    cp -a --parents /lib/*/libz.* /opt
 
 COPY package.json pnpm-lock.yaml* ./
 COPY ./patches ./patches
-RUN npx pnpm -r i --frozen-lockfile && npx pnpm patch art-template
+RUN pnpm -r i --frozen-lockfile && pnpm patch art-template
 
 COPY next.config.js next-env.d.ts postcss.config.js tailwind.config.js tsconfig.json ./
 COPY ./src ./src
 COPY ./public ./public
 COPY ./prisma ./prisma
 
-RUN npx pnpm build
+RUN pnpm build
 
 # ? -------------------------
 
-FROM cgr.dev/chainguard/node:18 AS runner
+FROM gcr.io/distroless/nodejs18-debian11 AS runner
 
+WORKDIR /app
 EXPOSE 3000
 
 ENV PORT 3000
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
+
+COPY --from=builder /opt /
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing

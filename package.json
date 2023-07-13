@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next",
     "build": "prisma generate && next build",
+    "vercel-build": "concurrently \"prisma migrate deploy\" \"prisma generate && next build\"",
     "start": "next start",
     "prisma:generate": "prisma generate",
     "prisma:commit": "prisma migrate dev",

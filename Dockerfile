@@ -6,7 +6,8 @@ RUN apt update && \
     apt install -y openssl
 
 RUN mkdir -p /opt && \
-    cp -a --parents /usr/lib/*/libz.* /opt
+    cp -a --parents /usr/lib/*/libz.* /opt && \
+    cp -a --parents /usr/lib/*/libssl.* /opt
 
 WORKDIR /app
 

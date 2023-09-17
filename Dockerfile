@@ -6,8 +6,13 @@ RUN apt update && \
     apt install -y openssl
 
 RUN mkdir -p /opt && \
+    cp -a --parents /etc/ld.so.cache /opt && \
+    cp -a -r --parents /etc/ssl /opt && \
     cp -a --parents /usr/lib/*/libz.* /opt && \
-    cp -a --parents /usr/lib/*/libssl.* /opt
+    cp -a --parents /usr/lib/*/libssl.* /opt && \
+    cp -a --parents /usr/lib/*/libcrypto.* /opt && \
+    cp -a -r --parents /usr/lib/*/engines-3 /opt && \
+    cp -a -r --parents /usr/lib/*/ossl-modules /opt
 
 WORKDIR /app
 
@@ -25,6 +30,7 @@ RUN pnpm build
 # ? -------------------------
 
 FROM gcr.io/distroless/nodejs20-debian11 AS runner
+# FROM node:20-slim AS runner
 
 WORKDIR /app
 EXPOSE 3000

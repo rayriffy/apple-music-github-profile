@@ -2,6 +2,9 @@ FROM node:20-slim AS builder
 
 RUN npm i -g pnpm
 
+RUN apt update && \
+    apt install -y openssl
+
 RUN mkdir -p /opt && \
     cp -a --parents /usr/lib/*/libz.* /opt
 

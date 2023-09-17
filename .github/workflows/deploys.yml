@@ -21,14 +21,6 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Cache Docker layers
-        uses: actions/cache@v3
-        with:
-          path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-single-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-single-buildx
-
       - name: Build and push image
         uses: docker/build-push-action@v3
         with:
@@ -36,11 +28,8 @@ jobs:
           file: Dockerfile
           push: true
           tags: ghcr.io/rayriffy/apple-music-github-profile-runtime
-          cache-from: type=local,src=/tmp/.buildx-cache
-          # mode=max to cache multi-layer stage
-          # https://github.com/moby/buildkit#--export-cache-options
-          # https://github.com/docker/buildx#--cache-tonametypetypekeyvalue
-          cache-to: type=local,mode=max,dest=/tmp/.buildx-cache-new
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
 
       - uses: deploys-app/deploys-action@v1
         with:
@@ -53,8 +42,3 @@ jobs:
         env:
           DEPLOYS_AUTH_USER: ${{ secrets.DEPLOYS_AUTH_USER }}
           DEPLOYS_AUTH_PASS: ${{ secrets.DEPLOYS_AUTH_PASS }}
-
-      - name: Replacing with newer cache
-        run: |
-          rm -rf /tmp/.buildx-cache
-          mv /tmp/.buildx-cache-new /tmp/.buildx-cache

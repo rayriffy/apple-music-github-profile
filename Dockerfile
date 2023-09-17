@@ -1,20 +1,8 @@
-FROM node:20-slim AS builder
-
-RUN npm i -g pnpm
-
-RUN apt update && \
-    apt install -y openssl
-
-RUN mkdir -p /opt && \
-    cp -a --parents /etc/ld.so.cache /opt && \
-    cp -a -r --parents /etc/ssl /opt && \
-    cp -a --parents /usr/lib/*/libz.* /opt && \
-    cp -a --parents /usr/lib/*/libssl.* /opt && \
-    cp -a --parents /usr/lib/*/libcrypto.* /opt && \
-    cp -a -r --parents /usr/lib/*/engines-3 /opt && \
-    cp -a -r --parents /usr/lib/*/ossl-modules /opt
+FROM node:20-alpine AS builder
 
 WORKDIR /app
+
+RUN npm i -g pnpm
 
 COPY package.json pnpm-lock.yaml* ./
 COPY ./patches ./patches
@@ -29,8 +17,7 @@ RUN pnpm build
 
 # ? -------------------------
 
-FROM gcr.io/distroless/nodejs20-debian11 AS runner
-# FROM node:20-slim AS runner
+FROM node:20-alpine AS runner
 
 WORKDIR /app
 EXPOSE 3000
@@ -38,8 +25,6 @@ EXPOSE 3000
 ENV PORT 3000
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
-
-COPY --from=builder /opt /
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing

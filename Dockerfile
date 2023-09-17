@@ -1,10 +1,11 @@
-FROM node:18-slim AS builder
+FROM node:20-slim AS builder
 
-WORKDIR /app
 RUN npm i -g pnpm
 
 RUN mkdir -p /opt && \
-    cp -a --parents /lib/*/libz.* /opt
+    cp -a --parents /usr/lib/*/libz.* /opt
+
+WORKDIR /app
 
 COPY package.json pnpm-lock.yaml* ./
 COPY ./patches ./patches
@@ -19,7 +20,7 @@ RUN pnpm build
 
 # ? -------------------------
 
-FROM gcr.io/distroless/nodejs18-debian11 AS runner
+FROM gcr.io/distroless/nodejs20-debian11 AS runner
 
 WORKDIR /app
 EXPOSE 3000

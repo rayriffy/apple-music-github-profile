@@ -19,6 +19,7 @@ model User {
   appleMusicToken   String?  @db.VarChar(300)
   createdAt         DateTime @default(now())
   updatedAt         DateTime @default(now())
+  usedAt            DateTime?
   clientAddress     String?
 
   @@index([uid])

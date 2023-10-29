@@ -107,6 +107,18 @@ export const GET = async (req: Request, context) => {
         render(templateFile, builtRenderedData)
       )
 
+      // update when successfully rendered
+      prisma.user
+        .update({
+          data: {
+            usedAt: new Date(),
+          },
+          where: {
+            uid: uid,
+          },
+        })
+        .catch(() => {})
+
       /**
        * Store in local browser for 60 seconds
        * Stored cache on server is fresh for 128 seconds

@@ -50,7 +50,7 @@ export const AppleMusicAuthorizeButton = memo(() => {
     <button
       disabled={progress}
       onClick={onAuthorize}
-      className={`inline-flex items-center rounded-md border border-transparent bg-white px-4 py-2 text-sm font-medium text-black shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 ${
+      className={`inline-flex items-center rounded-md border bg-white px-4 py-2 text-sm font-medium text-black shadow-sm hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-300 focus:ring-offset-2 ${
         progress ? 'disabled:cursor-wait' : 'disabled:cursor-not-allowed'
       }`}
     >

@@ -1,1 +1,1 @@
-export const sessionCookieName = 'amgp-auth'
+export const sessionCookieName = 'music-profile:auth'

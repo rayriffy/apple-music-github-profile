@@ -75,6 +75,7 @@ export const CardPreview = memo<Props>(props => {
               id="comment"
               className="block w-full rounded-md border-gray-300 font-mono shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-xs"
               value={`[![Apple Music GitHub profile](${builtUrl})](https://github.com/rayriffy/apple-music-github-profile)`}
+              readOnly
             ></textarea>
           </div>
         </div>

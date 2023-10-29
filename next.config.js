@@ -27,15 +27,20 @@ module.exports = withBundleAnalyzer({
   eslint: {
     ignoreDuringBuilds: true,
   },
+  compiler: {
+    reactRemoveProperties: true,
+    removeConsole: true,
+  },
   experimental: {
     typedRoutes: true,
+    fallbackNodePolyfills: false,
     serverComponentsExternalPackages: [
       'svgo',
       'art-template',
       'apple-signin-auth',
     ],
   },
+  poweredByHeader: false,
   reactStrictMode: true,
-  swcMinify: true,
   output: 'standalone',
 })

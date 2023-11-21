@@ -21,9 +21,7 @@ export const getRecentlyPlayedTrack = async (
         'Music-User-Token': userToken,
         Referer: 'https://music-profile.rayriffy.com',
       },
-      next: {
-        revalidate: 0,
-      },
+      cache: 'no-store'
     }
   ).then(async o => {
     try {
@@ -33,9 +31,9 @@ export const getRecentlyPlayedTrack = async (
 
       return await o.json()
     } catch (e) {
-      console.log('>>> statusCode: ', o.status)
-      console.log('>>> data: ', await o.text())
-      console.log('')
+      console.error('>>> statusCode: ', o.status)
+      console.error('>>> data: ', await o.text())
+      console.error('')
       throw e
     }
   })
@@ -43,8 +41,8 @@ export const getRecentlyPlayedTrack = async (
   try {
     return rawResponse.data[0]
   } catch (e) {
-    console.log('>>> data: ', JSON.stringify(rawResponse))
-    console.log('')
+    console.error('>>> data: ', JSON.stringify(rawResponse))
+    console.error('')
     throw e
   }
 }

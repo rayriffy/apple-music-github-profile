@@ -103,7 +103,7 @@ export const POST = async (request: Request) => {
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <meta http-equiv="X-UA-Compatible" content="ie=edge">
           <meta http-equiv="Refresh" content="1; url=https://music-profile.rayriffy.com/${
-            user!.token.music === null ? 'link' : 'dash'
+            typeof user?.token?.music !== 'string' ? 'link' : 'dash'
           }" />
           <title>Authenticated</title>
           <style>

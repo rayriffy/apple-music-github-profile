@@ -29,7 +29,7 @@ module.exports = withBundleAnalyzer({
   },
   compiler: {
     reactRemoveProperties: true,
-    removeConsole: true,
+    removeConsole: false,
   },
   experimental: {
     typedRoutes: true,

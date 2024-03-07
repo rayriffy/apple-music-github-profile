@@ -11,7 +11,6 @@ RUN pnpm -r i --frozen-lockfile && pnpm patch art-template
 COPY next.config.js next-env.d.ts postcss.config.js tailwind.config.js tsconfig.json ./
 COPY ./src ./src
 COPY ./public ./public
-COPY ./prisma ./prisma
 
 RUN pnpm build
 

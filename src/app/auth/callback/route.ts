@@ -70,14 +70,16 @@ export const POST = async (request: Request) => {
     const user = await collections.users.findOneAndUpdate({
       uid: appleUserId
     }, {
-      $set: {
+      $setOnInsert: {
         uid: appleUserId,
         email: appleUserEmail,
+        createdAt: createdAt,
+      },
+      $set: {
         'token.refresh': tokenResponse.refresh_token,
         clientAddress: getClientAddress(),
-        createdAt: createdAt,
         updatedAt: createdAt,
-      }
+      },
     }, {
       upsert: true
     })

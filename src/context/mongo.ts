@@ -9,9 +9,11 @@ declare global {
   var mongo: MongoClient | undefined
 }
 
+const { MONGODB_URL = "mongodb://johndoe:randompassword@localhost" } = process.env
+
 export const mongo =
   global.mongo ||
-  new MongoClient(process.env.MONGODB_URL ?? '')
+  new MongoClient(MONGODB_URL)
 
 if (process.env.NODE_ENV !== 'production') global.mongo = mongo
 

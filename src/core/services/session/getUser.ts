@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers'
 
 import { getUserSession, type LoginSession } from './getUserSession'
-import { prisma } from '$context/prisma'
+import { collections } from '$context/mongo'
 import { sessionCookieName } from '../../constants/sessionCookieName'
 
 interface User {
@@ -26,17 +26,18 @@ export const getUser = async (): Promise<User> => {
 
   // check if user connected with appl music yet
   try {
-    const targetUser = await prisma.user.findUnique({
-      where: {
-        uid: userSession.id,
-      },
-      select: {
-        appleMusicToken: true,
-      },
+    const targetUser = await collections.users.findOne({
+      uid: userSession.id,
+    }, {
+      projection: {
+        token: {
+          music: 1
+        }
+      }
     })
     const isMusicTokenExist =
-      typeof targetUser?.appleMusicToken === 'string' &&
-      targetUser?.appleMusicToken !== ''
+      typeof targetUser?.token.music === 'string' &&
+      targetUser?.token.music !== ''
 
     return {
       session: userSession,

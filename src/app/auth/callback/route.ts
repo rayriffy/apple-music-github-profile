@@ -4,7 +4,7 @@ import appleSignin from 'apple-signin-auth'
 import CSRF from 'csrf'
 import { serialize } from 'cookie'
 
-import { prisma } from '$context/prisma'
+import { collections } from '$context/mongo'
 import { getClientAddress } from '$core/services/getClientAddress'
 import { createUserSession } from '$core/services/session/createUserSession'
 import { sessionCookieName } from '$core/constants/sessionCookieName'
@@ -66,20 +66,20 @@ export const POST = async (request: Request) => {
     /**
      * Insert user OAuth result to database
      */
-    const user = await prisma.user.upsert({
-      where: {
+    const createdAt = new Date()
+    const user = await collections.users.findOneAndUpdate({
+      uid: appleUserId
+    }, {
+      $set: {
         uid: appleUserId,
-      },
-      update: {
-        appleRefreshToken: tokenResponse.refresh_token,
-        updatedAt: new Date(),
+        email: appleUserEmail,
+        'token.refresh': tokenResponse.refresh_token,
         clientAddress: getClientAddress(),
-      },
-      create: {
-        uid: appleUserId,
-        appleRefreshToken: tokenResponse.refresh_token,
-        email: appleUserEmail ?? null,
-      },
+        createdAt: createdAt,
+        updatedAt: createdAt,
+      }
+    }, {
+      upsert: true
     })
 
     /**
@@ -101,7 +101,7 @@ export const POST = async (request: Request) => {
           <meta name="viewport" content="width=device-width, initial-scale=1.0">
           <meta http-equiv="X-UA-Compatible" content="ie=edge">
           <meta http-equiv="Refresh" content="1; url=https://music-profile.rayriffy.com/${
-            user.appleMusicToken === null ? 'link' : 'dash'
+            user!.token.music === null ? 'link' : 'dash'
           }" />
           <title>Authenticated</title>
           <style>

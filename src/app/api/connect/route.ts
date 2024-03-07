@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-import { prisma } from '$context/prisma'
+import { collections } from '$context/mongo'
 import { getClientAddress } from '$core/services/getClientAddress'
 import { getUser } from '$core/services/session/getUser'
 
@@ -36,13 +36,14 @@ export const POST = async (req: Request) => {
   /**
    * Looking for a valid user
    */
-  const targetUser = await prisma.user.findUnique({
-    where: {
-      uid: session.id,
-    },
-    select: {
-      appleMusicToken: true,
-    },
+  const targetUser = await collections.users.findOne({
+    uid: session.id,
+  }, {
+    projection: {
+      token: {
+        music: 1
+      }
+    }
   })
 
   if (!targetUser) {
@@ -59,16 +60,16 @@ export const POST = async (req: Request) => {
   /**
    * Not to call update if token is unchanged
    */
-  if (targetUser.appleMusicToken !== userToken) {
-    await prisma.user.update({
-      where: {
-        uid: session.id,
-      },
-      data: {
-        appleMusicToken: userToken,
+  if (targetUser.token.music !== userToken) {
+    await collections.users.updateOne({
+      uid: session.id,
+    }, {
+
+      $set: {
+        'token.music': userToken,
         clientAddress: getClientAddress(),
         updatedAt: new Date(),
-      },
+      }
     })
   }
 

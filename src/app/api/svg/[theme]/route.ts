@@ -4,7 +4,7 @@ import path from 'path'
 import { render } from 'art-template'
 import { NextResponse } from 'next/server'
 
-import { prisma } from '$context/prisma'
+import { collections } from '$context/mongo'
 import { renderErrorCard } from '$core/services/renderErrorCard'
 import { getMusicKitDeveloperToken } from '$core/services/getMusicKitDeveloperToken'
 import { getRecentlyPlayedTrack } from '$modules/music/services/getRecentlyPlayedTrack'
@@ -44,22 +44,20 @@ export const GET = async (req: Request, context) => {
     /**
      * Locate user apple music token
      */
-    const targetUser = await prisma.user.findUnique({
-      where: {
-        uid: uid,
-      },
+    const targetUser = await collections.users.findOne({
+      uid,
     })
 
     if (!targetUser) {
       throw new Error('User does not exist')
-    } else if (typeof targetUser.appleMusicToken !== 'string') {
+    } else if (typeof targetUser.token.music !== 'string') {
       throw new Error('Account does not connected to Apple Music yet')
     }
 
     /**
      * Get all tokens
      */
-    const userToken = targetUser.appleMusicToken
+    const userToken = targetUser.token.music
     const developerToken = getMusicKitDeveloperToken(60)
 
     /**
@@ -108,16 +106,20 @@ export const GET = async (req: Request, context) => {
       )
 
       // update when successfully rendered
-      prisma.user
-        .update({
-          data: {
-            usedAt: new Date(),
-          },
-          where: {
-            uid: uid,
-          },
+      const loggedAt = new Date()
+      Promise.allSettled([
+        collections.users.updateOne({
+          uid,
+        }, {
+          $set: {
+            lastSeenAt: loggedAt,
+          }
+        }),
+        collections.logs.insertOne({
+          uid,
+          loggedAt
         })
-        .catch(() => {})
+      ])
 
       /**
        * Store in local browser for 60 seconds

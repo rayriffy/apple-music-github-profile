@@ -11,7 +11,7 @@ declare global {
 
 export const mongo =
   global.mongo ||
-  new MongoClient(process.env.MONGODB_URL!)
+  new MongoClient(process.env.MONGODB_URL ?? '')
 
 if (process.env.NODE_ENV !== 'production') global.mongo = mongo
 

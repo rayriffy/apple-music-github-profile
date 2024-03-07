@@ -10,6 +10,7 @@ import { getMusicKitDeveloperToken } from '$core/services/getMusicKitDeveloperTo
 import { getRecentlyPlayedTrack } from '$modules/music/services/getRecentlyPlayedTrack'
 import { getAlbumCover } from '$modules/music/services/getAlbumCover'
 import { optimizeSVG } from '$core/services/optimizeSVG'
+import { getClientAddress } from '$core/services/getClientAddress'
 
 export const GET = async (req: Request, context) => {
   const params = new URL(req.url).searchParams
@@ -117,6 +118,7 @@ export const GET = async (req: Request, context) => {
         }),
         collections.logs.insertOne({
           uid,
+          clientAddress: getClientAddress(),
           loggedAt
         })
       ])

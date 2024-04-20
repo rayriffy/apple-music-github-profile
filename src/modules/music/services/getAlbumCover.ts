@@ -63,6 +63,7 @@ export const getAlbumCover = async (
 
     return coverImageData
   } catch (e) {
+    console.error(e)
     return null
   }
 }

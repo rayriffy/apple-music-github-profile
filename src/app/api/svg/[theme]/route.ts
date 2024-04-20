@@ -83,6 +83,8 @@ export const GET = async (req: Request, context) => {
       return `${minute}:${seconds.toString().padStart(2, '0')}`
     }
 
+    console.log(track.attributes.artwork)
+
     const [templateFile, coverImageData] = await Promise.all([
       fs.promises.readFile(targetTemplateFile, 'utf-8'),
       getAlbumCover(track.attributes.artwork),

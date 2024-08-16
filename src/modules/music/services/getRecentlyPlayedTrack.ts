@@ -21,7 +21,7 @@ export const getRecentlyPlayedTrack = async (
         'Music-User-Token': userToken,
         Referer: 'https://music-profile.rayriffy.com',
       },
-      cache: 'no-store'
+      cache: 'no-store',
     }
   ).then(async o => {
     try {

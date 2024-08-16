@@ -67,22 +67,26 @@ export const POST = async (request: Request) => {
      * Insert user OAuth result to database
      */
     const createdAt = new Date()
-    const user = await collections.users.findOneAndUpdate({
-      uid: appleUserId
-    }, {
-      $setOnInsert: {
+    const user = await collections.users.findOneAndUpdate(
+      {
         uid: appleUserId,
-        email: appleUserEmail,
-        createdAt: createdAt,
       },
-      $set: {
-        'token.refresh': tokenResponse.refresh_token,
-        clientAddress: getClientAddress(),
-        updatedAt: createdAt,
+      {
+        $setOnInsert: {
+          uid: appleUserId,
+          email: appleUserEmail,
+          createdAt: createdAt,
+        },
+        $set: {
+          'token.refresh': tokenResponse.refresh_token,
+          clientAddress: getClientAddress(),
+          updatedAt: createdAt,
+        },
       },
-    }, {
-      upsert: true
-    })
+      {
+        upsert: true,
+      }
+    )
 
     /**
      * Generate encrypted token

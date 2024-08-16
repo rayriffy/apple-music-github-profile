@@ -22,8 +22,8 @@ export const Steps = memo<Props>(props => {
             i + 1 === current
               ? 'current'
               : i + 1 < current
-              ? 'complete'
-              : 'pending'
+                ? 'complete'
+                : 'pending'
 
           return (
             <li key={`step-${i}-${status}`}>

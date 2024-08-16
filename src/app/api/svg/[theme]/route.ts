@@ -111,18 +111,21 @@ export const GET = async (req: Request, context) => {
       // update when successfully rendered
       const loggedAt = new Date()
       Promise.allSettled([
-        collections.users.updateOne({
-          uid,
-        }, {
-          $set: {
-            lastSeenAt: loggedAt,
+        collections.users.updateOne(
+          {
+            uid,
+          },
+          {
+            $set: {
+              lastSeenAt: loggedAt,
+            },
           }
-        }),
+        ),
         collections.logs.insertOne({
           uid,
           clientAddress: getClientAddress(),
-          loggedAt
-        })
+          loggedAt,
+        }),
       ])
 
       /**

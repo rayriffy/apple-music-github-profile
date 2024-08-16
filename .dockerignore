@@ -3,6 +3,6 @@
 node_modules
 img
 .env.example
-.prettierrc
+biome.json
 CONTRIBUTE.md
 README.md

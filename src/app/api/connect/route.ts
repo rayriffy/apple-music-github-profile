@@ -36,15 +36,18 @@ export const POST = async (req: Request) => {
   /**
    * Looking for a valid user
    */
-  const targetUser = await collections.users.findOne({
-    uid: session.id,
-  }, {
-    projection: {
-      token: {
-        music: 1
-      }
+  const targetUser = await collections.users.findOne(
+    {
+      uid: session.id,
+    },
+    {
+      projection: {
+        token: {
+          music: 1,
+        },
+      },
     }
-  })
+  )
 
   if (!targetUser) {
     return NextResponse.json(
@@ -61,16 +64,18 @@ export const POST = async (req: Request) => {
    * Not to call update if token is unchanged
    */
   if (targetUser.token.music !== userToken) {
-    await collections.users.updateOne({
-      uid: session.id,
-    }, {
-
-      $set: {
-        'token.music': userToken,
-        clientAddress: getClientAddress(),
-        updatedAt: new Date(),
+    await collections.users.updateOne(
+      {
+        uid: session.id,
+      },
+      {
+        $set: {
+          'token.music': userToken,
+          clientAddress: getClientAddress(),
+          updatedAt: new Date(),
+        },
       }
-    })
+    )
   }
 
   return NextResponse.json({

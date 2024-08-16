@@ -26,15 +26,18 @@ export const getUser = async (): Promise<User> => {
 
   // check if user connected with appl music yet
   try {
-    const targetUser = await collections.users.findOne({
-      uid: userSession.id,
-    }, {
-      projection: {
-        token: {
-          music: 1
-        }
+    const targetUser = await collections.users.findOne(
+      {
+        uid: userSession.id,
+      },
+      {
+        projection: {
+          token: {
+            music: 1,
+          },
+        },
       }
-    })
+    )
     const isMusicTokenExist =
       typeof targetUser?.token.music === 'string' &&
       targetUser?.token.music !== ''

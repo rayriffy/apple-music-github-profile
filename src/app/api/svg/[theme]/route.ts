@@ -1,5 +1,5 @@
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 
 import { render } from 'art-template'
 import { NextResponse } from 'next/server'
@@ -146,7 +146,6 @@ export const GET = async (req: Request, context) => {
         },
       })
     } catch (e) {
-      console.log(e)
       throw new Error('Unable to render SVG string')
     }
   } catch (e) {

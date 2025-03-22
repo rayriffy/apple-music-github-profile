@@ -79,7 +79,7 @@ export const POST = async (request: Request) => {
         },
         $set: {
           'token.refresh': tokenResponse.refresh_token,
-          clientAddress: getClientAddress(),
+          clientAddress: await getClientAddress(),
           updatedAt: createdAt,
         },
       },

@@ -2,6 +2,7 @@
   "name": "apple-music-github-profile",
   "version": "1.0.0",
   "description": "Show your recently played song on Apple Music directly to your GitHub profile.",
+  "packageManager": "pnpm@10.6.5",
   "scripts": {
     "dev": "next",
     "build": "next build",
@@ -21,39 +22,40 @@
   "homepage": "https://github.com/rayriffy/apple-music-github-profile#readme",
   "dependencies": {
     "@hapi/iron": "^7.0.1",
-    "apple-signin-auth": "^1.7.6",
-    "art-template": "4.13.2",
+    "apple-signin-auth": "^1.7.8",
+    "art-template": "4.13.4",
     "cookie": "^0.6.0",
     "csrf": "^3.1.0",
     "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.8.0",
-    "next": "^14.2.5",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "react-icons": "^5.3.0",
-    "sharp": "^0.33.4",
+    "mongodb": "^6.15.0",
+    "next": "^15.2.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "sharp": "^0.33.5",
     "svgo": "^3.3.2"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.8.3",
-    "@next/bundle-analyzer": "^14.2.5",
-    "@tailwindcss/forms": "^0.5.7",
+    "@biomejs/biome": "^1.9.4",
+    "@next/bundle-analyzer": "^15.2.3",
+    "@tailwindcss/forms": "^0.5.10",
     "@types/cookie": "^0.6.0",
-    "@types/jsonwebtoken": "^9.0.6",
-    "@types/node": "^22.3.0",
-    "@types/react": "^18.3.3",
-    "@types/react-dom": "^18.3.0",
-    "autoprefixer": "^10.4.20",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/node": "^22.13.11",
+    "@types/react": "^19.0.12",
+    "@types/react-dom": "^19.0.4",
+    "autoprefixer": "^10.4.21",
     "musickit-typescript": "^1.2.4",
-    "postcss": "^8.4.41",
+    "postcss": "^8.5.3",
     "tailwindcss": "^3.4.10",
-    "tsx": "^4.17.0",
-    "typescript": "^5.5.4"
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
   },
   "pnpm": {
-    "patchedDependencies": {
-      "art-template@4.13.2": "patches/art-template@4.13.2.patch"
-    }
-  },
-  "packageManager": "pnpm@9.6.0+sha512.38dc6fba8dba35b39340b9700112c2fe1e12f10b17134715a4aa98ccf7bb035e76fd981cf0bb384dfa98f8d6af5481c2bef2f4266a24bfa20c34eb7147ce0b5e"
+    "onlyBuiltDependencies": [
+      "@biomejs/biome",
+      "esbuild",
+      "sharp"
+    ]
+  }
 }

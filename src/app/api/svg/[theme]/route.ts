@@ -15,15 +15,14 @@ import { getClientAddress } from '$core/services/getClientAddress'
 export const GET = async (req: Request, context) => {
   const params = new URL(req.url).searchParams
 
-  const theme = context.params.theme
+  const theme = (await context.params).theme
   const uid = params.get('uid')
 
   try {
-    if (params.keys.length > 1) {
+    if (params.keys.length > 1)
       throw new Error('Parameter exceed')
-    } else if (typeof theme !== 'string' || typeof uid !== 'string') {
+    if (typeof theme !== 'string' || typeof uid !== 'string')
       throw new Error('Illegal query')
-    }
 
     /**
      * make sure template file exists
@@ -49,11 +48,10 @@ export const GET = async (req: Request, context) => {
       uid,
     })
 
-    if (!targetUser) {
+    if (!targetUser)
       throw new Error('User does not exist')
-    } else if (typeof targetUser.token.music !== 'string') {
+    if (typeof targetUser.token.music !== 'string')
       throw new Error('Account does not connected to Apple Music yet')
-    }
 
     /**
      * Get all tokens
@@ -77,13 +75,11 @@ export const GET = async (req: Request, context) => {
      */
     const part = 3
     const getDuration = (millisec: number) => {
-      let minute = Math.floor(millisec / (60 * 1000))
-      let seconds = Math.ceil((millisec - minute * 60 * 1000) / 1000)
+      const minute = Math.floor(millisec / (60 * 1000))
+      const seconds = Math.ceil((millisec - minute * 60 * 1000) / 1000)
 
       return `${minute}:${seconds.toString().padStart(2, '0')}`
     }
-
-    console.log(track.attributes.artwork)
 
     const [templateFile, coverImageData] = await Promise.all([
       fs.promises.readFile(targetTemplateFile, 'utf-8'),
@@ -123,7 +119,7 @@ export const GET = async (req: Request, context) => {
         ),
         collections.logs.insertOne({
           uid,
-          clientAddress: getClientAddress(),
+          clientAddress: await getClientAddress(),
           loggedAt,
         }),
       ])

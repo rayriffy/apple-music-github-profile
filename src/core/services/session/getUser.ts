@@ -10,7 +10,7 @@ interface User {
 }
 
 export const getUser = async (): Promise<User> => {
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
 
   // get user session
   const userSessionToken = cookieStore.get(sessionCookieName)

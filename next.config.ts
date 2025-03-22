@@ -1,9 +1,11 @@
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
+import type { NextConfig } from 'next'
+import analyzer from '@next/bundle-analyzer'
+
+const withBundleAnalyzer = analyzer({
   enabled: process.env.ANALYZE === 'true',
 })
 
-/** @type {import('next').NextConfig} */
-module.exports = withBundleAnalyzer({
+const config: NextConfig = withBundleAnalyzer({
   async rewrites() {
     return [
       {
@@ -34,13 +36,15 @@ module.exports = withBundleAnalyzer({
   experimental: {
     typedRoutes: true,
     fallbackNodePolyfills: false,
-    serverComponentsExternalPackages: [
-      'svgo',
-      'art-template',
-      'apple-signin-auth',
-    ],
   },
+  serverExternalPackages: [
+    'svgo',
+    'art-template',
+    'apple-signin-auth',
+  ],
   poweredByHeader: false,
   reactStrictMode: true,
   output: 'standalone',
 })
+
+export default config

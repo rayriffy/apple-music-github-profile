@@ -71,7 +71,7 @@ export const POST = async (req: Request) => {
       {
         $set: {
           'token.music': userToken,
-          clientAddress: getClientAddress(),
+          clientAddress: await getClientAddress(),
           updatedAt: new Date(),
         },
       }

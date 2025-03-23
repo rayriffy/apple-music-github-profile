@@ -75,8 +75,8 @@ export const dashboardRoute = new Elysia()
       }),
     }
   )
-  .get('/dashboard/link', async ({ email }) => {
+  .get('/dashboard/link', async ({ email, isConnected }) => {
     const developerToken = await getMusicKitDeveloperToken('1h')
 
-    return <LinkPage email={email} token={developerToken} />
+    return <LinkPage email={email} token={developerToken} isConnected={isConnected} />
   })

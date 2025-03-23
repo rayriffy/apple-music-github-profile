@@ -4,9 +4,10 @@ import { Html } from '@elysiajs/html'
 interface Props {
   email: string
   token: string
+  isConnected: boolean
 }
 
-export const LinkPage = ({ email, token }: Props) => {
+export const LinkPage = ({ email, token, isConnected }: Props) => {
   const clientScript = `
     document.addEventListener('musickitloaded', async function () {
       const musicKit = await MusicKit.configure({
@@ -75,13 +76,15 @@ export const LinkPage = ({ email, token }: Props) => {
             Now, you need to authorize access to your Apple Music to be able to
             obtain your recently played music.
           </p>
-          <div role="alert" class="alert alert-warning">
-            <span>
-              You've already connected with Apple Music before. If you're having
-              a trouble with the card, try to reconnect by connect with Apple
-              Music again.
-            </span>
-          </div>
+          {isConnected && (
+            <div role="alert" class="alert alert-warning">
+              <span>
+                You've already connected with Apple Music before. If you're having
+                a trouble with the card, try to reconnect by connect with Apple
+                Music again.
+              </span>
+            </div>
+          )}
           <div id="error-alert" role="alert" class="alert alert-error hidden">
             <span id="error-content"></span>
           </div>

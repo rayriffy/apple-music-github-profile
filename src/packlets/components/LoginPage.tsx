@@ -20,11 +20,6 @@ export const LoginPage = ({ authorizationUrl }: Props) => {
             <a href={authorizationUrl} class="btn btn-neutral">
               Sign in with Apple
             </a>
-            <form action={'/callback'} method={'POST'}>
-              <button type="submit" class="btn btn-primary">
-                Callback
-              </button>
-            </form>
           </div>
         </div>
       </div>

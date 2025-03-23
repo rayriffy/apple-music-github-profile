@@ -1,34 +1,20 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": false,
-    "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
-    "incremental": true,
-    "esModuleInterop": true,
+    "target": "es2021",
     "module": "esnext",
     "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "jsx": "preserve",
-    "typeRoots": ["node_modules/musickit-typescript", "node_modules/@types"],
-    "isolatedModules": true,
-    // "verbatimModuleSyntax": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
-    "strictNullChecks": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "jsx": "react",
+    "jsxFactory": "Html.createElement",
+    "jsxFragmentFactory": "Html.Fragment",
+    "plugins": [{ "name": "@kitajs/ts-html-plugin" }],
     "baseUrl": ".",
     "paths": {
-      "$core/*": ["src/core/*"],
-      "$context/*": ["src/context/*"],
-      "$modules/*": ["src/modules/*"]
+      "$*": ["src/packlets/*"]
     }
-  },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules"]
+  }
 }

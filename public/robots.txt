@@ -1,5 +1,5 @@
 User-agent: *
-Disallow: /api
-Disallow: /auth
-Disallow: /link
-Disallow: /dash
+Disallow: /connect
+Disallow: /callback
+Disallow: /dashboard
+Disallow: /dashboard/link

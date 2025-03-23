@@ -38,7 +38,31 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const imageName = `ghcr.io/rayriffy/apple-music-github-profile-runtime:pr-${context.issue.number}`;
-            github.rest.issues.createComment({
+            
+            // Find and delete previous docker pull comments
+            const comments = await github.rest.issues.listComments({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            
+            // Look for comments containing our specific message format
+            const dockerPullComments = comments.data.filter(comment => 
+              comment.body.includes('Docker image has been built and pushed successfully') && 
+              comment.body.includes('docker pull')
+            );
+            
+            // Delete those comments
+            for (const comment of dockerPullComments) {
+              await github.rest.issues.deleteComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: comment.id
+              });
+            }
+            
+            // Add the new comment
+            await github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,

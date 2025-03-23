@@ -2,7 +2,13 @@
   "name": "apple-music-github-profile",
   "version": "2.0.0",
   "description": "Show your recently played song on Apple Music directly to your GitHub profile.",
-  "module": "src/index.js",
+  "author": "Phumrapee Limpianchop <contact@rayriffy.com>",
+  "license": "GNU AGPLv3",
+  "bugs": {
+    "url": "https://github.com/rayriffy/apple-music-github-profile/issues"
+  },
+  "homepage": "https://music-profile.rayriffy.com",
+  "module": "src/app.ts",
   "scripts": {
     "dev": "bun run --watch src/app.ts",
     "preview:generate": "tsx tools/generatePreviews.ts"

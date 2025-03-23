@@ -30,10 +30,13 @@ export const Base = ({ children }: Props) => {
       <body>
         <main
           className={
-            'w-screen md:h-[100dvh] flex md:items-center md:justify-center p-4 md:p-0'
+            'w-screen md:h-[100dvh] flex flex-col md:items-center md:justify-center p-4 md:p-0'
           }
         >
           {children}
+          <span className="pt-4 text-sm text-center">
+            © {new Date().getFullYear()} Phumrapee Limpianchop
+          </span>
         </main>
       </body>
     </html>

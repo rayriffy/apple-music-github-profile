@@ -9,9 +9,6 @@
     "lineWidth": 80,
     "attributePosition": "auto"
   },
-  "files": {
-    "ignore": [".next/**"]
-  },
   "organizeImports": { "enabled": true },
   "linter": { "enabled": true, "rules": { "recommended": true } },
   "javascript": {

@@ -145,7 +145,7 @@ export const authenticationRoute = new Elysia()
     async ({ body: { userToken }, cookie, headers }) => {
       const session = await getUserSession(cookie.token.value)
 
-      if (session === null) throw new Error(`unauthenticated`)
+      if (session === null) throw new Error('unauthenticated')
 
       const targetUser = await collections.users.findOne(
         {
@@ -160,7 +160,7 @@ export const authenticationRoute = new Elysia()
         }
       )
 
-      if (!targetUser) throw new Error(`illegal user`)
+      if (!targetUser) throw new Error('illegal user')
 
       if (targetUser.token.music !== userToken)
         await collections.users.updateOne(

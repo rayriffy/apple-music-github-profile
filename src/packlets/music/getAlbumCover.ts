@@ -16,7 +16,7 @@ export const getAlbumCover = async (
   try {
     if (typeof artwork?.url === 'string') {
       // build cover url
-      let albumCoverUrl = artwork.url
+      const albumCoverUrl = artwork.url
         .replace('{w}', targetImageSize.toString())
         .replace(
           '{h}',

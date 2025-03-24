@@ -1,7 +1,7 @@
 import { MongoClient } from 'mongodb'
 
-import { User } from '$types/User'
-import { Log } from '$types/Log'
+import type { User } from '$types/User'
+import type { Log } from '$types/Log'
 
 declare global {
   // allow global `var` declarations

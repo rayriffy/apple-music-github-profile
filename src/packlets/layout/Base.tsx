@@ -19,7 +19,7 @@ export const Base = ({ children }: Props) => {
           rel="stylesheet"
           type="text/css"
         />
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4" />
 
         <title>Apple Music GitHub Profile</title>
         <meta

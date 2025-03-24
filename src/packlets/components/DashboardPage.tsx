@@ -1,7 +1,7 @@
 import { Base } from '$layout/Base'
 import { Html } from '@elysiajs/html'
-import { Theme } from '$types/Theme'
 import { CardPreview } from '$components/CardPreview'
+import type { Theme } from '$types/Theme'
 
 interface Props {
   uid: string

@@ -86,9 +86,9 @@ export const LinkPage = ({ email, token, isConnected }: Props) => {
             </div>
           )}
           <div id="error-alert" role="alert" class="alert alert-error hidden">
-            <span id="error-content"></span>
+            <span id="error-content" />
           </div>
-          <button id={'connect-button'} class={'btn'} disabled>
+          <button type="button" id={'connect-button'} class={'btn'} disabled>
             Loading MusicKit...
           </button>
         </div>
@@ -97,7 +97,7 @@ export const LinkPage = ({ email, token, isConnected }: Props) => {
         src="https://js-cdn.music.apple.com/musickit/v3/musickit.js"
         data-web-components
         async
-      ></script>
+      />
       <script>{clientScript}</script>
     </Base>
   )

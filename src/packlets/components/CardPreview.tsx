@@ -1,5 +1,5 @@
 import { Html } from '@elysiajs/html'
-import { Theme } from '$types/Theme'
+import type { Theme } from '$types/Theme'
 
 interface Props {
   uid: string
@@ -11,6 +11,13 @@ export const CardPreview = ({ uid, theme: selectedTheme, themes }: Props) => {
   const imageUrl = `/theme/${selectedTheme}.svg?${new URLSearchParams({
     uid: uid,
   }).toString()}`
+
+  const clientScript = `
+    document.getElementById('select-feild').addEventListener('change', function (e) {
+      const selectedOption = e.target.options[e.target.selectedIndex]
+      window.location.href = selectedOption.value
+    })
+  `
 
   return (
     <div class={'md:flex'}>
@@ -29,16 +36,22 @@ export const CardPreview = ({ uid, theme: selectedTheme, themes }: Props) => {
         />
       </div>
       <div class="w-full space-y-4 break-all rounded-xl pl-4">
-        <div class="join">
-          {themes.map(theme => (
-            <a
-              href={`/dashboard?theme=${theme}`}
-              class={`btn btn-sm join-item capitalize ${theme === selectedTheme ? 'btn-neutral' : ''}`}
-            >
-              {theme}
-            </a>
-          ))}
-        </div>
+        <fieldset class="fieldset">
+          <legend class="fieldset-legend">Theme</legend>
+          <select id="select-feild" class="select">
+            <option disabled selected>Pick a theme</option>
+            {themes.map(theme => (
+              // biome-ignore lint/correctness/useJsxKeyInIterable: Pure JSX does not have interactive elements
+              <option
+                value={`/dashboard?theme=${theme}`}
+                selected={theme === selectedTheme}
+              >
+                {theme.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}
+              </option>
+            ))}
+          </select>
+          <script>{clientScript}</script>
+        </fieldset>
         <fieldset class="fieldset">
           <legend class="fieldset-legend">Markdown content</legend>
           <textarea rows="8" class="textarea font-mono" name="comment" readonly>

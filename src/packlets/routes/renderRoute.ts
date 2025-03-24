@@ -1,9 +1,9 @@
 import { Elysia, t } from 'elysia'
-import { themeModel } from '$model/theme'
 import path from 'node:path'
 import fs from 'node:fs'
 import { render } from 'art-template'
 
+import { themeModel } from '$model/theme'
 import { collections } from '$utils/mongo'
 import { getMusicKitDeveloperToken } from '$music/getMusicKitDeveloperToken'
 import { getRecentlyPlayedTrack } from '$music/getRecentlyPlayedTrack'

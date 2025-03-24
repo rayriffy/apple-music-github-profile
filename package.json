@@ -8,17 +8,18 @@
     "url": "https://github.com/rayriffy/apple-music-github-profile/issues"
   },
   "homepage": "https://music-profile.rayriffy.com",
-  "module": "src/app.ts",
+  "module": "src/index.ts",
   "scripts": {
-    "dev": "bun run --watch src/app.ts",
+    "dev": "bun run --watch src/index.ts",
     "preview:generate": "tsx tools/generatePreviews.ts"
   },
   "dependencies": {
+    "@bogeychan/elysia-logger": "^0.1.8",
     "@elysiajs/html": "^1.2.0",
     "@elysiajs/static": "^1.2.0",
     "@hapi/iron": "^7.0.1",
-    "art-template": "^4.13.4",
     "apple-signin-auth": "^1.7.8",
+    "art-template": "^4.13.4",
     "csrf": "^3.1.0",
     "elysia": "1.2.25",
     "jose": "^6.0.10",

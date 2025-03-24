@@ -1,12 +1,14 @@
-import { Elysia, t } from 'elysia'
+import { Elysia } from 'elysia'
 import { staticPlugin } from '@elysiajs/static'
 import { html } from '@elysiajs/html'
+import { logger } from '@bogeychan/elysia-logger'
 
 import { authenticationRoute } from '$routes/authenticationRoute'
 import { dashboardRoute } from '$routes/dashboardRoute'
 import { renderRoute } from '$routes/renderRoute'
 
 const app = new Elysia()
+  .use(logger())
   .use(
     staticPlugin({
       prefix: '/',

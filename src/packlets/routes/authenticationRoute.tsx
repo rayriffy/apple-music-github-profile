@@ -18,6 +18,9 @@ const {
 const redirectUri = 'https://music-profile.rayriffy.com/callback'
 
 export const authenticationRoute = new Elysia()
+  .guard({
+    cookie,
+  })
   .get(
     '/',
     ({ cookie, redirect }) => {
@@ -32,9 +35,6 @@ export const authenticationRoute = new Elysia()
       })
 
       return <LoginPage authorizationUrl={authorizationUrl} />
-    },
-    {
-      cookie,
     }
   )
   .post(
@@ -126,7 +126,6 @@ export const authenticationRoute = new Elysia()
         code: t.String(),
         state: t.String(),
       }),
-      cookie,
     }
   )
   .get(
@@ -182,6 +181,5 @@ export const authenticationRoute = new Elysia()
       body: t.Object({
         userToken: t.String(),
       }),
-      cookie,
     }
   )

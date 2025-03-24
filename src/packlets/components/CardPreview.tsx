@@ -20,7 +20,7 @@ export const CardPreview = ({ uid, theme: selectedTheme, themes }: Props) => {
   `
 
   return (
-    <div class={'md:flex'}>
+    <div class={'md:flex gap-4'}>
       <div
         class={
           'mx-auto mb-6 w-2/3 flex-shrink-0 sm:mx-0 sm:mb-0 sm:w-2/5 aspect-[345/534]'
@@ -35,7 +35,7 @@ export const CardPreview = ({ uid, theme: selectedTheme, themes }: Props) => {
           alt={'Rendered card'}
         />
       </div>
-      <div class="w-full space-y-4 break-all rounded-xl pl-4">
+      <div class="w-full space-y-4 break-all rounded-xl">
         <fieldset class="fieldset">
           <legend class="fieldset-legend">Theme</legend>
           <select id="select-feild" class="select">

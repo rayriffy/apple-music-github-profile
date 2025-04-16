@@ -1,4 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="345" height="534" role="img">
+<svg 
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="345"
+  height="534"
+  role="img"
+>
   <foreignObject width="343" height="534">
     <style>
       .container {

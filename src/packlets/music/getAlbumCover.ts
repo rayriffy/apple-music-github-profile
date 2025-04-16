@@ -1,7 +1,7 @@
 import type { MixedTypeSong } from '$types/MixedTypeSong'
 import sharp from 'sharp'
 
-const targetImageSize = 400
+const targetImageSize = 350
 
 /**
  * Download image and optimize if necessary
@@ -46,9 +46,10 @@ export const getAlbumCover = async (
         encodedCoverImage = await sharp(Buffer.from(rawAlbumCover))
           .resize(targetImageSize)
           .webp({
-            quality: 80,
+            quality: 78,
             preset: 'picture',
-            effort: 5,
+            effort: 6,
+            smartSubsample: true,
           })
           .toBuffer()
           .catch(() => {

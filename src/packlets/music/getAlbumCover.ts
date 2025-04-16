@@ -45,9 +45,10 @@ export const getAlbumCover = async (
       else {
         encodedCoverImage = await sharp(Buffer.from(rawAlbumCover))
           .resize(targetImageSize)
-          .jpeg({
-            quality: 83,
-            mozjpeg: true,
+          .webp({
+            quality: 80,
+            preset: 'picture',
+            effort: 5,
           })
           .toBuffer()
           .catch(() => {
@@ -56,7 +57,7 @@ export const getAlbumCover = async (
       }
 
       // build final encoded image
-      coverImageData = `data:image/jpeg;base64,${encodedCoverImage.toString(
+      coverImageData = `data:image/webp;base64,${encodedCoverImage.toString(
         'base64'
       )}`
     }

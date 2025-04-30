@@ -8,6 +8,7 @@ import { collections } from '$utils/mongo'
 import { getClientAddress } from '$utils/getClientAddress'
 import { cookie } from '$model/cookie'
 import { createUserSession, getUserSession } from '$utils/session'
+import { winston } from '$utils/winston'
 
 const {
   APPLE_TEAM_ID = '',
@@ -18,28 +19,26 @@ const {
 const redirectUri = 'https://music-profile.rayriffy.com/callback'
 
 export const authenticationRoute = new Elysia()
+  .use(winston)
   .guard({
     cookie,
   })
-  .get(
-    '/',
-    ({ cookie, redirect }) => {
-      if (cookie.token.value !== undefined) return redirect('/dashboard')
+  .get('/', ({ cookie, redirect }) => {
+    if (cookie.token.value !== undefined) return redirect('/dashboard')
 
-      const authorizationUrl = appleSignIn.getAuthorizationUrl({
-        clientID: 'com.rayriffy.apple-music.auth',
-        redirectUri,
-        state: getCSRFToken(),
-        responseMode: 'form_post',
-        scope: 'email',
-      })
+    const authorizationUrl = appleSignIn.getAuthorizationUrl({
+      clientID: 'com.rayriffy.apple-music.auth',
+      redirectUri,
+      state: getCSRFToken(),
+      responseMode: 'form_post',
+      scope: 'email',
+    })
 
-      return <LoginPage authorizationUrl={authorizationUrl} />
-    }
-  )
+    return <LoginPage authorizationUrl={authorizationUrl} />
+  })
   .post(
     '/callback',
-    async ({ body, headers, cookie, redirect }) => {
+    async ({ body, headers, cookie, redirect, logger }) => {
       // validate csrf token
       const csrfVerified = verifyCSRFToken(body.state)
 
@@ -52,30 +51,48 @@ export const authenticationRoute = new Elysia()
         keyIdentifier: APPLE_KEY_ID,
       })
 
-      try {
-        /**
-         * Verify authentication code, and get authentication data
-         */
-        const tokenResponse = await appleSignIn.getAuthorizationToken(
-          body.code,
-          {
-            clientID: 'com.rayriffy.apple-music.auth',
-            redirectUri,
-            clientSecret,
-          }
-        )
+      /**
+       * Verify authentication code, and get authentication data
+       */
+      const tokenResponse = await appleSignIn
+        .getAuthorizationToken(body.code, {
+          clientID: 'com.rayriffy.apple-music.auth',
+          redirectUri,
+          clientSecret,
+        })
+        .catch(e => {
+          logger.error(
+            `error occured at appleSignIn.getAuthorizationToken\n${e.stack}`,
+            {
+              code: body.code,
+              uri: redirectUri,
+            }
+          )
+          throw new Error('unable to verify authentication response from Apple')
+        })
 
-        const { sub: appleUserId, email: appleUserEmail } =
-          await appleSignIn.verifyIdToken(tokenResponse.id_token, {
-            audience: 'com.rayriffy.apple-music.auth',
-            ignoreExpiration: true,
-          })
+      const { sub: appleUserId, email: appleUserEmail } = await appleSignIn
+        .verifyIdToken(tokenResponse.id_token, {
+          audience: 'com.rayriffy.apple-music.auth',
+          ignoreExpiration: true,
+        })
+        .catch(e => {
+          logger.error(
+            `error occured at appleSignIn.verifyIdToken\n${e.stack}`,
+            {
+              code: body.code,
+              id_token: tokenResponse.id_token,
+            }
+          )
+          throw new Error('unable to verify token from Apple')
+        })
 
-        /**
-         * Insert user OAuth result to database
-         */
-        const createdAt = new Date()
-        const user = await collections.users.findOneAndUpdate(
+      /**
+       * Insert user OAuth result to database
+       */
+      const createdAt = new Date()
+      const user = await collections.users
+        .findOneAndUpdate(
           {
             uid: appleUserId,
           },
@@ -95,31 +112,49 @@ export const authenticationRoute = new Elysia()
             upsert: true,
           }
         )
+        .catch(e => {
+          logger.error(
+            `error occured at collections.users.findOneAndUpdate\n${e.stack}`,
+            {
+              uid: appleUserId,
+              email: appleUserEmail,
+            }
+          )
+          throw new Error('unable to insert user OAuth result to database')
+        })
 
-        /**
-         * Generate encrypted token
-         */
-        const token = await createUserSession({
-          id: appleUserId,
+      /**
+       * Generate encrypted token
+       */
+      const token = await createUserSession({
+        id: appleUserId,
+        email: appleUserEmail,
+      }).catch(e => {
+        logger.error(`error occured at createUserSession\n${e.stack}`, {
+          uid: appleUserId,
           email: appleUserEmail,
         })
+        throw new Error('unable to generate encrypted token')
+      })
 
-        cookie.token.set({
-          value: token,
-          secure: true,
-          httpOnly: true,
-          sameSite: 'lax',
-          path: '/',
-          maxAge: 60 * 60,
-          expires: new Date(Date.now() + 60 * 60 * 1000),
-        })
+      cookie.token.set({
+        value: token,
+        secure: true,
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        maxAge: 60 * 60,
+        expires: new Date(Date.now() + 60 * 60 * 1000),
+      })
 
-        return redirect(
-          `/${typeof user?.token?.music !== 'string' ? 'connect' : 'dashboard'}`
-        )
-      } catch (e) {
-        throw new Error('unable to verify authentication response from Apple')
-      }
+      logger.info('user authenticated', {
+        uid: appleUserId,
+        email: appleUserEmail,
+      })
+
+      return redirect(
+        `/${typeof user?.token?.music !== 'string' ? 'connect' : 'dashboard'}`
+      )
     },
     {
       body: t.Object({

@@ -29,10 +29,7 @@ export const getRecentlyPlayedTrack = async (
 
       return await o.json()
     } catch (e) {
-      console.error('>>> statusCode: ', o.status)
-      console.error('>>> data: ', await o.text())
-      console.error('')
-      throw e
+      throw new Error(`Apple API route /v1/me/recent/played/tracks returned status code ${o.status} message: ${await o.text()}`)
     }
   })
 

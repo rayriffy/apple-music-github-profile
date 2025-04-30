@@ -11,10 +11,11 @@ import { getAlbumCover } from '$music/getAlbumCover'
 import { optimizeSvg } from '$music/optimizeSvg'
 import { getClientAddress } from '$utils/getClientAddress'
 import { renderErrorCard } from '$music/renderErrorCard'
+import { winston } from '$utils/winston'
 
-export const renderRoute = new Elysia().get(
+export const renderRoute = new Elysia().use(winston).get(
   '/theme/:theme',
-  async ({ params, query, headers }) => {
+  async ({ params, query, headers, logger }) => {
     /**
      * make sure template file exists
      */
@@ -53,7 +54,11 @@ export const renderRoute = new Elysia().get(
      * Find recently played track
      */
     const track = await getRecentlyPlayedTrack(developerToken, userToken).catch(
-      () => {
+      e => {
+        logger.error(`error occured at getRecentlyPlayedTrack\n${e.stack}`, {
+          uid: query.uid,
+          userToken,
+        })
         throw new Error(
           'Unable to get recently played track. Try to reconnect Apple Music again.'
         )
@@ -73,7 +78,12 @@ export const renderRoute = new Elysia().get(
 
     const [templateFile, coverImageData] = await Promise.all([
       fs.promises.readFile(targetTemplateFile, 'utf-8'),
-      getAlbumCover(track.attributes.artwork),
+      getAlbumCover(track.attributes.artwork).catch(e => {
+        logger.error(`error occured at getAlbumCover\n${e.stack}`, {
+          artwork: track.attributes.artwork,
+        })
+        throw new Error('Unable to get album cover')
+      }),
     ])
 
     const builtRenderedData = {

@@ -2,14 +2,13 @@ import { Elysia } from 'elysia'
 import { staticPlugin } from '@elysiajs/static'
 import { html } from '@elysiajs/html'
 import { cors } from '@elysiajs/cors'
-import { logger } from '@bogeychan/elysia-logger'
+import { swagger } from '@elysiajs/swagger'
 
 import { authenticationRoute } from '$routes/authenticationRoute'
 import { dashboardRoute } from '$routes/dashboardRoute'
 import { renderRoute } from '$routes/renderRoute'
 
 const app = new Elysia()
-  .use(logger())
   .use(cors())
   .use(
     staticPlugin({
@@ -20,7 +19,11 @@ const app = new Elysia()
   .use(authenticationRoute)
   .use(dashboardRoute)
   .use(renderRoute)
-  .listen(3000)
+
+if (process.env.NODE_ENV !== 'production')
+  app.use(swagger())
+
+app.listen(3000)
 
 console.log(
   `🦊 Elysia is running at http://${app.server?.hostname}:${app.server?.port}`

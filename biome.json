@@ -10,7 +10,10 @@
     "attributePosition": "auto"
   },
   "organizeImports": { "enabled": true },
-  "linter": { "enabled": true, "rules": { "recommended": true, "style": { "noNonNullAssertion": "off" } } },
+  "linter": {
+    "enabled": true,
+    "rules": { "recommended": true, "style": { "noNonNullAssertion": "off" } }
+  },
   "javascript": {
     "formatter": {
       "jsxQuoteStyle": "double",

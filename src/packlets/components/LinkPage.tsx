@@ -79,9 +79,9 @@ export const LinkPage = ({ email, token, isConnected }: Props) => {
           {isConnected && (
             <div role="alert" class="alert alert-warning">
               <span>
-                You've already connected with Apple Music before. If you're having
-                a trouble with the card, try to reconnect by connect with Apple
-                Music again.
+                You've already connected with Apple Music before. If you're
+                having a trouble with the card, try to reconnect by connect with
+                Apple Music again.
               </span>
             </div>
           )}

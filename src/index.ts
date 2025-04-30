@@ -20,8 +20,7 @@ const app = new Elysia()
   .use(dashboardRoute)
   .use(renderRoute)
 
-if (process.env.NODE_ENV !== 'production')
-  app.use(swagger())
+if (process.env.NODE_ENV !== 'production') app.use(swagger())
 
 app.listen(3000)
 

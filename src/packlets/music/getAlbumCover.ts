@@ -29,7 +29,9 @@ export const getAlbumCover = async (
       // download image from apple cdn
       const rawAlbumCover = await fetch(albumCoverUrl).then(async o => {
         if (o.status >= 400 && o.status < 600)
-          throw new Error(`Music artwork ${albumCoverUrl} returned status code ${o.status}`)
+          throw new Error(
+            `Music artwork ${albumCoverUrl} returned status code ${o.status}`
+          )
 
         return await o.arrayBuffer()
       })

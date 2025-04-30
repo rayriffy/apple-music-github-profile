@@ -39,14 +39,18 @@ export const CardPreview = ({ uid, theme: selectedTheme, themes }: Props) => {
         <fieldset class="fieldset">
           <legend class="fieldset-legend">Theme</legend>
           <select id="select-feild" class="select">
-            <option disabled selected>Pick a theme</option>
+            <option disabled selected>
+              Pick a theme
+            </option>
             {themes.map(theme => (
               // biome-ignore lint/correctness/useJsxKeyInIterable: Pure JSX does not have interactive elements
               <option
                 value={`/dashboard?theme=${theme}`}
                 selected={theme === selectedTheme}
               >
-                {theme.replace(/(^\w{1})|(\s+\w{1})/g, letter => letter.toUpperCase())}
+                {theme.replace(/(^\w{1})|(\s+\w{1})/g, letter =>
+                  letter.toUpperCase()
+                )}
               </option>
             ))}
           </select>

@@ -8,7 +8,10 @@ export const winston = new Elysia({
   const logger = libWinston.createLogger({
     format: libWinston.format.combine(
       libWinston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-      libWinston.format.printf(({ timestamp, level, message }) => `${timestamp} ${level.toUpperCase()}: ${message}`)
+      libWinston.format.printf(
+        ({ timestamp, level, message }) =>
+          `${timestamp} ${level.toUpperCase()}: ${message}`
+      )
     ),
     transports: [
       ...(process.env.LOKI_HOST
@@ -28,7 +31,7 @@ export const winston = new Elysia({
                 environment: process.env.NODE_ENV ?? 'unknown',
               },
               json: true,
-              batching: true,  
+              batching: true,
               interval: 5,
               onConnectionError: err => console.error(err),
             }),

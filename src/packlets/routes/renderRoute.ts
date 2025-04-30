@@ -124,6 +124,10 @@ export const renderRoute = new Elysia().use(winston).get(
         }),
       ])
 
+      logger.info('card has been successfully rendered', {
+        uid: query.uid,
+      })
+
       return new Response(optimizedRender, {
         headers: {
           'Content-Type': 'image/svg+xml',

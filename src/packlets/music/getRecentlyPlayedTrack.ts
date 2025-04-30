@@ -1,5 +1,6 @@
 import type { MixedTypeSong } from '$types/MixedTypeSong'
 import type { RecentPlayedTracksResponse } from '$types/RecentPlayedTracksResponse'
+import axios from 'axios'
 
 /**
  * Obtain user's recently played track
@@ -10,37 +11,31 @@ export const getRecentlyPlayedTrack = async (
   developerToken: string,
   userToken: string
 ): Promise<MixedTypeSong> => {
-  const rawResponse: RecentPlayedTracksResponse = await fetch(
-    'https://api.music.apple.com/v1/me/recent/played/tracks',
-    {
-      headers: {
-        Accepts: 'application/json',
-        Authorization: `Bearer ${developerToken}`,
-        'Music-User-Token': userToken,
-        Referer: 'https://music-profile.rayriffy.com',
-      },
-      cache: 'no-store',
-    }
-  ).then(async o => {
-    try {
-      if (o.status >= 400 && o.status < 600) {
-        throw new Error(await o.json())
+  try {
+    const response = await axios.get<RecentPlayedTracksResponse>(
+      'https://api.music.apple.com/v1/me/recent/played/tracks',
+      {
+        headers: {
+          Accepts: 'application/json',
+          Authorization: `Bearer ${developerToken}`,
+          'Music-User-Token': userToken,
+          Referer: 'https://music-profile.rayriffy.com',
+        },
       }
-
-      return await o.json()
-    } catch (e) {
+    )
+    
+    return response.data.data[0]
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const statusCode = error.response?.status || 'unknown'
+      const responseData = error.response?.data || error.message
+      
       throw new Error(
-        `Apple API route /v1/me/recent/played/tracks returned status code ${o.status} message: ${await o.text()}`
+        `Apple API route /v1/me/recent/played/tracks returned status code ${statusCode} message: ${JSON.stringify(responseData)}`
       )
     }
-  })
 
-  try {
-    return rawResponse.data[0]
-  } catch (e) {
-    console.error('>>> data: ', JSON.stringify(rawResponse))
-    console.error('')
-    throw e
+    throw error
   }
 }
 

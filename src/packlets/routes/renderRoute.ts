@@ -5,7 +5,6 @@ import { render } from 'art-template'
 
 import { themeModel } from '$model/theme'
 import { collections } from '$utils/mongo'
-import { getMusicKitDeveloperToken } from '$music/getMusicKitDeveloperToken'
 import { getRecentlyPlayedTrack } from '$music/getRecentlyPlayedTrack'
 import { getAlbumCover } from '$music/getAlbumCover'
 import { optimizeSvg } from '$music/optimizeSvg'
@@ -48,15 +47,13 @@ export const renderRoute = new Elysia().use(winston).get(
      * Get all tokens
      */
     const userToken = targetUser.token.music
-    const developerToken = await getMusicKitDeveloperToken()
 
     /**
      * Find recently played track
      */
-    const track = await getRecentlyPlayedTrack(developerToken, userToken).catch(
-      e => {
-        logger.error(`error occured at getRecentlyPlayedTrack\n${e.stack}`, {
-          uid: query.uid,
+    const track = await getRecentlyPlayedTrack(userToken).catch(e => {
+      logger.error(`error occured at getRecentlyPlayedTrack\n${e.stack}`, {
+        uid: query.uid,
           userToken,
         })
         throw new Error(

@@ -1,6 +1,7 @@
 import type { MixedTypeSong } from '$types/MixedTypeSong'
 import type { RecentPlayedTracksResponse } from '$types/RecentPlayedTracksResponse'
 import axios from 'axios'
+import { getMusicKitDeveloperToken } from './getMusicKitDeveloperToken'
 
 /**
  * Obtain user's recently played track
@@ -8,10 +9,10 @@ import axios from 'axios'
  * @param userToken Authorized user token (https://developer.apple.com/documentation/applemusicapi/user_authentication_for_musickit)
  */
 export const getRecentlyPlayedTrack = async (
-  developerToken: string,
   userToken: string
 ): Promise<MixedTypeSong> => {
   try {
+    const developerToken = await getMusicKitDeveloperToken()
     const queryParams = new URLSearchParams({
       limit: '1',
       types: 'songs',

@@ -12,8 +12,12 @@ export const getRecentlyPlayedTrack = async (
   userToken: string
 ): Promise<MixedTypeSong> => {
   try {
+    const queryParams = new URLSearchParams({
+      limit: '1',
+      types: 'songs',
+    })
     const response = await axios.get<RecentPlayedTracksResponse>(
-      'https://api.music.apple.com/v1/me/recent/played/tracks',
+      `https://api.music.apple.com/v1/me/recent/played/tracks?${queryParams.toString()}`,
       {
         headers: {
           Accepts: 'application/json',

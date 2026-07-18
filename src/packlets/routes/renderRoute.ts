@@ -15,88 +15,88 @@ import { winston } from '$utils/winston'
 export const renderRoute = new Elysia().use(winston).get(
   '/theme/:theme',
   async ({ params, query, headers, logger }) => {
-    /**
-     * make sure template file exists
-     */
-    const targetTemplateFile = path.join(
-      process.cwd(),
-      'src/templates',
-      `${params.theme.replace('.svg', '')}.art`
-    )
-    if (
-      !(await fs.promises
-        .access(targetTemplateFile, fs.constants.R_OK)
-        .then(() => true)
-        .catch(() => false))
-    ) {
-      throw new Error('Requested template does not exist')
-    }
+    try {
+      /**
+       * make sure template file exists
+       */
+      const targetTemplateFile = path.join(
+        process.cwd(),
+        'src/templates',
+        `${params.theme.replace('.svg', '')}.art`
+      )
+      if (
+        !(await fs.promises
+          .access(targetTemplateFile, fs.constants.R_OK)
+          .then(() => true)
+          .catch(() => false))
+      ) {
+        throw new Error('Requested template does not exist')
+      }
 
-    /**
-     * Locate user Apple Music token
-     */
-    const targetUser = await collections.users.findOne({
-      uid: query.uid,
-    })
-
-    if (!targetUser) throw new Error('User does not exist')
-    if (typeof targetUser.token.music !== 'string')
-      throw new Error('Account does not connected to Apple Music yet')
-
-    /**
-     * Get all tokens
-     */
-    const userToken = targetUser.token.music
-
-    /**
-     * Find recently played track
-     */
-    const track = await getRecentlyPlayedTrack(userToken).catch(e => {
-      logger.error(`error occured at getRecentlyPlayedTrack\n${e.stack}`, {
+      /**
+       * Locate user Apple Music token
+       */
+      const targetUser = await collections.users.findOne({
         uid: query.uid,
+      })
+
+      if (!targetUser) throw new Error('User does not exist')
+      if (typeof targetUser.token.music !== 'string')
+        throw new Error('Account does not connected to Apple Music yet')
+
+      /**
+       * Get all tokens
+       */
+      const userToken = targetUser.token.music
+
+      /**
+       * Find recently played track
+       */
+      const track = await getRecentlyPlayedTrack(userToken).catch(e => {
+        logger.error(`error occured at getRecentlyPlayedTrack\n${e.stack}`, {
+          uid: query.uid,
           userToken,
         })
         throw new Error(
           'Unable to get recently played track. Try to reconnect Apple Music again.'
         )
       }
-    )
+      )
 
-    /**
-     * Build metadatas
-     */
-    const part = 3
-    const getDuration = (millisec: number) => {
-      const minute = Math.floor(millisec / (60 * 1000))
-      const seconds = Math.ceil((millisec - minute * 60 * 1000) / 1000)
+      /**
+       * Build metadatas
+       */
+      const part = 3
+      const getDuration = (millisec: number) => {
+        const minute = Math.floor(millisec / (60 * 1000))
+        const seconds = Math.ceil((millisec - minute * 60 * 1000) / 1000)
 
-      return `${minute}:${seconds.toString().padStart(2, '0')}`
-    }
+        return `${minute}:${seconds.toString().padStart(2, '0')}`
+      }
 
-    const [templateFile, coverImageData] = await Promise.all([
-      fs.promises.readFile(targetTemplateFile, 'utf-8'),
-      getAlbumCover(track.attributes.artwork).catch(e => {
-        logger.error(`error occured at getAlbumCover\n${e.stack}`, {
-          artwork: track.attributes.artwork,
-        })
-        throw new Error('Unable to get album cover')
-      }),
-    ])
+      const [templateFile, coverImageData] = await Promise.all([
+        fs.promises.readFile(targetTemplateFile, 'utf-8'),
+        getAlbumCover(track.attributes.artwork).catch(e => {
+          logger.error(`error occured at getAlbumCover\n${e.stack}`, {
+            artwork: track.attributes.artwork,
+          })
+          throw new Error('Unable to get album cover')
+        }),
+      ])
 
-    const builtRenderedData = {
-      title: track.attributes.name,
-      artist: track.attributes.artistName ?? '',
-      coverImageData,
-      timestamp: {
-        percentage: (100 / part).toFixed(2),
-        elapsed: getDuration(track.attributes.durationInMillis / part),
-        remaining: getDuration(
-          (track.attributes.durationInMillis * (part - 1)) / part
-        ),
-      },
-    }
+      const builtRenderedData = {
+        title: track.attributes.name,
+        artist: track.attributes.artistName ?? '',
+        coverImageData,
+        timestamp: {
+          percentage: (100 / part).toFixed(2),
+          elapsed: getDuration(track.attributes.durationInMillis / part),
+          remaining: getDuration(
+            (track.attributes.durationInMillis * (part - 1)) / part
+          ),
+        },
+      }
 
-    try {
       const optimizedRender = optimizeSvg(
         render(templateFile, builtRenderedData)
       )

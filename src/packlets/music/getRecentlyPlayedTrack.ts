@@ -34,7 +34,7 @@ export const getRecentlyPlayedTrack = async (
     if (axios.isAxiosError(error)) {
       const statusCode = error.response?.status || 'unknown'
       const responseData = error.response?.data || error.message
-      
+
       throw new Error(
         `Apple API route /v1/me/recent/played/tracks returned status code ${statusCode} message: ${JSON.stringify(responseData)}`
       )

@@ -1,5 +1,4 @@
 import type { MixedTypeSong } from '$types/MixedTypeSong'
-import sharp from 'sharp'
 
 const targetImageSize = 350
 
@@ -44,15 +43,12 @@ export const getAlbumCover = async (
       }
       // exclusive case for iCloud Music Library, self-uploaded album is not compressible from API
       else {
-        encodedCoverImage = await sharp(Buffer.from(rawAlbumCover))
+        encodedCoverImage = await new Bun.Image(Buffer.from(rawAlbumCover))
           .resize(targetImageSize)
           .webp({
             quality: 78,
-            preset: 'picture',
-            effort: 6,
-            smartSubsample: true,
           })
-          .toBuffer()
+          .buffer()
           .catch(() => {
             return Buffer.from(rawAlbumCover)
           })
